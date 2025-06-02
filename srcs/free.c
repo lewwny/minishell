@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 10:29:13 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:52:48 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,24 @@ void	free_split(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+void	ft_cmdclear(t_cmd **cmd)
+{
+	t_cmd	*tmp;
+
+	while (*cmd)
+	{
+		tmp = (*cmd)->next;
+		free_split((*cmd)->args);
+		free(*cmd);
+		*cmd = tmp;
+	}
+	*cmd = NULL;
+}
+
+void	free_cmd(char *input)
+{
+	free(input);
+	ft_cmdclear(&_data()->cmds);
 }

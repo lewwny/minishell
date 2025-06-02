@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 10:33:22 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 13:45:20 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/02 17:52:35 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	malloc_error(void)
+void	parsing(char *input)
 {
-	rl_clear_history();
-	if (_data()->path)
-		free_split(_data()->path);
-	perror("malloc");
-	exit(1);
+	char	**args;
+	t_cmd	*cmd;
+
+	args = ft_split(input, ' ');
+	if (!args)
+		malloc_error();
+	cmd = ft_cmdnew(args);
+	if (!cmd)
+		malloc_error();
+	_data()->cmds = cmd;
 }

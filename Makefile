@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+         #
+#    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/02 12:42:51 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/02 17:34:27 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ GREEN 		= \033[0;32m
 BLUE   		= \033[0;34m
 YELLOW		= \033[1;33m
 
-SRCS   	 	= srcs/main.c srcs/utils.c srcs/free.c srcs/path.c srcs/error.c srcs/singleton.c
+SRCS   	 	= srcs/main.c srcs/utils.c srcs/free.c srcs/path.c srcs/error.c \
+			srcs/singleton.c srcs/parsing.c srcs/exec.c
 OBJDIR		= obj
 OBJS  		= $(SRCS:srcs/%.c=$(OBJDIR)/%.o)
 NAME  		= minishell

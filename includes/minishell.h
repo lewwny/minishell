@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 12:43:58 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:49:04 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**args;
+	char			*cmd_path;
 	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -57,6 +58,7 @@ typedef struct s_data
 	t_cmd	*cmds;
 	int		exit_code;
 	char	**path;
+	char	**env;
 }	t_data;
 
 extern int	g_exit_status;
@@ -67,5 +69,9 @@ void	malloc_error(void);
 void	print_tab(char **tab);
 void	get_path(void);
 t_data	*_data(void);
+t_cmd	*ft_cmdnew(char **content);
+void	parsing(char *input);
+void	free_cmd(char *input);
+void	exec_cmds(t_cmd *cmd);
 
 #endif
