@@ -6,7 +6,7 @@
 #    By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/02 08:07:04 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/02 08:43:12 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ GREEN 		= \033[0;32m
 BLUE   		= \033[0;34m
 YELLOW		= \033[1;33m
 
-SRCS   	 	= srcs/main.c
+SRCS   	 	= srcs/main.c srcs/utils.c
 OBJS  		= $(SRCS:.c=.o)
 NAME  		= minishell
 INCLUDES	= -Iincludes -Ilibft/includes
