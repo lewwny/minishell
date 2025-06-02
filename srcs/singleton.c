@@ -1,43 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   singleton.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 08:40:27 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 10:40:11 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/02 12:36:22 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/02 12:46:07 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_tab(char **tab)
+t_data	*_data(void)
 {
-	int	i;
+	static t_data	data;
+	static int		init = 0;
 
-	i = 0;
-	while (tab[i])
+	if (init == 0)
 	{
-		printf("%s\n", tab[i]);
-		i++;
+		init = 1;
+		ft_bzero(&data, sizeof(t_data));
 	}
-}
-
-int	only_space(char *str)
-{
-	int	i;
-	int	letter;
-
-	letter = 0;
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if ((str[i] != 32) && (str[i] < 9 || str[i] > 13))
-			letter++;
-		i++;
-	}
-	return (letter);
+	return (&data);
 }

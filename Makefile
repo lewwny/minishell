@@ -6,7 +6,7 @@
 #    By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/02 08:43:12 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/02 12:42:51 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,18 @@ GREEN 		= \033[0;32m
 BLUE   		= \033[0;34m
 YELLOW		= \033[1;33m
 
-SRCS   	 	= srcs/main.c srcs/utils.c
-OBJS  		= $(SRCS:.c=.o)
+SRCS   	 	= srcs/main.c srcs/utils.c srcs/free.c srcs/path.c srcs/error.c srcs/singleton.c
+OBJDIR		= obj
+OBJS  		= $(SRCS:srcs/%.c=$(OBJDIR)/%.o)
 NAME  		= minishell
 INCLUDES	= -Iincludes -Ilibft/includes
 LIBFT_PATH	= ./libft
 LIBFT 		= $(LIBFT_PATH)/libft.a
 
-all: $(NAME)
+all: $(OBJDIR) $(NAME)
+
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@printf "$(GREEN)==> Linking $(NAME)$(RESET)\n"
@@ -37,13 +41,13 @@ $(NAME): $(OBJS) $(LIBFT)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_PATH)
 
-%.o: %.c
+$(OBJDIR)/%.o: srcs/%.c
 	@printf "$(YELLOW)==> Compiling $<$(RESET)\n"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@printf "$(BLUE)==> Cleaning objects$(RESET)\n"
-	@rm -f $(OBJS)
+	@rm -rf $(OBJDIR)
 	@$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
