@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 17:54:43 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:56:46 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	main_help(envp);
 	while (1)
 	{
-		input = readline(COLOR_GREEN "minishell $>" COLOR_RESET);
+		input = readline(COLOR_GREEN "minishell$>" COLOR_RESET);
 		if (!input || ft_strncmp(input, "exit", 5) == 0)
 		{
 			if (input)

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 17:49:55 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:58:40 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void	exec(t_data *data)
 	{
 		if (execve(data->cmds->cmd_path, data->cmds->args, data->env) == -1)
 		{
-			perror("execve");
-			exit(EXIT_FAILURE);
+			perror(data->cmds->args[0]);
+			exit(1);
 		}
 	}
 	else if (pid < 0)
