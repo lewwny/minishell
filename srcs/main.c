@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 17:56:46 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:23:36 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,18 @@ void	end_program(void)
 void	main_help(char **envp)
 {
 	get_path();
-	_data()->env = envp;
+	_data()->env_list = env_fill(envp);
+	_data()->env = env_to_array(_data()->env_list);
+}
+
+static void main_helper(void)
+{
+	free_split(_data()->path);
+	get_path();
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
 	t_data	*data;
 
 	(void)argc;
@@ -38,24 +44,23 @@ int	main(int argc, char **argv, char **envp)
 	main_help(envp);
 	while (1)
 	{
-		input = readline(COLOR_GREEN "minishell$>" COLOR_RESET);
-		if (!input || ft_strncmp(input, "exit", 5) == 0)
+		data->input = readline(COLOR_GREEN "minishell$>" COLOR_RESET);
+		if (!data->input)
 		{
-			if (input)
-				free(input);
 			printf("exit\n");
 			break ;
 		}
-		if (!only_space(input))
-			input[0] = '\0';
-		if (!*input)
+		if (!only_space(data->input))
+			data->input[0] = '\0';
+		if (!*data->input)
 			continue ;
-		add_history(input);
-		parsing(input);
-		if (ft_strncmp(input, "/test", 5) == 0)
-			print_tab(_data()->path);
+		add_history(data->input);
+		parsing(data->input);
+		if (ft_strcmp(data->input, "/test") == 0)
+			print_env_list(data->env_list);
 		exec_cmds(_data()->cmds);
-		free_cmd(input);
+		free_cmd();
+		main_helper();
 	}
 	end_program();
 	return (0);

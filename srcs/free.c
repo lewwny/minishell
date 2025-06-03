@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 15:52:48 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:17:17 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void	ft_cmdclear(t_cmd **cmd)
 	*cmd = NULL;
 }
 
-void	free_cmd(char *input)
+void	free_cmd(void)
 {
-	free(input);
+	free_split(_data()->env);
+	_data()->env = env_to_array(_data()->env_list);
+	free(_data()->input);
 	ft_cmdclear(&_data()->cmds);
 }

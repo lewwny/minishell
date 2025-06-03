@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/02 17:49:04 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:10:26 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,21 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_data
 {
 	t_cmd	*cmds;
 	int		exit_code;
 	char	**path;
 	char	**env;
+	t_env	*env_list;
+	char	*input;
 }	t_data;
 
 extern int	g_exit_status;
@@ -71,7 +80,14 @@ void	get_path(void);
 t_data	*_data(void);
 t_cmd	*ft_cmdnew(char **content);
 void	parsing(char *input);
-void	free_cmd(char *input);
+void	free_cmd(void);
 void	exec_cmds(t_cmd *cmd);
+void	exec_builtins(t_cmd *cmd);
+int		is_builtin(char *cmd);
+void	end_program(void);
+t_env	*env_fill(char **envp);
+void	print_env_list(t_env *env);
+void	delete_env_node(t_env **env, const char *key);
+char	**env_to_array(t_env *env);
 
 #endif

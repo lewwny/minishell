@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   singleton.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 12:36:22 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 16:58:50 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/03 17:11:28 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/03 17:11:33 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-t_data	*_data(void)
+char	*ft_strcat(char *dest, const char *src)
 {
-	static t_data	data;
-	static int		init = 0;
+	char	*ptr;
 
-	if (init == 0)
-	{
-		init = 1;
-		ft_bzero(&data, sizeof(t_data));
-		ft_bzero(&data.cmds, sizeof(t_cmd));
-	}
-	return (&data);
+	ptr = dest + ft_strlen(dest);
+	while (*src)
+		*ptr++ = *src++;
+	*ptr = '\0';
+	return (dest);
 }

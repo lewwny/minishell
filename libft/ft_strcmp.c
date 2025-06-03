@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   singleton.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 12:36:22 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 16:58:50 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/03 14:46:20 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/03 15:31:09 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-t_data	*_data(void)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	static t_data	data;
-	static int		init = 0;
+	int	i;
 
-	if (init == 0)
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
+	while (s1[i] && s2[i])
 	{
-		init = 1;
-		ft_bzero(&data, sizeof(t_data));
-		ft_bzero(&data.cmds, sizeof(t_cmd));
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
 	}
-	return (&data);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

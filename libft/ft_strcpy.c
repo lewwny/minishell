@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   singleton.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 12:36:22 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 16:58:50 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/03 17:11:57 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/03 17:12:06 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-t_data	*_data(void)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	static t_data	data;
-	static int		init = 0;
+	char	*ptr;
 
-	if (init == 0)
+	ptr = dest;
+	while (*src)
 	{
-		init = 1;
-		ft_bzero(&data, sizeof(t_data));
-		ft_bzero(&data.cmds, sizeof(t_cmd));
+		*ptr++ = *src++;
 	}
-	return (&data);
+	*ptr = '\0';
+	return (dest);
 }
