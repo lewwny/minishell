@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 17:19:41 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:14:22 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static void	get_cmd(char *cmd)
 		return ;
 	}
 	i = 0;
+	if (!data->path)
+	{
+		data->cmds->cmd_path = NULL;
+		return ;
+	}
 	while (data->path[i])
 	{
 		data->cmds->cmd_path = ft_strjoin(data->path[i], cmd);
@@ -43,7 +48,6 @@ static void	exec(t_data *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		print_tab(data->env);
 		if (execve(data->cmds->cmd_path, data->cmds->args, data->env) == -1)
 		{
 			perror(data->cmds->args[0]);

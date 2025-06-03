@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 08:40:27 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 16:55:57 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:23:50 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,33 @@ void	print_env_list(t_env *env)
 			printf("%s=%s\n", env->key, env->value);
 		}
 		env = env->next;
+	}
+}
+
+void	delete_env_node(t_env **env, const char *key)
+{
+	t_env	*curr;
+	t_env	*prev;
+
+	if (!env || !*env || !key)
+		return ;
+	curr = *env;
+	prev = NULL;
+	while (curr)
+	{
+		if (ft_strcmp(curr->key, key) == 0)
+		{
+			if (prev)
+				prev->next = curr->next;
+			else
+				*env = curr->next;
+			free(curr->key);
+			if (curr->value)
+				free(curr->value);
+			free(curr);
+			return ;
+		}
+		prev = curr;
+		curr = curr->next;
 	}
 }

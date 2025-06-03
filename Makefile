@@ -6,7 +6,7 @@
 #    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/03 16:57:43 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/03 18:27:06 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ YELLOW		= \033[1;33m
 
 SRCS   	 	= srcs/main.c srcs/utils.c srcs/free.c srcs/path.c srcs/error.c \
 			srcs/singleton.c srcs/parsing.c srcs/exec.c srcs/builtins.c \
-			srcs/env.c
+			srcs/env.c srcs/builtins_func.c
 OBJDIR		= obj
 OBJS  		= $(SRCS:srcs/%.c=$(OBJDIR)/%.o)
 NAME  		= minishell

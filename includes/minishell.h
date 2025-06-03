@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 17:10:26 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:20:23 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,10 @@ t_env	*env_fill(char **envp);
 void	print_env_list(t_env *env);
 void	delete_env_node(t_env **env, const char *key);
 char	**env_to_array(t_env *env);
+void	env_builtin(void);
+void	exit_builtin(void);
+void	pwd_builtin(void);
+void	cd_builtin(void);
+void	unset_builtin(void);
 
 #endif
