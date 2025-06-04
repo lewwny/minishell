@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:35:09 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/03 17:12:20 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:14:49 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int		ft_isdigit(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_isprint(int c);
 int		ft_lstsize(t_list *lst);
-int		ft_putstri(char const *s);
-int		ft_putchari(char c);
-int		ft_putnbri(int n);
-int		ft_printf(const char *format, ...);
-int		ft_putnbrui(unsigned int n);
-int		ft_putnbrhexmin(int n);
-int		ft_putnbrhexmaj(int n);
-int		ft_putptr(void	*ptr);
+int		ft_putstri(int fd, char const *s);
+int		ft_putchari(int fd, char c);
+int		ft_putnbri(int fd, int n);
+int		ft_dprintf(int fd, const char *format, ...);
+int		ft_putnbrui(int fd, unsigned int n);
+int		ft_putnbrhexmin(int fd, int n);
+int		ft_putnbrhexmaj(int fd, int n);
+int		ft_putptr(int fd, void	*ptr);
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_putchar_fd(char c, int fd);

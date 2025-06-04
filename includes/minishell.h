@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 18:20:23 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:56:40 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,10 @@ void	exit_builtin(void);
 void	pwd_builtin(void);
 void	cd_builtin(void);
 void	unset_builtin(void);
+void	export_builtin(void);
+void	lst_add_back_env(t_env **env, t_env *new_node);
+void	ultimate_free_func(void);
+void	free_split(char **tab);
+void	ft_cmdclear(t_cmd **cmd);
 
 #endif

@@ -1,44 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 19:57:11 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/04/30 14:24:04 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/04 10:09:59 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_process(char conv, va_list *args)
+int	ft_process(int fd, char conv, va_list *args)
 {
 	int	count;
 
 	count = 0;
 	if (conv == 'd' || conv == 'i')
-		count += ft_putnbri(va_arg(*args, int));
+		count += ft_putnbri(fd, va_arg(*args, int));
 	else if (conv == 's')
-		count += ft_putstri(va_arg(*args, char *));
+		count += ft_putstri(fd, va_arg(*args, char *));
 	else if (conv == 'c')
-		count += ft_putchari(va_arg(*args, int));
+		count += ft_putchari(fd, va_arg(*args, int));
 	else if (conv == 'u')
-		count += ft_putnbrui(va_arg(*args, unsigned int));
+		count += ft_putnbrui(fd, va_arg(*args, unsigned int));
 	else if (conv == '%')
-		count += ft_putchari('%');
+		count += ft_putchari(fd, '%');
 	else if (conv == 'x')
-		count += ft_putnbrhexmin(va_arg(*args, int));
+		count += ft_putnbrhexmin(fd, va_arg(*args, int));
 	else if (conv == 'X')
-		count += ft_putnbrhexmaj(va_arg(*args, int));
+		count += ft_putnbrhexmaj(fd, va_arg(*args, int));
 	else if (conv == 'p')
-		count += ft_putptr(va_arg(*args, void *));
+		count += ft_putptr(fd, va_arg(*args, void *));
 	else
-		count += ft_putchari(conv);
+		count += ft_putchari(fd, conv);
 	return (count);
 }
 
-static int	vprintf_loop(const char *format, va_list *args)
+static int	vprintf_loop(int fd, const char *format, va_list *args)
 {
 	unsigned int	count;
 	unsigned int	tmp;
@@ -49,10 +49,10 @@ static int	vprintf_loop(const char *format, va_list *args)
 		if (*format == '%')
 		{
 			format++;
-			tmp = ft_process(*format, args);
+			tmp = ft_process(fd, *format, args);
 		}
 		else
-			tmp = ft_putchari(*format);
+			tmp = ft_putchari(fd, *format);
 		if (tmp < 0)
 			return (-1);
 		count += tmp;
@@ -61,13 +61,13 @@ static int	vprintf_loop(const char *format, va_list *args)
 	return (count);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_dprintf(int fd, const char *format, ...)
 {
 	va_list	args;
 	int		ret;
 
 	va_start(args, format);
-	ret = vprintf_loop(format, &args);
+	ret = vprintf_loop(fd, format, &args);
 	va_end(args);
 	return (ret);
 }

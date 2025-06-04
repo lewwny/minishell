@@ -1,29 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstri.c                                       :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 11:29:57 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/04 10:11:15 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/04 10:55:36 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/04 10:57:27 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_putstri(int fd, char const *s)
+void	free_split(char **tab)
 {
 	int	i;
-	int	tmp;
 
 	i = 0;
-	if (!s)
-		s = "(null)";
-	while (s[i])
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
 		i++;
-	tmp = write(fd, s, i);
-	if (tmp < 0)
-		return (-1);
-	return (i);
+	}
+	free(tab);
+}
+
+void	ft_cmdclear(t_cmd **cmd)
+{
+	t_cmd	*tmp;
+
+	while (*cmd)
+	{
+		tmp = (*cmd)->next;
+		free_split((*cmd)->args);
+		free(*cmd);
+		*cmd = tmp;
+	}
+	*cmd = NULL;
 }

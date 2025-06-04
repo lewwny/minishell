@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbrhexmin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:49:00 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/04/30 14:26:22 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/04 10:12:17 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putnbrhexmin(int n)
+int	ft_putnbrhexmin(int fd, int n)
 {
 	unsigned int		count;
 	unsigned int		nb;
@@ -26,11 +26,11 @@ int	ft_putnbrhexmin(int n)
 		nb = n;
 	if (nb >= 16)
 	{
-		count += ft_putnbrhexmin(nb / 16);
-		count += ft_putnbrhexmin(nb % 16);
+		count += ft_putnbrhexmin(fd, nb / 16);
+		count += ft_putnbrhexmin(fd, nb % 16);
 	}
 	else
-		count += ft_putchari(hex[nb]);
+		count += ft_putchari(fd, hex[nb]);
 	return (count);
 }
 /*

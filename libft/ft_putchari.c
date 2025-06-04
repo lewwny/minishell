@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchari.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:28:16 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/04/30 14:25:25 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/04 10:08:14 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putchari(char c)
+int	ft_putchari(int fd, char c)
 {
 	int	tmp;
 
-	tmp = write(1, &c, 1);
+	tmp = write(fd, &c, 1);
 	if (tmp < 0)
 		return (-1);
 	return (1);

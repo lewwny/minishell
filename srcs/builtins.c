@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 18:19:10 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:22:04 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,30 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
+static void	echo_builtin(t_cmd *cmd)
+{
+	int	i;
+	int	newline;
+
+	i = 1;
+	newline = 1;
+	if (cmd->args[1] && ft_strncmp(cmd->args[1], "-n", 2) == 0)
+	{
+		newline = 0;
+		i++;
+	}
+	while (cmd->args[i])
+	{
+		ft_putstri(1, cmd->args[i]);
+		if (cmd->args[i + 1])
+			ft_putchari(1, ' ');
+		i++;
+	}
+	if (newline)
+		ft_putchari(1, '\n');
+	printf("==========================\nDEBUG: echo_builtin called\n");
+}
+
 void	exec_builtins(t_cmd *cmd)
 {
 	if (ft_strcmp(cmd->args[0], "env") == 0)
@@ -43,4 +67,8 @@ void	exec_builtins(t_cmd *cmd)
 		cd_builtin();
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
 		unset_builtin();
+	else if (ft_strcmp(cmd->args[0], "export") == 0)
+		export_builtin();
+	else if (ft_strcmp(cmd->args[0], "echo") == 0)
+		echo_builtin(_data()->cmds);
 }

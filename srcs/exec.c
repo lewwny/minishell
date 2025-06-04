@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 18:14:22 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:42:03 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ static void	exec(t_data *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(data->cmds->cmd_path, data->cmds->args, data->env) == -1)
-		{
-			perror(data->cmds->args[0]);
-			exit(1);
-		}
+		if (data->cmds->cmd_path)
+			execve(data->cmds->cmd_path, data->cmds->args, data->env);
+		perror(data->cmds->args[0]);
+		ultimate_free_func();
+		exit(127);
 	}
 	else if (pid < 0)
 		perror("fork");

@@ -6,40 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 18:08:29 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:55:15 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	free_split(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-void	ft_cmdclear(t_cmd **cmd)
-{
-	t_cmd	*tmp;
-
-	while (*cmd)
-	{
-		tmp = (*cmd)->next;
-		free_split((*cmd)->args);
-		free(*cmd);
-		*cmd = tmp;
-	}
-	*cmd = NULL;
-}
 
 void	free_cmd(void)
 {
@@ -47,4 +18,64 @@ void	free_cmd(void)
 	_data()->env = env_to_array(_data()->env_list);
 	free(_data()->input);
 	ft_cmdclear(&_data()->cmds);
+}
+
+static void	free_env_list(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env->next;
+		free(env->key);
+		if (env->value)
+			free(env->value);
+		free(env);
+		env = tmp;
+	}
+}
+
+static void	free_data_members(void)
+{
+	if (_data()->cmds && _data()->cmds->cmd_path)
+	{
+		free(_data()->cmds->cmd_path);
+		_data()->cmds->cmd_path = NULL;
+	}
+	if (_data()->cmds && _data()->cmds->args)
+	{
+		free_split(_data()->cmds->args);
+		_data()->cmds->args = NULL;
+	}
+	if (_data()->path)
+	{
+		free_split(_data()->path);
+		_data()->path = NULL;
+	}
+	if (_data()->env)
+	{
+		free_split(_data()->env);
+		_data()->env = NULL;
+	}
+}
+
+static void	free_data_lists(void)
+{
+	if (_data()->env_list)
+	{
+		free_env_list(_data()->env_list);
+		_data()->env_list = NULL;
+	}
+	if (_data()->cmds)
+	{
+		ft_cmdclear(&_data()->cmds);
+		_data()->cmds = NULL;
+	}
+	rl_clear_history();
+}
+
+void	ultimate_free_func(void)
+{
+	free_data_members();
+	free_data_lists();
 }

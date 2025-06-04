@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:35:19 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/04/30 17:01:33 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/04 10:13:19 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_puthex(unsigned long n)
+static int	ft_puthex(int fd, unsigned long n)
 {
 	unsigned int		count;
 	char				*hex;
@@ -21,27 +21,27 @@ static int	ft_puthex(unsigned long n)
 	count = 0;
 	if (n >= 16)
 	{
-		count += ft_puthex(n / 16);
-		count += ft_puthex(n % 16);
+		count += ft_puthex(fd, n / 16);
+		count += ft_puthex(fd, n % 16);
 	}
 	else
-		count += ft_putchari(hex[n]);
+		count += ft_putchari(fd, hex[n]);
 	return (count);
 }
 
-int	ft_putptr(void	*ptr)
+int	ft_putptr(int fd, void	*ptr)
 {
 	unsigned int	count;
 	unsigned long	addr;
 
 	if (ptr == 0)
-		return (ft_putstri("(nil)"));
+		return (ft_putstri(fd, "(nil)"));
 	addr = (unsigned long)ptr;
 	count = 0;
-	count += ft_putstri("0x");
+	count += ft_putstri(fd, "0x");
 	if (addr == 0)
-		count += ft_putchari('0');
+		count += ft_putchari(fd, '0');
 	else
-		count += ft_puthex(addr);
+		count += ft_puthex(fd, addr);
 	return (count);
 }
