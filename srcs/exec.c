@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 10:42:03 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:11:26 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	get_cmd(char *cmd)
 		if (access(data->cmds->cmd_path, F_OK) == 0)
 			return ;
 		free(data->cmds->cmd_path);
+		data->cmds->cmd_path = NULL;
 		i++;
 	}
 	data->cmds->cmd_path = NULL;
@@ -77,7 +78,10 @@ void	exec_cmds(t_cmd *cmd)
 		get_cmd(cmd->args[0]);
 		exec(_data());
 		if (_data()->cmds->cmd_path)
+		{
 			free(_data()->cmds->cmd_path);
+			_data()->cmds->cmd_path = NULL;
+		}
 		cmd = cmd->next;
 	}
 }

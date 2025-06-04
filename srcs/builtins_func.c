@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:19:24 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 18:20:30 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:51:48 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	env_builtin(void)
 
 void	exit_builtin(void)
 {
-	free_cmd();
-	end_program();
+	ultimate_free_func();
 	printf("==========================\nDEBUG: exit_builtin called\n");
 	exit(0);
 }

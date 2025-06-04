@@ -6,19 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 10:55:15 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:52:52 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	free_cmd(void)
-{
-	free_split(_data()->env);
-	_data()->env = env_to_array(_data()->env_list);
-	free(_data()->input);
-	ft_cmdclear(&_data()->cmds);
-}
 
 static void	free_env_list(t_env *env)
 {
@@ -56,6 +48,11 @@ static void	free_data_members(void)
 	{
 		free_split(_data()->env);
 		_data()->env = NULL;
+	}
+	if (_data()->input)
+	{
+		free(_data()->input);
+		_data()->input = NULL;
 	}
 }
 
