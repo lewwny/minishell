@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 10:22:04 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 09:36:38 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	echo_builtin(t_cmd *cmd)
 	}
 	if (newline)
 		ft_putchari(1, '\n');
-	printf("==========================\nDEBUG: echo_builtin called\n");
 }
 
 void	exec_builtins(t_cmd *cmd)

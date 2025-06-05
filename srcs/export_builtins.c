@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:20:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 10:20:34 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 09:36:47 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,4 @@ void	export_builtin(void)
 		value = NULL;
 	export_update_env(key, value);
 	free(key);
-	printf("==========================\nDEBUG: export_builtin called\n");
 }
