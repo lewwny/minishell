@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 09:31:54 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:25:49 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ void	ultimate_free_func(void);
 void	free_split(char **tab);
 void	ft_cmdclear(t_cmd **cmd);
 char	*get_prompt(void);
+void	signal_handler(int sig);
 
 #endif
