@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 12:11:26 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:59:17 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ void	exec_cmds(t_cmd *cmd)
 {
 	while (cmd)
 	{
+		get_cmd(cmd->args[0]);
 		if (is_builtin(cmd->args[0]))
 		{
 			exec_builtins(cmd);
 			cmd = cmd->next;
 			continue ;
 		}
-		get_cmd(cmd->args[0]);
 		exec(_data());
 		if (_data()->cmds->cmd_path)
 		{
