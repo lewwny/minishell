@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 14:00:17 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:11:36 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	is_builtin(char *cmd)
 	if (ft_strcmp(cmd, "export") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "ls") == 0 && !_data()->cmds->args[1])
 		return (1);
 	return (0);
 }
@@ -70,4 +72,6 @@ void	exec_builtins(t_cmd *cmd)
 		export_builtin();
 	else if (ft_strcmp(cmd->args[0], "echo") == 0)
 		echo_builtin(_data()->cmds);
+	else if (ft_strcmp(cmd->args[0], "ls") == 0)
+		ls_builtin(_data()->cmds);
 }
