@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 16:59:17 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:29:47 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	exec_cmds(t_cmd *cmd)
 		{
 			exec_builtins(cmd);
 			cmd = cmd->next;
+			free(_data()->cmds->cmd_path);
 			continue ;
 		}
 		exec(_data());

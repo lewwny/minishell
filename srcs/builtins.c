@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 16:59:48 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:32:42 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
-	if (ft_strcmp(cmd, "ls") == 0 && !_data()->cmds->args[1] && access(
+	if (_data()->cmds->cmd_path && ft_strcmp(cmd,
+			"ls") == 0 && !_data()->cmds->args[1] && access(
 			_data()->cmds->cmd_path, F_OK) == 0)
 		return (1);
 	return (0);
