@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 12:04:56 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 09:32:10 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	main_helper(void)
 {
 	free(_data()->input);
 	_data()->input = NULL;
+	free(_data()->prompt);
+	_data()->prompt = NULL;
 	free_split(_data()->env);
 	_data()->env = env_to_array(_data()->env_list);
 	ft_cmdclear(&_data()->cmds);
@@ -35,12 +37,13 @@ static void	main_helper(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)argc;
-	(void)argv;
+	(void)(argc);
+	(void)(argv);
 	main_help(envp);
 	while (1)
 	{
-		_data()->input = readline(COLOR_GREEN "minishell$>" COLOR_RESET);
+		_data()->prompt = get_prompt();
+		_data()->input = readline(_data()->prompt);
 		if (!_data()->input)
 		{
 			printf("exit\n");
@@ -52,8 +55,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(_data()->input);
 		parsing(_data()->input);
-		if (ft_strcmp(_data()->input, "/test") == 0)
-			print_env_list(_data()->env_list);
 		exec_cmds(_data()->cmds);
 		main_helper();
 	}

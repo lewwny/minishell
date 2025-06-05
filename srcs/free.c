@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 11:52:52 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 09:32:27 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ static void	free_data_lists(void)
 	{
 		ft_cmdclear(&_data()->cmds);
 		_data()->cmds = NULL;
+	}
+	if (_data()->prompt)
+	{
+		free(_data()->prompt);
+		_data()->prompt = NULL;
 	}
 	rl_clear_history();
 }

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 10:56:40 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/05 09:31:54 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_data
 	char	**env;
 	t_env	*env_list;
 	char	*input;
+	char	*prompt;
 }	t_data;
 
 extern int	g_exit_status;
@@ -99,5 +100,6 @@ void	lst_add_back_env(t_env **env, t_env *new_node);
 void	ultimate_free_func(void);
 void	free_split(char **tab);
 void	ft_cmdclear(t_cmd **cmd);
+char	*get_prompt(void);
 
 #endif
