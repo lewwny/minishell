@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 15:12:16 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:31:27 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ void	ft_cmdclear(t_cmd **cmd);
 char	*get_prompt(void);
 void	signal_handler(int sig);
 void	ls_builtin(t_cmd *cmd);
+char	*replace_env_vars(char *str);
 
 #endif

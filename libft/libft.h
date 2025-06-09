@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:35:09 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/04 10:14:49 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:48:44 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_lstdelone(t_list *lst);
 void	ft_lstclear(t_list **lst);
 void	ft_bzero(void *s, size_t n);
 
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+
 char	*ft_itoa(int n);
 char	*ft_strdup(const char *s1);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
@@ -69,6 +71,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*get_next_line(int fd);
 char	*ft_strcat(char *dest, const char *src);
 char	*ft_strcpy(char *dest, const char *src);
+char	*ft_strjoin_free(char *s1, char *s2, int free_s1, int free_s2);
 
 char	**ft_split(char const *s, char c);
 

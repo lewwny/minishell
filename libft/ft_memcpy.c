@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/09 16:24:09 by lenygarcia       ###   ########.fr       */
+/*   Created: 2025/06/09 16:42:57 by lenygarcia        #+#    #+#             */
+/*   Updated: 2025/06/09 19:31:01 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	parsing(char *input)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	**args;
-	t_cmd	*cmd;
-	int		i;
+	size_t		i;
+	char		*dest_ptr;
+	const char	*src_ptr;
 
+	if (!dest && !src)
+		return (NULL);
+	dest_ptr = (char *)dest;
+	src_ptr = (const char *)src;
 	i = 0;
-	args = ft_split(input, ' ');
-	if (!args)
-		malloc_error();
-	while (args[i])
+	while (i < n)
 	{
-		if (ft_strchr(args[i], '$'))
-			args[i] = replace_env_vars(args[i]);
+		dest_ptr[i] = src_ptr[i];
 		i++;
 	}
-	cmd = ft_cmdnew(args);
-	if (!cmd)
-		malloc_error();
-	_data()->cmds = cmd;
+	return (dest);
 }
