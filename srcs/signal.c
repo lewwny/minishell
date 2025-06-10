@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:21:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/09 19:36:05 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/10 12:10:17 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_exit_status = 130;
+	_data()->exit_status = 130;
 }
 
 static void	sigquit_handler(int sig)
 {
 	(void) sig;
-	g_exit_status = 131;
+	_data()->exit_status = 131;
 }
 
 void	signal_handler(int sig)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 19:57:11 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/04 10:09:59 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 11:15:34 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_process(int fd, char conv, va_list *args)
 	else if (conv == 'c')
 		count += ft_putchari(fd, va_arg(*args, int));
 	else if (conv == 'u')
-		count += ft_putnbrui(fd, va_arg(*args, unsigned int));
+		count += ft_putnbrui(fd, va_arg(*args, size_t));
 	else if (conv == '%')
 		count += ft_putchari(fd, '%');
 	else if (conv == 'x')
@@ -40,8 +40,8 @@ int	ft_process(int fd, char conv, va_list *args)
 
 static int	vprintf_loop(int fd, const char *format, va_list *args)
 {
-	unsigned int	count;
-	unsigned int	tmp;
+	size_t	count;
+	size_t	tmp;
 
 	count = 0;
 	while (*format)

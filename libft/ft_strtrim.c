@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:52:23 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/03/11 18:57:58 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/10 11:15:34 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	in_set(char c, char const *s)
 {
-	unsigned int	i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
@@ -28,8 +28,8 @@ static int	in_set(char c, char const *s)
 
 static int	count(char const *s1, char const *set)
 {
-	unsigned int	count;
-	unsigned int	i;
+	size_t	count;
+	size_t	i;
 
 	count = 0;
 	i = 0;

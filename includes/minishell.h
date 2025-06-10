@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 10:55:23 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/10 12:22:15 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_data
-{
-	t_cmd	*cmds;
-	int		exit_code;
-	char	**path;
-	char	**env;
-	t_env	*env_list;
-	char	*input;
-	char	*prompt;
-}	t_data;
-
-extern int	g_exit_status;
 
 typedef enum e_token_type
 {
@@ -148,18 +136,37 @@ typedef struct s_ast
 	} ast;
 }				t_ast;
 
-typedef struct s_minishell
+// typedef struct s_minishell
+// {
+// 	t_token			*tokens;
+// 	char			**cmds;
+// 	size_t	pos;
+// 	int				exit_status;
+// 	bool			early_error;
+// 	bool			error;
+// 	t_ast			*ast;
+// 	t_cmd			*cmd_lst;
+// 	size_t			escaped;
+// }				t_minishell;
+
+typedef struct s_data
 {
-	t_token			*tokens;
-	char			**cmds;
-	unsigned int	pos;
-	int				exit_status;
-	bool			early_error;
-	bool			error;
-	t_ast			*ast;
-	t_cmd			*cmd_lst;
-	size_t			escaped;
-}				t_minishell;
+	t_cmd	*cmds;
+	int		exit_code;
+	char	**path;
+	char	**env;
+	char	**args;
+	t_env	*env_list;
+	char	*input;
+	char	*prompt;
+	t_token	*tokens;
+	t_ast	*ast;
+	size_t	pos;
+	int		exit_status;
+	bool	early_error;
+	bool	error;
+	size_t	escaped;
+}	t_data;
 
 int		only_space(char *str);
 void	free_split(char **tab);
@@ -197,5 +204,17 @@ char	*replace_env_vars(char *str);
 
 void	free_ms_ctx(void);
 void	free_token_array(void);
+char	**split_on_whitespace(char *line);
+void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void	append_token(unsigned int *cap, unsigned int *c, char *new_tok);
+bool	handle_operator(unsigned int *cap, unsigned int *count,
+		char *line, unsigned int *i);
+bool	handle_word(unsigned int *cap, unsigned int *count,
+		char *line, unsigned int *i);
+bool	handle_quote(unsigned int *cap, unsigned int *count,
+		char *line, unsigned int *i);
+char	*extract_word(const char *line, unsigned int *i);
+char	*extract_operator(const char *line, unsigned int *i);
+char	*collect_quoted(const char *str, char quote, bool *unclosed);
 
 #endif

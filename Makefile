@@ -6,7 +6,7 @@
 #    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/10 10:58:19 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/10 12:24:27 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ FILES		= main.c utils.c free.c path.c error.c \
 			singleton.c parsing.c exec.c \
 			builtins.c env.c builtins_func.c \
 			export_builtins.c lst_utils.c free_utils.c \
-			prompt.c signal.c ls_builtins.c expand.c
+			prompt.c signal.c ls_builtins.c expand.c pratt_parsing.c \
+			pratt_handler.c extract_data.c
 SRC_DIR		= srcs
 SRCS		= $(addprefix $(SRC_DIR)/, $(FILES))
 OBJDIR		= .obj

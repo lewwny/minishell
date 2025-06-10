@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 08:40:27 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 12:11:55 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 12:17:55 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	void	*new_ptr;
+
+	if (new_size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (ptr)
+	{
+		if (old_size < new_size)
+			ft_memcpy(new_ptr, ptr, old_size);
+		else
+			ft_memcpy(new_ptr, ptr, new_size);
+		free(ptr);
+	}
+	return (new_ptr);
+}
 
 void	print_tab(char **tab)
 {
