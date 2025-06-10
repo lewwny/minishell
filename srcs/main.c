@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 14:45:51 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:04:43 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	main_helper(void)
 	_data()->prompt = NULL;
 	free_split(_data()->env);
 	_data()->env = env_to_array(_data()->env_list);
+	if (!_data()->env)
+		malloc_error();
 	ft_cmdclear(&_data()->cmds);
 	free_split(_data()->path);
 	_data()->path = NULL;

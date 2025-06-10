@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:49:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:41:15 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:26:04 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,21 @@ static char	*env_entry_to_str(t_env *env)
 	return (entry);
 }
 
+static char	*free_array(char **res, int j, char *tmp)
+{
+	int	i;
+
+	if (!tmp)
+	{
+		i = 0;
+		while (i < j)
+			free(res[i++]);
+		free(res);
+		return (NULL);
+	}
+	return (tmp);
+}
+
 char	**env_to_array(t_env *env)
 {
 	char	**array;
@@ -116,8 +131,8 @@ char	**env_to_array(t_env *env)
 		if (env->key && env->value)
 		{
 			entry = env_entry_to_str(env);
-			if (!entry)
-				return (NULL);
+			if (!free_array(array, i, entry))
+				malloc_error();
 			array[i++] = entry;
 		}
 		env = env->next;
