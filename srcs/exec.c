@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 18:01:29 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:37:36 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 		dup2(out_fd, 1);
 		close(out_fd);
 	}
+	if (!data->is_last)
+		close(_data()->fd[0]);
 	get_cmd(cmd->args[0]);
 	if (is_builtin(cmd->args[0]))
 	{
@@ -68,27 +70,24 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 		execve(data->cmds->cmd_path, cmd->args, data->env);
 	perror(cmd->args[0]);
 	ultimate_free_func();
-
 	exit(127);
 }
 
 void	exec_cmds(t_cmd *cmd)
 {
-	int		fd[2];
 	int		in_fd;
 	t_cmd	*cur;
 	int		status;
-	int		is_last;
 
 	in_fd = 0;
 	cur = cmd;
 	status = 0;
 	while (cur)
 	{
-		is_last = (cur->next == NULL);
-		if (!is_last)
-			pipe(fd);
-		exec_single_cmd(cur, &in_fd, fd, is_last);
+		_data()->is_last = (cur->next == NULL);
+		if (!_data()->is_last)
+			pipe(_data()->fd);
+		exec_single_cmd(cur, &in_fd, _data()->fd, _data()->is_last);
 		if (is_builtin(cur->args[0]) && !cur->next)
 			break ;
 		cur = cur->next;

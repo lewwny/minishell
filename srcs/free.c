@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 17:14:54 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:38:18 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static void	free_data_lists(void)
 
 void	ultimate_free_func(void)
 {
-	// free_token_array();
 	free_data_members();
 	free_data_lists();
 }
