@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 11:01:17 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/10 15:08:03 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:46:08 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ char	*replace_env_vars(char *str)
 		malloc_error();
 	result = process_env_var(result, &str);
 	result = ft_strjoin_free(result, str, 1, 0);
+	if (!result)
+		malloc_error();
 	return (result);
 }

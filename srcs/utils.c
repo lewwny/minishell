@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 08:40:27 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 12:11:55 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:40:17 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_cmd	*ft_cmdnew(char **content)
 
 	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
+		malloc_error();
 	cmd->cmd_path = NULL;
 	cmd->args = content;
 	cmd->next = NULL;

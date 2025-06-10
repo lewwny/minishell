@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:22:10 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:45:33 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	get_cmd(char *cmd)
 	if (access(cmd, F_OK) == 0)
 	{
 		data->cmds->cmd_path = ft_strdup(cmd);
+		if (!data->cmds->cmd_path)
+			malloc_error();
 		return ;
 	}
 	i = 0;
@@ -32,6 +34,8 @@ void	get_cmd(char *cmd)
 	while (data->path[i])
 	{
 		data->cmds->cmd_path = ft_strjoin(data->path[i], cmd);
+		if (!data->cmds->cmd_path)
+			malloc_error();
 		if (access(data->cmds->cmd_path, F_OK) == 0)
 			return ;
 		free(data->cmds->cmd_path);

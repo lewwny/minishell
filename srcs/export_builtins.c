@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:20:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 09:36:47 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:43:22 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,16 @@
 static char	*get_key(char *arg)
 {
 	char	*eq;
+	char	*tmp;
 
 	eq = ft_strchr(arg, '=');
 	if (!eq)
-		return (ft_strdup(arg));
+	{
+		tmp = ft_strdup(arg);
+		if (!tmp)
+			malloc_error();
+		return (tmp);
+	}
 	return (ft_substr(arg, 0, eq - arg));
 }
 
@@ -47,6 +53,8 @@ static void	edit_value(char *key, char *value)
 		{
 			free(env->value);
 			env->value = ft_strdup(value);
+			if (!env->value)
+				malloc_error();
 			return ;
 		}
 		env = env->next;
@@ -68,8 +76,21 @@ static void	export_update_env(char *key, char *value)
 		if (!new_node)
 			malloc_error();
 		new_node->key = ft_strdup(key);
+		if (!new_node->key)
+		{
+			free(new_node);
+			malloc_error();
+		}
 		if (value)
+		{
 			new_node->value = ft_strdup(value);
+			if (!new_node->value)
+			{
+				free(new_node->key);
+				free(new_node);
+				malloc_error();
+			}
+		}
 		else
 			new_node->value = NULL;
 		new_node->next = NULL;

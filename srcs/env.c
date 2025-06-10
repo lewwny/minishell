@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:49:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 18:23:42 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:41:15 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,23 @@ static t_env	*create_env_node(char *env)
 	if (!new_node)
 		malloc_error();
 	new_node->key = ft_strdup(kv[0]);
+	if (!new_node->key)
+	{
+		free(new_node);
+		free_split(kv);
+		malloc_error();
+	}
 	if (kv[1])
+	{
 		new_node->value = ft_strdup(kv[1]);
+		if (!new_node->value)
+		{
+			free(new_node->key);
+			free(new_node);
+			free_split(kv);
+			malloc_error();
+		}
+	}
 	else
 		new_node->value = NULL;
 	new_node->next = NULL;
@@ -77,7 +92,7 @@ static char	*env_entry_to_str(t_env *env)
 
 	entry = malloc(ft_strlen(env->key) + ft_strlen(env->value) + 2);
 	if (!entry)
-		return (NULL);
+		malloc_error();
 	ft_strcpy(entry, env->key);
 	ft_strcat(entry, "=");
 	ft_strcat(entry, env->value);
@@ -95,7 +110,7 @@ char	**env_to_array(t_env *env)
 	size = env_list_size_with_value(env);
 	array = malloc(sizeof(char *) * (size + 1));
 	if (!array)
-		return (NULL);
+		malloc_error();
 	while (env)
 	{
 		if (env->key && env->value)
