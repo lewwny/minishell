@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 12:22:15 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:16:36 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,13 @@
 # define COLOR_GREEN "\001\033[0;32m\002"
 # define COLOR_RESET "\001\033[0m\002"
 
-typedef enum e_redir_type
-{
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	REDIR_HEREDOC
-}	t_redir_type;
-
-typedef struct s_redir
-{
-	t_redir_type	type;
-	char			*file;
-	struct s_redir	*next;
-}	t_redir;
-
-typedef struct s_cmd
-{
-	char			**args;
-	char			*cmd_path;
-	t_redir			*redir;
-	struct s_cmd	*next;
-}	t_cmd;
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
+// typedef enum e_redir_type
+// {
+// 	REDIR_IN,
+// 	REDIR_OUT,
+// 	REDIR_APPEND,
+// 	REDIR_HEREDOC
+// }	t_redir_type;
 
 typedef enum e_token_type
 {
@@ -81,8 +58,36 @@ typedef enum e_token_type
 	TK_BACKGROUND,
 	TK_HERESTRING,
 	TK_EOF,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HEREDOC,
 	TK_ERROR
 }				t_token_type;
+
+typedef struct s_redir
+{
+	t_token_type	type;
+	char			*target;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_cmd
+{
+	char			**args;
+	char			*cmd_path;
+	t_redir			*redirs;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+
 
 typedef enum e_ast_type
 {
@@ -213,8 +218,30 @@ bool	handle_word(unsigned int *cap, unsigned int *count,
 		char *line, unsigned int *i);
 bool	handle_quote(unsigned int *cap, unsigned int *count,
 		char *line, unsigned int *i);
+void	print_token_array(t_token *tokens);
 char	*extract_word(const char *line, unsigned int *i);
 char	*extract_operator(const char *line, unsigned int *i);
 char	*collect_quoted(const char *str, char quote, bool *unclosed);
+void	finalize_token_array(t_token **tokens, unsigned int *count,
+		unsigned int *cap);
+void	assign_token_type_and_bp(const char *word, t_token *token);
+void	add_token(t_token **arr, unsigned int *count,
+		unsigned int *cap, t_token newtok);
+void	set_token_fields(t_token *token, t_token_type type, char *text,
+		int bp[2]);
+void	free_ast(t_ast *ast);
+void	free_token_array(void);
+void	free_cmdlst(t_cmd *cmd);
+t_token	*tokenize_to_pratt(char **args);
+t_token	*advance_token(void);
+t_token	*peek_token(void);
+t_ast	*parse_prefix(t_token *tok);
+t_ast	*parse_infix(t_ast *left, t_token *op);
+t_ast	*parse_expression(int min_bp);
+void	parser_error_at(t_token *tok, char *msg, char *tk_text);
+char	**alloc_args(size_t cap);
+char	*dup_arg(char *text);
+char	**grow_args(char **args, size_t old_cnt, size_t *cap);
+t_cmd	*ast_to_cmd(t_ast *root);
 
 #endif

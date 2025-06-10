@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 12:07:17 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:45:29 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	**split_on_whitespace(char *line)
 	ft_bzero(minishell->args, sizeof(char *) * cap);
 	if (!split_on_whitespace_loop(line, &cap, &count))
 		return (NULL);
-	free(line);
 	minishell->args[count] = NULL;
 	return (minishell->args);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/09 19:35:49 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/10 16:58:58 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	free_data_lists(void)
 	}
 	if (_data()->cmds)
 	{
-		ft_cmdclear(&_data()->cmds);
+		free_cmdlst(_data()->cmds);
 		_data()->cmds = NULL;
 	}
 	if (_data()->prompt)
@@ -78,6 +78,7 @@ static void	free_data_lists(void)
 
 void	ultimate_free_func(void)
 {
+	// free_token_array();
 	free_data_members();
 	free_data_lists();
 }

@@ -6,26 +6,28 @@
 #    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/10 12:24:27 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/10 16:02:03 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -g
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
 BLUE   		= \033[0;34m
 YELLOW		= \033[1;33m
 
-FILES		= main.c utils.c free.c path.c error.c \
-			singleton.c parsing.c exec.c \
-			builtins.c env.c builtins_func.c \
-			export_builtins.c lst_utils.c free_utils.c \
-			prompt.c signal.c ls_builtins.c expand.c pratt_parsing.c \
-			pratt_handler.c extract_data.c
+FILES		= main.c utils.c free.c path.c error.c						\
+			singleton.c parsing.c exec.c								\
+			builtins.c env.c builtins_func.c							\
+			export_builtins.c lst_utils.c free_utils.c					\
+			prompt.c signal.c ls_builtins.c expand.c pratt_parsing.c	\
+			pratt_handler.c extract_data.c debug.c tokenizer.c			\
+			tokenizer2.c parse_expr.c parse_prefix.c parse_infix.c		\
+			parse_utils.c ast_to_cmd.c
 SRC_DIR		= srcs
 SRCS		= $(addprefix $(SRC_DIR)/, $(FILES))
 OBJDIR		= .obj
