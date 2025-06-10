@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 16:04:43 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:15:32 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,25 @@ void	main_help(char **envp)
 
 static void	main_helper(void)
 {
-	free(_data()->input);
-	_data()->input = NULL;
-	free(_data()->prompt);
-	_data()->prompt = NULL;
-	free_split(_data()->env);
-	_data()->env = env_to_array(_data()->env_list);
-	if (!_data()->env)
-		malloc_error();
-	ft_cmdclear(&_data()->cmds);
-	free_split(_data()->path);
-	_data()->path = NULL;
+	t_data	*data;
+
+	data = _data();
+	free(data->input);
+	data->input = NULL;
+	free(data->prompt);
+	data->prompt = NULL;
+	free_split(data->env);
+	data->env = env_to_array(data->env_list);
+	// free_cmdlst(data->cmds);
+	// ft_cmdclear(&data->cmds);
+	free_split(data->path);
+	data->path = NULL;
 	get_path();
+	// free_token_array();
+	data->error = false;
+	data->early_error = false;
+	data->pos = 0;
+	data->escaped = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

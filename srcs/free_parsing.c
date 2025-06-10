@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   free_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 20:59:01 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/10 11:15:34 by macauchy         ###   ########.fr       */
+/*   Created: 2025/06/10 10:48:33 by macauchy          #+#    #+#             */
+/*   Updated: 2025/06/10 10:49:50 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_strmapi(char const *s, char (*f)(size_t, char))
+void	free_ms_ctx(void)
 {
-	size_t	i;
-	size_t			size;
-	char			*res;
+	t_minishell	*ms;
 
-	if (!s)
-		return (NULL);
-	size = ft_strlen(s);
+	ms = _minishell();
+	free_token_array();
+	ms->error = false;
+	ms->early_error = false;
+	ms->pos = 0;
+	ms->escaped = 0;
+}
+
+void	free_token_array(void)
+{
+	t_minishell	*ms;
+	size_t		i;
+
+	ms = _minishell();
 	i = 0;
-	res = (char *) malloc(sizeof(char) * (size + 1));
-	if (!res)
-		return (NULL);
-	while (s[i])
+	if (!ms->tokens)
+		return ;
+	while (ms->tokens[i].text)
 	{
-		res[i] = f(i, s[i]);
+		free(ms->tokens[i].text);
 		i++;
 	}
-	res[i] = '\0';
-	return (res);
+	free(ms->tokens);
 }

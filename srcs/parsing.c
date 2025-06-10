@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 10:10:56 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:25:49 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 
 void	parsing(char *input)
 {
-	char	**args;
-	char	*temp;
-	t_cmd	*cmd;
 	int		i;
 
 	i = 0;
-	args = ft_split(input, ' ');
-	if (!args)
-		malloc_error();
-	while (args[i])
+	_data()->args = split_on_whitespace(input);
+	if (!_data()->args)
 	{
-		if (ft_strchr(args[i], '$'))
-		{
-			temp = replace_env_vars(args[i]);
-			free(args[i]);
-			args[i] = temp;
-		}
+		return ;
+	}
+	while (_data()->args[i])
+	{
+		if (ft_strchr(_data()->args[i], '$'))
+			_data()->args[i] = replace_env_vars(_data()->args[i]);
 		i++;
 	}
-	cmd = ft_cmdnew(args);
-	if (!cmd)
-		malloc_error();
-	_data()->cmds = cmd;
+	_data()->tokens = tokenize_to_pratt(_data()->args);
+	_data()->ast = parse_expression(0);
+	// free_token_array();
+	_data()->cmds = ast_to_cmd(_data()->ast);
+	free_ast(_data()->ast);
+	free_split(_data()->args);
+	free_token_array();
 }

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 21:18:17 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/03 18:17:46 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 11:15:34 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_strcpycat(char *dest, const char *src, unsigned int *j)
+static void	ft_strcpycat(char *dest, const char *src, size_t *j)
 {
-	unsigned int	i;
+	size_t	i;
 
 	i = 0;
 	if (src)
@@ -29,7 +29,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int				size_s1;
 	int				size_s2;
 	char			*res;
-	unsigned int	j;
+	size_t	j;
 
 	size_s1 = ft_strlen(s1);
 	size_s2 = ft_strlen(s2);

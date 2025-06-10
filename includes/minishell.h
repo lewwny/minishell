@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:07:50 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:07:29 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,49 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/ioctl.h>
+# include <stdbool.h>
+# include <unistd.h>
 
 # define COLOR_GREEN "\001\033[0;32m\002"
 # define COLOR_RESET "\001\033[0m\002"
 
-typedef enum e_redir_type
+// typedef enum e_redir_type
+// {
+// 	REDIR_IN,
+// 	REDIR_OUT,
+// 	REDIR_APPEND,
+// 	REDIR_HEREDOC
+// }	t_redir_type;
+
+typedef enum e_token_type
 {
+	TK_WORD,
+	TK_PIPE,
+	TK_REDIR_IN,
+	TK_REDIR_OUT,
+	TK_APPEND,
+	TK_HEREDOC,
+	TK_LPAREN,
+	TK_RPAREN,
+	TK_SEMICOLON,
+	TK_AND,
+	TK_OR,
+	TK_DUP_IN,
+	TK_DUP_OUT,
+	TK_BACKGROUND,
+	TK_HERESTRING,
+	TK_EOF,
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_APPEND,
-	REDIR_HEREDOC
-}	t_redir_type;
+	REDIR_HEREDOC,
+	TK_ERROR
+}				t_token_type;
 
 typedef struct s_redir
 {
-	t_redir_type	type;
-	char			*file;
+	t_token_type	type;
+	char			*target;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -49,7 +76,7 @@ typedef struct s_cmd
 {
 	char			**args;
 	char			*cmd_path;
-	t_redir			*redir;
+	t_redir			*redirs;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -60,15 +87,90 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+
+
+typedef enum e_ast_type
+{
+	AST_CMD,
+	AST_PIPE,
+	AST_REDIR,
+	AST_SEQ,
+	AST_BG,
+	AST_AND,
+	AST_OR,
+	AST_SUBSHELL
+}				t_ast_type;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*text;
+	int				left_bp;
+	int				right_bp;
+}				t_token;
+
+typedef struct s_ast
+{
+	t_ast_type	type;
+	union u_ast
+	{
+		struct s_ast_cmd
+		{
+			char		**args;
+		} cmd;
+		struct s_ast_pipe
+		{
+			struct s_ast	*left;
+			struct s_ast	*right;
+		} pipe;
+		struct s_ast_redir
+		{
+			t_token_type	type;
+			char			*target;
+			struct s_ast	*child;
+		} redir;
+		struct s_ast_subshell
+		{
+			struct s_ast	*sub;
+		} subshell;
+		struct s_ast_logical
+		{
+			struct s_ast	*left;
+			struct s_ast	*right;
+		} logical;
+	} ast;
+}				t_ast;
+
+// typedef struct s_minishell
+// {
+// 	t_token			*tokens;
+// 	char			**cmds;
+// 	size_t	pos;
+// 	int				exit_status;
+// 	bool			early_error;
+// 	bool			error;
+// 	t_ast			*ast;
+// 	t_cmd			*cmd_lst;
+// 	size_t			escaped;
+// }				t_minishell;
+
 typedef struct s_data
 {
 	t_cmd	*cmds;
 	int		exit_code;
 	char	**path;
 	char	**env;
+	char	**args;
 	t_env	*env_list;
 	char	*input;
 	char	*prompt;
+	t_token	*tokens;
+	t_ast	*ast;
+	size_t	pos;
+	int		exit_status;
+	bool	early_error;
+	bool	error;
+	size_t	escaped;
 }	t_data;
 
 int		only_space(char *str);
@@ -110,5 +212,44 @@ void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last);
 void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data);
 void	get_cmd(char *cmd);
 char	*get_env_value(const char *key);
+
+// Parsing functions
+
+void	free_ms_ctx(void);
+void	free_token_array(void);
+char	**split_on_whitespace(char *line);
+void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void	append_token(unsigned int *cap, unsigned int *c, char *new_tok);
+bool	handle_operator(unsigned int *cap, unsigned int *count,
+		char *line, unsigned int *i);
+bool	handle_word(unsigned int *cap, unsigned int *count,
+		char *line, unsigned int *i);
+bool	handle_quote(unsigned int *cap, unsigned int *count,
+		char *line, unsigned int *i);
+void	print_token_array(t_token *tokens);
+char	*extract_word(const char *line, unsigned int *i);
+char	*extract_operator(const char *line, unsigned int *i);
+char	*collect_quoted(const char *str, char quote, bool *unclosed);
+void	finalize_token_array(t_token **tokens, unsigned int *count,
+		unsigned int *cap);
+void	assign_token_type_and_bp(const char *word, t_token *token);
+void	add_token(t_token **arr, unsigned int *count,
+		unsigned int *cap, t_token newtok);
+void	set_token_fields(t_token *token, t_token_type type, char *text,
+		int bp[2]);
+void	free_ast(t_ast *ast);
+void	free_token_array(void);
+void	free_cmdlst(t_cmd *cmd);
+t_token	*tokenize_to_pratt(char **args);
+t_token	*advance_token(void);
+t_token	*peek_token(void);
+t_ast	*parse_prefix(t_token *tok);
+t_ast	*parse_infix(t_ast *left, t_token *op);
+t_ast	*parse_expression(int min_bp);
+void	parser_error_at(t_token *tok, char *msg, char *tk_text);
+char	**alloc_args(size_t cap);
+char	*dup_arg(char *text);
+char	**grow_args(char **args, size_t old_cnt, size_t *cap);
+t_cmd	*ast_to_cmd(t_ast *root);
 
 #endif
