@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/09 19:31:27 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/10 10:55:23 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/ioctl.h>
+# include <stdbool.h>
+# include <unistd.h>
 
 # define COLOR_GREEN "\001\033[0;32m\002"
 # define COLOR_RESET "\001\033[0m\002"
@@ -73,6 +75,92 @@ typedef struct s_data
 
 extern int	g_exit_status;
 
+typedef enum e_token_type
+{
+	TK_WORD,
+	TK_PIPE,
+	TK_REDIR_IN,
+	TK_REDIR_OUT,
+	TK_APPEND,
+	TK_HEREDOC,
+	TK_LPAREN,
+	TK_RPAREN,
+	TK_SEMICOLON,
+	TK_AND,
+	TK_OR,
+	TK_DUP_IN,
+	TK_DUP_OUT,
+	TK_BACKGROUND,
+	TK_HERESTRING,
+	TK_EOF,
+	TK_ERROR
+}				t_token_type;
+
+typedef enum e_ast_type
+{
+	AST_CMD,
+	AST_PIPE,
+	AST_REDIR,
+	AST_SEQ,
+	AST_BG,
+	AST_AND,
+	AST_OR,
+	AST_SUBSHELL
+}				t_ast_type;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*text;
+	int				left_bp;
+	int				right_bp;
+}				t_token;
+
+typedef struct s_ast
+{
+	t_ast_type	type;
+	union u_ast
+	{
+		struct s_ast_cmd
+		{
+			char		**args;
+		} cmd;
+		struct s_ast_pipe
+		{
+			struct s_ast	*left;
+			struct s_ast	*right;
+		} pipe;
+		struct s_ast_redir
+		{
+			t_token_type	type;
+			char			*target;
+			struct s_ast	*child;
+		} redir;
+		struct s_ast_subshell
+		{
+			struct s_ast	*sub;
+		} subshell;
+		struct s_ast_logical
+		{
+			struct s_ast	*left;
+			struct s_ast	*right;
+		} logical;
+	} ast;
+}				t_ast;
+
+typedef struct s_minishell
+{
+	t_token			*tokens;
+	char			**cmds;
+	unsigned int	pos;
+	int				exit_status;
+	bool			early_error;
+	bool			error;
+	t_ast			*ast;
+	t_cmd			*cmd_lst;
+	size_t			escaped;
+}				t_minishell;
+
 int		only_space(char *str);
 void	free_split(char **tab);
 void	malloc_error(void);
@@ -104,5 +192,10 @@ char	*get_prompt(void);
 void	signal_handler(int sig);
 void	ls_builtin(t_cmd *cmd);
 char	*replace_env_vars(char *str);
+
+// Parsing functions
+
+void	free_ms_ctx(void);
+void	free_token_array(void);
 
 #endif
