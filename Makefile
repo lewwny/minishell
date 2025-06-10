@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+         #
+#    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/09 16:41:52 by lenygarcia       ###   ########.fr        #
+#    Updated: 2025/06/10 15:09:11 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS   	 	= srcs/main.c srcs/utils.c srcs/free.c srcs/path.c srcs/error.c \
 			srcs/singleton.c srcs/parsing.c srcs/exec.c \
 			srcs/builtins.c srcs/env.c srcs/builtins_func.c \
 			srcs/export_builtins.c srcs/lst_utils.c srcs/free_utils.c \
-			srcs/prompt.c srcs/signal.c srcs/ls_builtins.c srcs/expand.c
+			srcs/prompt.c srcs/signal.c srcs/ls_builtins.c srcs/expand.c \
+			srcs/exec_utils.c srcs/env_utils.c
 OBJDIR		= obj
 OBJS  		= $(SRCS:srcs/%.c=$(OBJDIR)/%.o)
 NAME  		= minishell

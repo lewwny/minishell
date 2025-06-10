@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 10:10:56 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/10 15:07:23 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/10 15:07:38 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	parsing(char *input)
+char	*get_env_value(const char *key)
 {
-	char	**args;
-	char	*temp;
-	t_cmd	*cmd;
-	int		i;
+	t_env	*env;
+	char	*value;
 
-	i = 0;
-	args = ft_split(input, ' ');
-	if (!args)
-		malloc_error();
-	while (args[i])
+	env = _data()->env_list;
+	while (env)
 	{
-		if (ft_strchr(args[i], '$'))
+		if (ft_strcmp(env->key, key) == 0)
 		{
-			temp = replace_env_vars(args[i]);
-			free(args[i]);
-			args[i] = temp;
+			value = ft_strdup(env->value);
+			if (!value)
+				malloc_error();
+			return (value);
 		}
-		i++;
+		env = env->next;
 	}
-	cmd = ft_cmdnew(args);
-	if (!cmd)
-		malloc_error();
-	_data()->cmds = cmd;
+	return (NULL);
 }

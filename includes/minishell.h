@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/09 19:31:27 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/10 15:07:50 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ typedef struct s_data
 	char	*prompt;
 }	t_data;
 
-extern int	g_exit_status;
-
 int		only_space(char *str);
 void	free_split(char **tab);
 void	malloc_error(void);
@@ -104,5 +102,13 @@ char	*get_prompt(void);
 void	signal_handler(int sig);
 void	ls_builtin(t_cmd *cmd);
 char	*replace_env_vars(char *str);
+void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last);
+void	cleanup_fds(int *in_fd, int *fd, int is_last);
+void	free_cmd_path(void);
+void	wait_for_children(int *status);
+void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last);
+void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data);
+void	get_cmd(char *cmd);
+char	*get_env_value(const char *key);
 
 #endif

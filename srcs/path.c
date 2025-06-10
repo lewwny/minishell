@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:24:29 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/03 18:18:26 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:08:55 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	put_slash(char **path)
 	}
 }
 
-static char	*get_env_value(t_env *env, const char *key)
+static char	*get_enve_value(t_env *env, const char *key)
 {
 	while (env)
 	{
@@ -46,7 +46,7 @@ void	get_path(void)
 	char	*path_value;
 
 	data = _data();
-	path_value = get_env_value(data->env_list, "PATH");
+	path_value = get_enve_value(data->env_list, "PATH");
 	if (path_value)
 	{
 		data->path = ft_split(path_value, ':');

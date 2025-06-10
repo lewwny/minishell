@@ -6,13 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 10:26:08 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:45:51 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	g_exit_status = 0;
 
 void	main_help(char **envp)
 {
