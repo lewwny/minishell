@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:45:33 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:01:29 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 		execve(data->cmds->cmd_path, cmd->args, data->env);
 	perror(cmd->args[0]);
 	ultimate_free_func();
+
 	exit(127);
 }
 

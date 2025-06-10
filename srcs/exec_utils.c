@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 17:27:29 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:57:59 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,7 @@ void	cleanup_fds(int *in_fd, int *fd, int is_last)
 		*in_fd = fd[0];
 	}
 	else
-	{
-		if (fd[0] != 0)
-			close(fd[0]);
 		*in_fd = 0;
-	}
 }
 
 void	free_cmd_path(void)
