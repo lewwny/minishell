@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 10:17:51 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:31:37 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	here_doc_manage(t_redir *redir)
 	close(p[0]);
 }
 
-static void	apply_redirs(t_redir *redirs)
+static int	apply_redirs(t_redir *redirs)
 {
 	int	fd;
 
@@ -81,7 +81,7 @@ static void	apply_redirs(t_redir *redirs)
 		{
 			fd = open(redirs->target, O_RDONLY);
 			if (fd < 0)
-				perror("open");
+				return (0);
 			dup2(fd, 0);
 			close(fd);
 		}
@@ -89,7 +89,7 @@ static void	apply_redirs(t_redir *redirs)
 		{
 			fd = open(redirs->target, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd < 0)
-				perror("open");
+				return (0);
 			dup2(fd, 1);
 			close(fd);
 		}
@@ -97,7 +97,7 @@ static void	apply_redirs(t_redir *redirs)
 		{
 			fd = open(redirs->target, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (fd < 0)
-				perror("open");
+				return (0);
 			dup2(fd, 1);
 			close(fd);
 		}
@@ -105,6 +105,7 @@ static void	apply_redirs(t_redir *redirs)
 			here_doc_manage(redirs);
 		redirs = redirs->next;
 	}
+	return (1);
 }
 
 void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
@@ -121,7 +122,12 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 	}
 	if (!data->is_last)
 		close(_data()->fd[0]);
-	apply_redirs(cmd->redirs);
+	if (!apply_redirs(cmd->redirs))
+	{
+		ultimate_free_func();
+		perror("minishell: redirection error");
+		exit(1);
+	}
 	get_cmd(cmd->args[0]);
 	if (is_builtin(cmd->args[0]))
 	{
