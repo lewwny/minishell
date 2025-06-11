@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:19:24 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 09:37:21 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:51:15 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	cd_builtin(void)
 	}
 	if (chdir(path) != 0)
 		perror("cd");
+	printf("Changed directory to: %s\n", path);
 }
 
 void	unset_builtin(void)

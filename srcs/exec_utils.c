@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 10:33:34 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:54:22 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ void	wait_for_children(int *status)
 void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
 {
 	get_cmd(cur->args[0]);
-	if (strcmp(cur->args[0], "exit") == 0 && !cur->next)
+	if ((ft_strcmp(cur->args[0], "exit") == 0
+		|| ft_strcmp(cur->args[0], "cd") == 0) && !cur->next)
 	{
 		free_cmd_path();
 		exec_builtins(cur);
+		return ;
 	}
 	handle_child_process(cur, *in_fd, fd, is_last);
 	cleanup_fds(in_fd, fd, is_last);
