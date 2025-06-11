@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+         #
+#    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/10 19:15:37 by lenygarcia       ###   ########.fr        #
+#    Updated: 2025/06/11 08:24:21 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -g -march=native
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
@@ -34,7 +34,6 @@ OBJDIR		= .obj
 OBJS  		= $(SRCS:srcs/%.c=$(OBJDIR)/%.o)
 NAME  		= minishell
 HEADER		= includes/minishell.h
-# INCLUDES	= -Iincludes -Ilibft/includes
 LIBFT_PATH	= ./libft
 LIBFT 		= $(LIBFT_PATH)/libft.a
 

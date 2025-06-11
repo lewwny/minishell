@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 17:15:32 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/11 08:31:40 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,9 @@ static void	main_helper(void)
 	data->prompt = NULL;
 	free_split(data->env);
 	data->env = env_to_array(data->env_list);
-	// free_cmdlst(data->cmds);
-	// ft_cmdclear(&data->cmds);
 	free_split(data->path);
 	data->path = NULL;
 	get_path();
-	// free_token_array();
 	data->error = false;
 	data->early_error = false;
 	data->pos = 0;

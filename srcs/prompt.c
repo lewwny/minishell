@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 09:07:39 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:45:16 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 08:37:06 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ static char	*get_prompt1(char *cwd)
 		dir++;
 	else
 		dir = cwd;
-	colored_dir = ft_strjoin(COLOR_GREEN, dir);
+	if (_data()->exit_code != 0)
+		colored_dir = ft_strjoin(COLOR_RED, dir);
+	else
+		colored_dir = ft_strjoin(COLOR_GREEN, dir);
 	if (!colored_dir)
 		malloc_error();
 	tmp = ft_strjoin(colored_dir, "\033[0m $ ");
@@ -45,6 +48,8 @@ static char	*get_prompt2(char *cwd)
 	char	*tmp;
 
 	colored_dir = ft_strjoin(COLOR_GREEN, cwd);
+	if (_data()->exit_code != 0)
+		colored_dir = ft_strjoin(COLOR_RED, cwd);
 	if (!colored_dir)
 		malloc_error();
 	tmp = ft_strjoin(colored_dir, "\033[0m $ ");
