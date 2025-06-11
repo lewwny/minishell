@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 11:31:37 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:34:15 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	get_cmd(char *cmd)
 	}
 	while (data->path[i])
 	{
+		if (data->cmds->cmd_path)
+			free(data->cmds->cmd_path);
 		data->cmds->cmd_path = ft_strjoin(data->path[i], cmd);
 		if (!data->cmds->cmd_path)
 			malloc_error();

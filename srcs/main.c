@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 08:31:40 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:35:38 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	main_helper(void)
 	data = _data();
 	free(data->input);
 	data->input = NULL;
+	free_cmdlst(data->cmds);
+	data->cmds = NULL;
 	free(data->prompt);
 	data->prompt = NULL;
 	free_split(data->env);
