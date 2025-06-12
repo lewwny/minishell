@@ -6,27 +6,21 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:01:44 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/11 18:46:51 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:24 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static t_ast	*prefix_word(t_token *tok)
+static char	**collect_args(t_token *tok)
 {
-	t_ast	*node;
-	size_t	cap = 4;
-	size_t	count = 0;
+	size_t	cap;
+	size_t	count;
 	char	**args;
 	t_token	*next_tok;
 
-	node = malloc(sizeof(t_ast));
-	if (!node)
-	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
-		exit(EXIT_FAILURE);
-	}
-	node->type = AST_CMD;
+	cap = 4;
+	count = 0;
 	args = alloc_args(cap);
 	args[count++] = dup_arg(tok->text);
 	while (peek_token()->type == TK_WORD)
@@ -37,27 +31,35 @@ static t_ast	*prefix_word(t_token *tok)
 		args[count++] = dup_arg(next_tok->text);
 	}
 	args[count] = NULL;
-	node->ast.cmd.args = args;
+	return (args);
+}
+
+static t_ast	*prefix_word(t_token *tok)
+{
+	t_ast	*node;
+
+	node = malloc(sizeof(t_ast));
+	if (!node)
+	{
+		dprintf(2, "Error: Memory allocation failed for AST node\n");
+		exit(EXIT_FAILURE);
+	}
+	node->type = AST_CMD;
+	node->ast.cmd.args = collect_args(tok);
 	return (node);
 }
 
-static t_ast	*prefix_redir(t_token *tok)
+static t_ast	*create_redir_node(t_token *tok, t_token *file_tok, t_ast *cmd)
 {
-	t_token	*file_tok;
-	t_ast	*cmd;
 	t_ast	*node;
 
-	file_tok = advance_token();
-	if (!file_tok || file_tok->type != TK_WORD)
-	{
-		parser_error_at(tok, "Expected file name after redirection", tok->text);
-		// free_split(_data()->args);
-		return (NULL);
-	}
-	cmd = parse_expression(0);
-	if (!cmd)
-		return (NULL);
 	node = malloc(sizeof(t_ast));
+	if (!node)
+	{
+		dprintf(2, "Error: Memory allocation failed for AST node\n");
+		free_ast(cmd);
+		exit(EXIT_FAILURE);
+	}
 	node->type = AST_REDIR;
 	node->ast.redir.type = tok->type;
 	node->ast.redir.target = ft_strdup(file_tok->text);
@@ -70,6 +72,23 @@ static t_ast	*prefix_redir(t_token *tok)
 	}
 	node->ast.redir.child = cmd;
 	return (node);
+}
+
+static t_ast	*prefix_redir(t_token *tok)
+{
+	t_token	*file_tok;
+	t_ast	*cmd;
+
+	file_tok = advance_token();
+	if (!file_tok || file_tok->type != TK_WORD)
+	{
+		parser_error_at(tok, "Expected file name after redirection", tok->text);
+		return (NULL);
+	}
+	cmd = parse_expression(0);
+	if (!cmd)
+		return (NULL);
+	return (create_redir_node(tok, file_tok, cmd));
 }
 
 t_ast	*parse_prefix(t_token *tok)

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 18:54:22 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:25 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last)
 	}
 	else if (pid < 0)
 		perror("fork");
+	_data()->pid = pid;
 }
 
 void	cleanup_fds(int *in_fd, int *fd, int is_last)
@@ -52,19 +53,20 @@ void	free_cmd_path(void)
 
 void	wait_for_children(int *status)
 {
-	while (wait(status) > 0)
+	waitpid(_data()->pid, status, 0);
+	while (wait(NULL) > 0)
 		;
-	if (WIFEXITED(*status))
+	if (_data()->pid)
 		_data()->exit_code = WEXITSTATUS(*status);
-	else
-		_data()->exit_code = 1;
 }
 
 void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
 {
 	get_cmd(cur->args[0]);
 	if ((ft_strcmp(cur->args[0], "exit") == 0
-		|| ft_strcmp(cur->args[0], "cd") == 0) && !cur->next)
+			|| ft_strcmp(cur->args[0], "cd") == 0
+			|| ft_strcmp(cur->args[0], "unset") == 0
+			|| ft_strcmp(cur->args[0], "export") == 0) && !cur->next)
 	{
 		free_cmd_path();
 		exec_builtins(cur);

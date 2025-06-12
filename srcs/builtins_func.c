@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:19:24 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 18:51:15 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:20:24 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	cd_builtin(void)
 		path = getenv("HOME");
 		if (!path)
 		{
-			fprintf(stderr, "cd: HOME not set\n");
+			ft_dprintf(2, "cd: HOME not set\n");
+			_data()->exit_code = 1;
 			return ;
 		}
 	}
@@ -53,8 +54,10 @@ void	cd_builtin(void)
 		path = _data()->cmds->args[1];
 	}
 	if (chdir(path) != 0)
+	{
 		perror("cd");
-	printf("Changed directory to: %s\n", path);
+		_data()->exit_code = 1;
+	}
 }
 
 void	unset_builtin(void)

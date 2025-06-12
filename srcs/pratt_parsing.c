@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 19:15:21 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/12 17:12:58 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ char	**split_on_whitespace(char *line)
 	count = 0;
 	minishell = _data();
 	minishell->args = malloc(sizeof(char *) * (cap));
+	minishell->ctx = malloc(sizeof(t_ctx) * (cap));
+	ft_bzero(minishell->ctx, sizeof(t_ctx) * (cap));
+	if (!minishell->ctx)
+	{
+		free(minishell->args);
+		malloc_error();
+	}
 	if (!minishell->args)
 		malloc_error();
 	ft_bzero(minishell->args, sizeof(char *) * cap);
@@ -75,5 +82,6 @@ char	**split_on_whitespace(char *line)
 		return (NULL);
 	}
 	minishell->args[count] = NULL;
+	minishell->ctx[count].arg = NULL;
 	return (minishell->args);
 }

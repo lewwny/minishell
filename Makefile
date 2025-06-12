@@ -6,14 +6,14 @@
 #    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/11 08:24:21 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/12 17:06:50 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -Werror -g -march=native
+CFLAGS		= -Wall -Wextra -Werror -g3 -march=native
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
@@ -25,9 +25,10 @@ FILES		= main.c utils.c free.c path.c error.c						\
 			builtins.c env.c builtins_func.c							\
 			export_builtins.c lst_utils.c free_utils.c					\
 			prompt.c signal.c ls_builtins.c expand.c pratt_parsing.c	\
-			pratt_handler.c extract_data.c debug.c tokenizer.c			\
+			pratt_handler.c extract_data.c tokenizer.c					\
 			tokenizer2.c parse_expr.c parse_prefix.c parse_infix.c		\
-			parse_utils.c ast_to_cmd.c exec_utils.c env_utils.c
+			parse_utils.c ast_to_cmd.c exec_utils.c env_utils.c \
+			create_env_node.c export_utils.c
 SRC_DIR		= srcs
 SRCS		= $(addprefix $(SRC_DIR)/, $(FILES))
 OBJDIR		= .obj

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   extract_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:19:39 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 12:21:56 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:10:30 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static unsigned int	copy_quoted_content(const char *str, char quote, \
-		unsigned int end, char *buff)
+static unsigned int	copy_quoted_content(const char *str, char quote,
+		unsigned int end, t_ctx *buff)
 {
 	unsigned int	j;
 	unsigned int	p;
@@ -22,16 +22,23 @@ static unsigned int	copy_quoted_content(const char *str, char quote, \
 	p = 0;
 	while (j < end)
 	{
-		if (str[j] == '\\' && quote == '"' && str[j + 1] && strchr("\"\\$`", str[j + 1]))
+		if (str[j] == '\\' && quote == '"' && str[j + 1]
+			&& ft_strchr("\"\\$`", str[j + 1]))
 		{
-			_data()->escaped++;
+			if (str[j + 1] == '$')
+				buff->is_escaped = true;
 			j++;
-			buff[p++] = str[j++];
+			buff->arg[p++] = str[j++];
+		}
+		else if (str[j] == '$' && quote == '\'')
+		{
+			buff->is_escaped = true;
+			buff->arg[p++] = str[j++];
 		}
 		else
-			buff[p++] = str[j++];
+			buff->arg[p++] = str[j++];
 	}
-	buff[p] = '\0';
+	buff->arg[p] = '\0';
 	return (p);
 }
 
@@ -50,20 +57,20 @@ static unsigned int	find_closing_quote(const char *str, char quote)
 	return (i);
 }
 
-char	*collect_quoted(const char *str, char quote, bool *unclosed)
+t_ctx	*collect_quoted(const char *str, char quote, bool *unclosed)
 {
 	unsigned int	end;
-	char			*buff;
+	t_ctx			*buff;
 
-	buff = NULL;
+	buff = (t_ctx *)malloc(sizeof(t_ctx));
 	end = find_closing_quote(str, quote);
 	if (str[end] != quote)
 	{
 		*unclosed = true;
 		return (NULL);
 	}
-	buff = (char *)malloc(end);
-	if (!buff)
+	buff->arg = (char *)malloc(end);
+	if (!buff->arg)
 	{
 		free_split(_data()->args);
 		return (NULL);

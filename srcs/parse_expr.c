@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_expr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:28:28 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 14:53:08 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:18:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,29 @@ t_token	*peek_token(void)
 
 void	parser_error_at(t_token *tok, char *msg, char *tk_text)
 {
+	(void)tok;
+	(void)msg;
+	(void)tk_text;
+	_data()->early_error = true;
+	_data()->error = true;
+	_data()->exit_code = 2;
 	if (tok->type == TK_ERROR)
 		return ;
-	dprintf(2, "Error: %s at token '%s' (type: %d)\n", msg, tk_text, tok->type);
-	_data()->early_error = true;
-	if (tok->type == TK_EOF)
-		_data()->error = true;
+	if (!msg)
+	{
+		if (tk_text)
+			ft_dprintf(STDERR_FILENO,
+				"minishell: %s: %s\n", tk_text, "syntax error");
+		else
+			ft_dprintf(STDERR_FILENO, "minishell: syntax error\n");
+	}
 	else
-		_data()->error = true;
+	{
+		if (tk_text)
+			ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", tk_text, msg);
+		else
+			ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", msg, tok->text);
+	}
 }
 
 t_ast	*parse_expression(int min_bp)
@@ -45,7 +60,7 @@ t_ast	*parse_expression(int min_bp)
 	t_token		*token;
 	t_ast		*left;
 	t_token		*op;
-	t_data	*minishell;
+	t_data		*minishell;
 
 	minishell = _data();
 	if (minishell->early_error || minishell->error)

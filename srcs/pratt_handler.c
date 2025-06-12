@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:12:47 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 12:17:32 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:05:53 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ void	append_token(unsigned int *cap, unsigned int *c, char *new_tok)
 			*cap *= 2;
 		m->args = ft_realloc(m->args, (sizeof(char *) * (*c)), \
 			sizeof(char *) * (*cap));
-		if (!m->args)
+		m->ctx = ft_realloc(m->ctx, (sizeof(t_ctx) * (*c)), \
+			sizeof(t_ctx) * (*cap));
+		if (!m->args || !m->ctx)
 		{
-			dprintf(2, "Error: Memory allocation failed\n");
+			ft_dprintf(2, "Error: Memory allocation failed\n");
 			exit(EXIT_FAILURE);
 		}
 	}
 	m->args[*c] = new_tok;
+	free(_data()->ctx[*c].arg);
+	_data()->ctx[*c].arg = ft_strdup(new_tok);
 	(*c)++;
 }
 
@@ -67,20 +71,22 @@ bool	handle_quote(unsigned int *cap, unsigned int *count,
 {
 	bool			unclosed;
 	char			quote;
-	char			*qstr;
+	t_ctx			*ctx;
 	unsigned int	skip_len;
 
 	unclosed = false;
 	quote = line[*i];
-	qstr = collect_quoted(line + *i, quote, &unclosed);
-	if (unclosed || !qstr)
+	ctx = collect_quoted(line + *i, quote, &unclosed);
+	if (unclosed || !ctx)
 	{
 		dprintf(2, "Error: Unclosed quote '%c'\n", quote);
 		_data()->early_error = true;
+		free(ctx);
 		return (false);
 	}
-	skip_len = ft_strlen(qstr) + 2;
-	append_token(cap, count, qstr);
+	skip_len = ft_strlen(ctx->arg) + 2;
+	append_token(cap, count, ctx->arg);
 	*i += skip_len + _data()->escaped;
+	free(ctx);
 	return (true);
 }

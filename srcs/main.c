@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 18:35:38 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:57:28 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	main_helper(void)
 	t_data	*data;
 
 	data = _data();
+	edit_env(_data()->env_list);
 	free(data->input);
 	data->input = NULL;
 	free_cmdlst(data->cmds);
@@ -42,6 +43,32 @@ static void	main_helper(void)
 	data->escaped = 0;
 }
 
+static int	main_loop(void)
+{
+	_data()->prompt = get_prompt();
+	_data()->input = readline(_data()->prompt);
+	_data()->exit_code = 0;
+	if (!_data()->input)
+	{
+		printf("exit\n");
+		return (0);
+	}
+	if (!only_space(_data()->input))
+		_data()->input[0] = '\0';
+	if (!*_data()->input)
+		return (1);
+	add_history(_data()->input);
+	parsing(_data()->input);
+	if (_data()->exit_code)
+	{
+		main_helper();
+		return (1);
+	}
+	exec_cmds(_data()->cmds);
+	main_helper();
+	return (1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)(argc);
@@ -49,21 +76,8 @@ int	main(int argc, char **argv, char **envp)
 	main_help(envp);
 	while (1)
 	{
-		_data()->prompt = get_prompt();
-		_data()->input = readline(_data()->prompt);
-		if (!_data()->input)
-		{
-			printf("exit\n");
+		if (!main_loop())
 			break ;
-		}
-		if (!only_space(_data()->input))
-			_data()->input[0] = '\0';
-		if (!*_data()->input)
-			continue ;
-		add_history(_data()->input);
-		parsing(_data()->input);
-		exec_cmds(_data()->cmds);
-		main_helper();
 	}
 	ultimate_free_func();
 	return (0);

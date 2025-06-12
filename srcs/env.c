@@ -6,50 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:49:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 16:26:04 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:43:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static t_env	*create_env_node(char *env)
-{
-	t_env	*new_node;
-	char	**kv;
-
-	kv = ft_split(env, '=');
-	if (!kv || !kv[0])
-	{
-		free_split(kv);
-		return (NULL);
-	}
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		malloc_error();
-	new_node->key = ft_strdup(kv[0]);
-	if (!new_node->key)
-	{
-		free(new_node);
-		free_split(kv);
-		malloc_error();
-	}
-	if (kv[1])
-	{
-		new_node->value = ft_strdup(kv[1]);
-		if (!new_node->value)
-		{
-			free(new_node->key);
-			free(new_node);
-			free_split(kv);
-			malloc_error();
-		}
-	}
-	else
-		new_node->value = NULL;
-	new_node->next = NULL;
-	free_split(kv);
-	return (new_node);
-}
 
 t_env	*env_fill(char **envp)
 {

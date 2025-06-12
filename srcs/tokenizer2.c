@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:51:17 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 14:22:11 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:25 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	finalize_token_array(t_token **tokens, unsigned int *count,
 		unsigned int *cap)
 {
 	t_token	tok;
-	
+
 	if (!_data()->error && !_data()->early_error)
 	{
 		set_token_fields(&tok, TK_EOF, NULL, (int []){0, 0});
@@ -99,7 +99,7 @@ void	assign_token_type_and_bp(const char *word, t_token *token)
 		while (ft_isdigit(word[idx]))
 			idx++;
 		assign_fd_token_type(word, token, idx);
-		return;
+		return ;
 	}
 	assign_simple_token_type(word, token);
 }

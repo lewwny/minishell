@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 10:17:16 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:06:39 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-
-
 typedef enum e_ast_type
 {
 	AST_CMD,
@@ -155,6 +153,12 @@ typedef struct s_ast
 // 	size_t			escaped;
 // }				t_minishell;
 
+typedef struct s_ctx
+{
+	char	*arg;
+	bool	is_escaped;
+}			t_ctx;
+
 typedef struct s_data
 {
 	t_cmd	*cmds;
@@ -162,6 +166,7 @@ typedef struct s_data
 	char	**path;
 	char	**env;
 	char	**args;
+	t_ctx	*ctx;
 	t_env	*env_list;
 	char	*input;
 	char	*prompt;
@@ -174,6 +179,8 @@ typedef struct s_data
 	size_t	escaped;
 	int		is_last;
 	int		fd[2];
+	pid_t	pid;
+	char	*old_pwd;
 }	t_data;
 
 int		only_space(char *str);
@@ -215,6 +222,9 @@ void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last);
 void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data);
 void	get_cmd(char *cmd);
 char	*get_env_value(const char *key);
+void	edit_env(t_env *env_list);
+t_env	*create_env_node(char *env);
+char	*get_key(char *arg);
 
 // Parsing functions
 
@@ -224,26 +234,26 @@ char	**split_on_whitespace(char *line);
 void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void	append_token(unsigned int *cap, unsigned int *c, char *new_tok);
 bool	handle_operator(unsigned int *cap, unsigned int *count,
-		char *line, unsigned int *i);
+			char *line, unsigned int *i);
 bool	handle_word(unsigned int *cap, unsigned int *count,
-		char *line, unsigned int *i);
+			char *line, unsigned int *i);
 bool	handle_quote(unsigned int *cap, unsigned int *count,
-		char *line, unsigned int *i);
+			char *line, unsigned int *i);
 void	print_token_array(t_token *tokens);
 char	*extract_word(const char *line, unsigned int *i);
 char	*extract_operator(const char *line, unsigned int *i);
-char	*collect_quoted(const char *str, char quote, bool *unclosed);
+t_ctx	*collect_quoted(const char *str, char quote, bool *unclosed);
 void	finalize_token_array(t_token **tokens, unsigned int *count,
-		unsigned int *cap);
+			unsigned int *cap);
 void	assign_token_type_and_bp(const char *word, t_token *token);
 void	add_token(t_token **arr, unsigned int *count,
-		unsigned int *cap, t_token newtok);
+			unsigned int *cap, t_token newtok);
 void	set_token_fields(t_token *token, t_token_type type, char *text,
-		int bp[2]);
+			int bp[2]);
 void	free_ast(t_ast *ast);
 void	free_token_array(void);
 void	free_cmdlst(t_cmd *cmd);
-t_token	*tokenize_to_pratt(char **args);
+t_token	*tokenize_to_pratt(t_ctx *args);
 t_token	*advance_token(void);
 t_token	*peek_token(void);
 t_ast	*parse_prefix(t_token *tok);

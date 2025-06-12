@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:08:36 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 16:14:17 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:38:16 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_token_array(void)
 {
-	t_data	*ms;
+	t_data		*ms;
 	size_t		i;
 
 	ms = _data();
@@ -63,7 +63,7 @@ char	**grow_args(char **args, size_t old_cnt, size_t *cap)
 		dprintf(2, "Error: Memory allocation failed for command args\n");
 		exit(EXIT_FAILURE);
 	}
-	return args;
+	return (args);
 }
 
 char	**alloc_args(size_t cap)

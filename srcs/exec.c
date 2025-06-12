@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 18:34:15 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:20:23 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	get_cmd(char *cmd)
 	int		i;
 
 	data = _data();
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 	{
 		data->cmds->cmd_path = ft_strdup(cmd);
 		if (!data->cmds->cmd_path)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbrhexmaj.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:49:00 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/10 11:15:34 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:24 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_putnbrhexmaj(int fd, int n)
 {
-	size_t		count;
-	size_t		nb;
+	size_t				count;
+	size_t				nb;
 	char				*hex;
 
 	hex = "0123456789ABCDEF";

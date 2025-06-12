@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 20:59:01 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/10 11:15:34 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:24 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strmapi(char const *s, char (*f)(size_t, char))
 {
-	size_t	i;
+	size_t			i;
 	size_t			size;
 	char			*res;
 

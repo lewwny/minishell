@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:35:19 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/10 11:15:34 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:57:09 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_puthex(int fd, unsigned long n)
 {
-	size_t		count;
+	size_t				count;
 	char				*hex;
 
 	hex = "0123456789abcdef";
@@ -31,7 +31,7 @@ static int	ft_puthex(int fd, unsigned long n)
 
 int	ft_putptr(int fd, void	*ptr)
 {
-	size_t	count;
+	size_t			count;
 	unsigned long	addr;
 
 	if (ptr == 0)

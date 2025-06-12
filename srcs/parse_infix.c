@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_infix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:45:42 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/10 15:38:01 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:38:18 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*get_redir_target(t_token *file_tok, t_token *op)
 {
-	char *target;
+	char	*target;
 
 	if (!file_tok || file_tok->type != TK_WORD)
 	{

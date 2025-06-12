@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:48:33 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/11 08:33:35 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:39:07 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_ms_ctx(void)
 
 void	free_token_array(void)
 {
-	t_data	*data;
+	t_data		*data;
 	size_t		i;
 
 	data = _data();
