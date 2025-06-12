@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 09:07:39 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/11 08:37:06 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 09:56:24 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static char	*get_prompt2(char *cwd)
 	free(colored_dir);
 	if (!tmp)
 		malloc_error();
-	free(tmp);
 	prompt = ft_strdup(tmp);
+	free(tmp);
 	if (!prompt)
 		malloc_error();
 	return (prompt);
