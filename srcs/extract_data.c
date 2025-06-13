@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:19:39 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/12 18:10:30 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:17:55 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static unsigned int	copy_quoted_content(const char *str, char quote,
 {
 	unsigned int	j;
 	unsigned int	p;
+	char			*temp;
 
 	j = 1;
 	p = 0;
@@ -25,6 +26,7 @@ static unsigned int	copy_quoted_content(const char *str, char quote,
 		if (str[j] == '\\' && quote == '"' && str[j + 1]
 			&& ft_strchr("\"\\$`", str[j + 1]))
 		{
+			_data()->escaped++;
 			if (str[j + 1] == '$')
 				buff->is_escaped = true;
 			j++;
@@ -32,6 +34,7 @@ static unsigned int	copy_quoted_content(const char *str, char quote,
 		}
 		else if (str[j] == '$' && quote == '\'')
 		{
+			_data()->escaped++;
 			buff->is_escaped = true;
 			buff->arg[p++] = str[j++];
 		}
@@ -39,6 +42,12 @@ static unsigned int	copy_quoted_content(const char *str, char quote,
 			buff->arg[p++] = str[j++];
 	}
 	buff->arg[p] = '\0';
+	if (!buff->is_escaped && ft_strchr(buff->arg, '$'))
+	{
+		temp = buff->arg;
+		buff->arg = replace_env_vars(temp);
+		free(temp);
+	}
 	return (p);
 }
 
@@ -49,7 +58,7 @@ static unsigned int	find_closing_quote(const char *str, char quote)
 	i = 1;
 	while (str[i] && str[i] != quote)
 	{
-		if (str[i] == '\\' && quote == '"' && str[i + 1] && str[i + 1] == '"')
+		if (str[i] == '\\' && quote == '"' && str[i + 1] && ft_strchr("\"\\$`", str[i + 1]))
 			i += 2;
 		else
 			i++;
@@ -63,6 +72,7 @@ t_ctx	*collect_quoted(const char *str, char quote, bool *unclosed)
 	t_ctx			*buff;
 
 	buff = (t_ctx *)malloc(sizeof(t_ctx));
+	ft_bzero(buff, sizeof(t_ctx));
 	end = find_closing_quote(str, quote);
 	if (str[end] != quote)
 	{

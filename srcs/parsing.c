@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/12 18:12:34 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:03:02 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	parsing(char *input)
 		if (ft_strchr(_data()->ctx[i].arg, '$')
 			&& _data()->ctx[i].is_escaped == false)
 		{
-			printf("Replacing env vars in: %s\n", _data()->ctx[i].arg);
 			temp = _data()->ctx[i].arg;
 			_data()->ctx[i].arg = replace_env_vars(temp);
 			free(temp);

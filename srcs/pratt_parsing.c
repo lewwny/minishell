@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/12 17:12:58 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:55:25 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ static bool	process_token(unsigned int *cap, unsigned int *count, char *line,
 static int	split_on_whitespace_loop(char *line, unsigned int *cap, unsigned int *count)
 {
 	unsigned int	i;
+	unsigned int	size;
 
 	i = 0;
+	size = ft_strlen(line);
 	while (line[i])
 	{
 		skip_whitespace(line, &i);
@@ -52,6 +54,8 @@ static int	split_on_whitespace_loop(char *line, unsigned int *cap, unsigned int 
 			break ;
 		if (!process_token(cap, count, line, &i))
 			return (0);
+		if (i >= size)
+			break ;
 	}
 	return (1);
 }

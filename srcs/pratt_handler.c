@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:12:47 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/12 18:05:53 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:53:25 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,34 @@ void	append_token(unsigned int *cap, unsigned int *c, char *new_tok)
 	m->args[*c] = new_tok;
 	free(_data()->ctx[*c].arg);
 	_data()->ctx[*c].arg = ft_strdup(new_tok);
+	(*c)++;
+}
+
+static void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok)
+{
+	t_data	*m;
+
+	m = _data();
+	if (*c + 1 >= *cap)
+	{
+		if (*cap == 0)
+			*cap = 8;
+		else
+			*cap *= 2;
+		m->args = ft_realloc(m->args, (sizeof(char *) * (*c)), \
+			sizeof(char *) * (*cap));
+		m->ctx = ft_realloc(m->ctx, (sizeof(t_ctx) * (*c)), \
+			sizeof(t_ctx) * (*cap));
+		if (!m->args || !m->ctx)
+		{
+			ft_dprintf(2, "Error: Memory allocation failed\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	m->args[*c] = new_tok->arg;
+	free(_data()->ctx[*c].arg);
+	_data()->ctx[*c].arg = ft_strdup(new_tok->arg);
+	_data()->ctx[*c].is_escaped = new_tok->is_escaped;
 	(*c)++;
 }
 
@@ -85,7 +113,7 @@ bool	handle_quote(unsigned int *cap, unsigned int *count,
 		return (false);
 	}
 	skip_len = ft_strlen(ctx->arg) + 2;
-	append_token(cap, count, ctx->arg);
+	append_t_ctx(cap, count, ctx);
 	*i += skip_len + _data()->escaped;
 	free(ctx);
 	return (true);
