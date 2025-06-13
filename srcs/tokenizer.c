@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:26:00 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/12 16:45:55 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:26:35 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ char	**get_args_from_ctx(t_ctx *ctx)
 	return (args);
 }
 
-//change char **args to t_ctx *ctx;
 t_token	*tokenize_to_pratt(t_ctx *args)
 {
 	unsigned int	cap;

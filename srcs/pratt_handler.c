@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:12:47 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/13 10:53:25 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:32:51 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,10 @@ void	append_token(unsigned int *cap, unsigned int *c, char *new_tok)
 		}
 	}
 	m->args[*c] = new_tok;
-	free(_data()->ctx[*c].arg);
-	_data()->ctx[*c].arg = ft_strdup(new_tok);
 	(*c)++;
 }
 
-static void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok)
+void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok)
 {
 	t_data	*m;
 
@@ -71,6 +69,7 @@ bool	handle_operator(unsigned int *cap, unsigned int *count,
 							char *line, unsigned int *i)
 {
 	char	*op_token;
+	t_ctx	*ctx;
 
 	op_token = extract_operator(line, i);
 	if (!op_token)
@@ -78,7 +77,15 @@ bool	handle_operator(unsigned int *cap, unsigned int *count,
 		dprintf(2, "Error: Memory allocation failed\n");
 		free_split(_data()->args);
 	}
-	append_token(cap, count, op_token);
+	ctx = malloc(sizeof(t_ctx));
+	if (!ctx)
+	{
+		free(op_token);
+		dprintf(2, "Error: Memory allocation failed for context\n");
+		return (false);
+	}
+	ctx->arg = op_token;
+	append_t_ctx(cap, count, ctx);
 	return (true);
 }
 
@@ -86,11 +93,14 @@ bool	handle_word(unsigned int *cap, unsigned int *count,
 						char *line, unsigned int *i)
 {
 	char	*token;
+	t_ctx	*ctx;
 
 	token = extract_word(line, i);
+	ctx = malloc(sizeof(t_ctx));
+	ctx->arg = token;
 	if (!token)
 		return (false);
-	append_token(cap, count, token);
+	append_t_ctx(cap, count, ctx);
 	return (true);
 }
 
@@ -104,6 +114,7 @@ bool	handle_quote(unsigned int *cap, unsigned int *count,
 
 	unclosed = false;
 	quote = line[*i];
+	_data()->escaped = 0;
 	ctx = collect_quoted(line + *i, quote, &unclosed);
 	if (unclosed || !ctx)
 	{

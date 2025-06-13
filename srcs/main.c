@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/12 15:57:28 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:10:11 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int	main_loop(void)
 	_data()->prompt = get_prompt();
 	_data()->input = readline(_data()->prompt);
 	_data()->exit_code = 0;
+	_data()->escaped = 0;
 	if (!_data()->input)
 	{
 		printf("exit\n");

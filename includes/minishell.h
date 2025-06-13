@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/12 17:06:39 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/13 12:32:06 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,5 +264,6 @@ char	**alloc_args(size_t cap);
 char	*dup_arg(char *text);
 char	**grow_args(char **args, size_t old_cnt, size_t *cap);
 t_cmd	*ast_to_cmd(t_ast *root);
+void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok);
 
 #endif
