@@ -242,7 +242,7 @@ bool	handle_quote(unsigned int *cap, unsigned int *count,
 void	print_token_array(t_token *tokens);
 char	*extract_word(const char *line, unsigned int *i);
 char	*extract_operator(const char *line, unsigned int *i);
-t_ctx	*collect_quoted(const char *str, char quote, bool *unclosed);
+t_ctx	collect_quoted(const char *str, char quote, bool *unclosed);
 void	finalize_token_array(t_token **tokens, unsigned int *count,
 			unsigned int *cap);
 void	assign_token_type_and_bp(const char *word, t_token *token);

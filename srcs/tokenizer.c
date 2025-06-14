@@ -41,6 +41,7 @@ int	process_regular_token(char **args, int i, t_token **tokens,
 	char	*ctx_word;
 
 	word = args[i];
+	(void)word;
 	ctx_word = _data()->ctx[i].arg;
 	assign_token_type_and_bp(ctx_word, &new_token);
 	add_token(tokens, count, cap, new_token);

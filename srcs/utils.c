@@ -24,6 +24,7 @@ void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	new_ptr = malloc(new_size);
 	if (!new_ptr)
 		return (NULL);
+	ft_bzero(new_ptr, new_size);
 	if (ptr)
 	{
 		if (old_size < new_size)

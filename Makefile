@@ -13,7 +13,7 @@
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -Werror -g3 -march=native
+CFLAGS		= -Wall -Wextra -g3 -march=native
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m

@@ -66,26 +66,27 @@ static unsigned int	find_closing_quote(const char *str, char quote)
 	return (i);
 }
 
-t_ctx	*collect_quoted(const char *str, char quote, bool *unclosed)
+t_ctx	collect_quoted(const char *str, char quote, bool *unclosed)
 {
 	unsigned int	end;
-	t_ctx			*buff;
+	t_ctx			buff;
 
-	buff = (t_ctx *)malloc(sizeof(t_ctx));
-	ft_bzero(buff, sizeof(t_ctx));
+	//buff = (t_ctx *)malloc(sizeof(t_ctx));
+	ft_bzero(&buff, sizeof(buff));
 	end = find_closing_quote(str, quote);
 	if (str[end] != quote)
 	{
 		*unclosed = true;
-		return (NULL);
+		buff.arg = NULL;
+		return (buff);
 	}
-	buff->arg = (char *)malloc(end);
-	if (!buff->arg)
+	buff.arg = (char *)malloc(end);
+	if (!buff.arg)
 	{
 		free_split(_data()->args);
-		return (NULL);
+		return (buff);
 	}
-	copy_quoted_content(str, quote, end, buff);
+	copy_quoted_content(str, quote, end, &buff);
 	return (buff);
 }
 

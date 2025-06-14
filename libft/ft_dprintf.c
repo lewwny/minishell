@@ -53,8 +53,6 @@ static int	vprintf_loop(int fd, const char *format, va_list *args)
 		}
 		else
 			tmp = ft_putchari(fd, *format);
-		if (tmp < 0)
-			return (-1);
 		count += tmp;
 		format++;
 	}
