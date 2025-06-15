@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 12:48:28 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:44:32 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	main_helper(void)
 	data->escaped = 0;
 }
 
-static int	main_loop(void)
+static int	handle_input(void)
 {
 	_data()->prompt = get_prompt();
 	_data()->input = readline(_data()->prompt);
@@ -59,11 +59,23 @@ static int	main_loop(void)
 	if (!*_data()->input)
 	{
 		free(_data()->prompt);
-		free (_data()->input);
+		free(_data()->input);
 		return (1);
 	}
 	add_history(_data()->input);
 	parsing(_data()->input);
+	return (2);
+}
+
+static int	main_loop(void)
+{
+	int	input_status;
+
+	input_status = handle_input();
+	if (input_status == 0)
+		return (0);
+	if (input_status == 1)
+		return (1);
 	if (_data()->exit_code)
 	{
 		main_helper();

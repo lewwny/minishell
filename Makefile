@@ -6,29 +6,37 @@
 #    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/15 14:13:54 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/15 15:10:45 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -g3 -O1 -fsanitize=address,leak -fno-omit-frame-pointer
+CFLAGS		= -Wall -Wextra -Werror -g3 -O1 -fsanitize=address,leak -fno-omit-frame-pointer
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
 BLUE   		= \033[0;34m
 YELLOW		= \033[1;33m
 
-FILES		= main.c utils.c free.c path.c error.c						\
-			singleton.c parsing.c exec.c								\
-			builtins.c env.c builtins_func.c							\
-			export_builtins.c lst_utils.c free_utils.c					\
-			prompt.c signal.c ls_builtins.c expand.c pratt_parsing.c	\
-			pratt_handler.c extract_data.c tokenizer.c					\
-			tokenizer2.c parse_expr.c parse_prefix.c parse_infix.c		\
-			parse_utils.c ast_to_cmd.c exec_utils.c env_utils.c \
-			create_env_node.c export_utils.c oldpwd.c
+FILES		= builtins/builtins.c builtins/builtins_func.c builtins/cd_builtins.c \
+			builtins/export_builtins.c builtins/export_utils.c builtins/ls_builtins.c \
+			\
+			exec/exec.c exec/exec_utils.c exec/path.c exec/redir.c exec/get_cmd.c \
+			\
+			env/env.c env/env_utils.c env/expand.c env/oldpwd.c env/create_env_node.c \
+			\
+			utils/free_parsing.c utils/free_utils.c utils/free.c utils/lst_utils.c \
+			utils/prompt.c utils/signal.c utils/singleton.c utils/utils.c utils/error.c \
+			\
+			parse/ast_to_cmd.c parse/extract_data.c parse/parse_expr.c \
+			parse/parse_infix.c parse/parse_prefix.c parse/parse_utils.c \
+			parse/parsing.c parse/pratt_handler.c parse/pratt_parsing.c \
+			parse/tokenizer.c parse/tokenizer2.c parse/ast_utils.c \
+			parse/handler_utils.c parse/args_ctx.c\
+			\
+			main.c
 SRC_DIR		= srcs
 SRCS		= $(addprefix $(SRC_DIR)/, $(FILES))
 OBJDIR		= .obj

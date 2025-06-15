@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:13:46 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:07:14 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,8 @@ void	edit_env(t_env *env_list);
 t_env	*create_env_node(char *env);
 char	*get_key(char *arg);
 void	change_oldpwd(char *oldpwd);
+int	apply_redirs(t_redir *redirs);
+void	here_doc_manage(t_redir *redir);
 
 // Parsing functions
 
@@ -252,7 +254,6 @@ void	add_token(t_token **arr, unsigned int *count,
 void	set_token_fields(t_token *token, t_token_type type, char *text,
 			int bp[2]);
 void	free_ast(t_ast *ast);
-void	free_token_array(void);
 void	free_cmdlst(t_cmd *cmd);
 t_token	*tokenize_to_pratt(t_ctx *args);
 t_token	*advance_token(void);
@@ -266,5 +267,8 @@ char	*dup_arg(char *text);
 char	**grow_args(char **args, size_t old_cnt, size_t *cap);
 t_cmd	*ast_to_cmd(t_ast *root);
 void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok);
+t_cmd	*new_cmd(void);
+char	**copy_args(char **src);
+char	**get_args_from_ctx(t_ctx *ctx);
 
 #endif
