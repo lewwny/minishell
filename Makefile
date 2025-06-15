@@ -6,14 +6,14 @@
 #    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/15 11:31:39 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/15 12:19:30 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -g3 -march=native
+CFLAGS		= -Wall -Wextra -g3 -O1 -fsanitize=address,leak -fno-omit-frame-pointer
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m

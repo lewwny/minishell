@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:07:23 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/12 18:18:25 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:28:02 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	edit_env(t_env *env_list)
 	if (in_env("PWD"))
 	{
 		edit_value("PWD", pwd);
+		free(pwd);
 	}
 	else
 	{
@@ -104,5 +105,4 @@ void	edit_env(t_env *env_list)
 		new_node->next = env_list;
 		_data()->env_list = new_node;
 	}
-	free(pwd);
 }
