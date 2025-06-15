@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/13 12:24:27 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/15 10:47:36 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,10 @@ void	parsing(char *input)
 		i++;
 	}
 	_data()->tokens = tokenize_to_pratt(_data()->ctx);
-	print_token_array(_data()->tokens);
+	// print_token_array(_data()->tokens);
 	_data()->ast = parse_expression(0);
 	_data()->cmds = ast_to_cmd(_data()->ast);
-	print_cmd_list(_data()->cmds);
+	// print_cmd_list(_data()->cmds);
 	free_ctx();
 	free_ast(_data()->ast);
 	free_split(_data()->args);
