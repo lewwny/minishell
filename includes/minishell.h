@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 11:31:34 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:13:46 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ char	*get_env_value(const char *key);
 void	edit_env(t_env *env_list);
 t_env	*create_env_node(char *env);
 char	*get_key(char *arg);
+void	change_oldpwd(char *oldpwd);
 
 // Parsing functions
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:19:24 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/12 12:20:24 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:11:09 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,15 @@ void	pwd_builtin(void)
 void	cd_builtin(void)
 {
 	char	*path;
+	char	*oldpwd;
 
+	oldpwd = getcwd(NULL, 0);
+	if (!oldpwd)
+	{
+		perror("cd");
+		_data()->exit_code = 1;
+		return ;
+	}
 	if (_data()->cmds->args[1] == NULL)
 	{
 		path = getenv("HOME");
@@ -58,6 +66,9 @@ void	cd_builtin(void)
 		perror("cd");
 		_data()->exit_code = 1;
 	}
+	else
+		change_oldpwd(oldpwd);
+	free(oldpwd);
 }
 
 void	unset_builtin(void)
