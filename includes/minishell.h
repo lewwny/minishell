@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 15:07:14 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:23:26 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@
 # define COLOR_GREEN "\001\033[0;32m\002"
 # define COLOR_RESET "\001\033[0m\002"
 # define COLOR_RED "\001\033[0;31m\002"
-
-// typedef enum e_redir_type
-// {
-// 	REDIR_IN,
-// 	REDIR_OUT,
-// 	REDIR_APPEND,
-// 	REDIR_HEREDOC
-// }	t_redir_type;
 
 typedef enum e_token_type
 {
@@ -140,19 +132,6 @@ typedef struct s_ast
 	} ast;
 }				t_ast;
 
-// typedef struct s_minishell
-// {
-// 	t_token			*tokens;
-// 	char			**cmds;
-// 	size_t	pos;
-// 	int				exit_status;
-// 	bool			early_error;
-// 	bool			error;
-// 	t_ast			*ast;
-// 	t_cmd			*cmd_lst;
-// 	size_t			escaped;
-// }				t_minishell;
-
 typedef struct s_ctx
 {
 	char	*arg;
@@ -226,7 +205,7 @@ void	edit_env(t_env *env_list);
 t_env	*create_env_node(char *env);
 char	*get_key(char *arg);
 void	change_oldpwd(char *oldpwd);
-int	apply_redirs(t_redir *redirs);
+int		apply_redirs(t_redir *redirs);
 void	here_doc_manage(t_redir *redir);
 
 // Parsing functions
