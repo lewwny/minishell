@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 11:31:23 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:54:52 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ static void	here_doc_manage(t_redir *redir)
 	char	*heredoc_input;
 
 	pipe(p);
+	signal_handler(1);
 	while (1)
 	{
 		heredoc_input = readline("heredoc> ");
 		if (!heredoc_input || !ft_strcmp(heredoc_input, redir->target))
 		{
-			if (!heredoc_input)
+			if (!heredoc_input && !(_data()->exit_code == 130))
 				ft_dprintf(2, "minishell: warning: here-document wanted `%s'\n",
 					redir->target);
 			free(heredoc_input);
@@ -69,8 +70,10 @@ static void	here_doc_manage(t_redir *redir)
 		free(heredoc_input);
 	}
 	close(p[1]);
-	dup2(p[0], 0);
+	if (!(_data()->exit_code == 130))
+		dup2(p[0], 0);
 	close(p[0]);
+	signal_handler(0);
 }
 
 static int	apply_redirs(t_redir *redirs)
