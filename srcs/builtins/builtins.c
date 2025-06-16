@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 09:24:28 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:26:37 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	echo_builtin(t_cmd *cmd)
 		if (is_option(cmd->args[i]))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		ft_putstri(1, cmd->args[i]);
 		if (cmd->args[i + 1])
