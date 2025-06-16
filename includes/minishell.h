@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 15:23:26 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:20:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ char	*get_key(char *arg);
 void	change_oldpwd(char *oldpwd);
 int		apply_redirs(t_redir *redirs);
 void	here_doc_manage(t_redir *redir);
+void	print_export(t_env *env);
 
 // Parsing functions
 

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:19:24 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 09:43:20 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:45:07 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	verify_exit_code(char *arg)
 		write(2, "minishell: exit: numeric argument required\n", 44);
 		return (exit_code);
 	}
+	if ((arg[0] == '-' || arg[0] == '+') && arg[1] != '\0')
+		i++;
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
@@ -44,18 +46,18 @@ static int	verify_exit_code(char *arg)
 void	exit_builtin(void)
 {
 	if (_data()->cmds->args[1] == NULL)
-		_data()->exit_code = 0;
+		_data()->exit_status = 0;
 	else
 	{
-		_data()->exit_code = verify_exit_code(_data()->cmds->args[1]);
+		_data()->exit_status = verify_exit_code(_data()->cmds->args[1]);
 		if (_data()->cmds->args[2])
 		{
 			write(2, "minishell: exit: too many arguments\n", 37);
-			_data()->exit_code = 1;
+			_data()->exit_status = 1;
 		}
 	}
 	ultimate_free_func();
-	exit(_data()->exit_code);
+	exit(_data()->exit_status);
 }
 
 void	pwd_builtin(void)
@@ -72,12 +74,19 @@ void	pwd_builtin(void)
 
 void	unset_builtin(void)
 {
+	int	i;
+
+	i = 1;
 	if (_data()->cmds->args[1] == NULL)
 	{
 		fprintf(stderr, "unset: not enough arguments\n");
 		return ;
 	}
-	delete_env_node(&_data()->env_list, _data()->cmds->args[1]);
-	free_split(_data()->env);
-	_data()->env = env_to_array(_data()->env_list);
+	while (_data()->cmds->args[i])
+	{
+		delete_env_node(&_data()->env_list, _data()->cmds->args[i]);
+		free_split(_data()->env);
+		_data()->env = env_to_array(_data()->env_list);
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:20:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:27:51 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:19:54 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,27 @@ void	export_builtin(void)
 	char	*key;
 	char	*value;
 	char	*eq;
+	int		i;
 
+	i = 1;
 	if (_data()->cmds->args[1] == NULL)
 	{
-		print_env_list(_data()->env_list);
+		print_export(_data()->env_list);
 		return ;
 	}
-	if (_data()->cmds->args[1][0] == '\0' || _data()->cmds->args[1][0] == '=')
-		return ;
-	eq = ft_strchr(_data()->cmds->args[1], '=');
-	key = get_key(_data()->cmds->args[1]);
-	if (eq)
-		value = eq + 1;
-	else
-		value = NULL;
-	add_or_update_env(key, value);
-	free(key);
+	while (_data()->cmds->args[i])
+	{
+		if (_data()->cmds->args[i][0] == '\0' ||
+			_data()->cmds->args[i][0] == '=')
+			return ;
+		eq = ft_strchr(_data()->cmds->args[i], '=');
+		key = get_key(_data()->cmds->args[i]);
+		if (eq)
+			value = eq + 1;
+		else
+			value = NULL;
+		add_or_update_env(key, value);
+		free(key);
+		i++;
+	}
 }

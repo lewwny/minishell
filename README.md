@@ -9,5 +9,3 @@ CHECKLIST de ce qui reste a faire :
 -""''echo hola""'''' que""'' tal""''
 - echo > < puis une commande qui n'existe pas = leak parsing
 -echo "'"h'o'la"'" returned :' h o la ' expected: 'hola'
--petites modifications dans export (sans param, et sans =)
--gestion + et - dans exit
