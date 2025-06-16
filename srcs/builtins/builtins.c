@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 09:26:37 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:24:02 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ static bool	is_option(char *arg)
 {
 	if (!arg || arg[0] != '-')
 		return (false);
+	if (*arg != '-')
+		return (false);
+	arg++;
 	while (*arg)
 	{
-		if (*arg != '-' && *arg != 'n')
+		if (*arg != 'n')
 			return (false);
 		arg++;
 	}
@@ -52,8 +55,10 @@ static void	echo_builtin(t_cmd *cmd)
 {
 	int	i;
 	int	newline;
+	int	token;
 
 	i = 1;
+	token = 0;
 	newline = 1;
 	if (cmd->args[1] && is_option(cmd->args[1]))
 	{
@@ -62,7 +67,7 @@ static void	echo_builtin(t_cmd *cmd)
 	}
 	while (cmd->args[i])
 	{
-		if (is_option(cmd->args[i]))
+		if (is_option(cmd->args[i]) && !token)
 		{
 			i++;
 			continue ;
@@ -71,6 +76,7 @@ static void	echo_builtin(t_cmd *cmd)
 		if (cmd->args[i + 1])
 			ft_putchari(1, ' ');
 		i++;
+		token = 1;
 	}
 	if (newline)
 		ft_putchari(1, '\n');

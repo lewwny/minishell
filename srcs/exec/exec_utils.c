@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:33:53 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:11:01 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,15 @@ void	wait_for_children(int *status)
 
 void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
 {
+	struct stat	st;
+
+	if (stat(cur->args[0], &st) == 0 && S_ISDIR(st.st_mode))
+	{
+		write(2, "minishell: is a directory\n", 27);
+		_data()->exit_code = 126;
+		free_cmd_path();
+		return ;
+	}
 	get_cmd(cur->args[0]);
 	if ((ft_strcmp(cur->args[0], "exit") == 0
 			|| ft_strcmp(cur->args[0], "cd") == 0

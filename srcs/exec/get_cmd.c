@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:47:36 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:47:53 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:02:10 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	find_cmd_in_path(char *cmd, t_data *data)
 		data->cmds->cmd_path = ft_strjoin(data->path[i], cmd);
 		if (!data->cmds->cmd_path)
 			malloc_error();
-		if (access(data->cmds->cmd_path, F_OK) == 0)
+		if (access(data->cmds->cmd_path, X_OK) == 0)
 			return (1);
 		free(data->cmds->cmd_path);
 		data->cmds->cmd_path = NULL;
