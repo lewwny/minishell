@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:19:39 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 15:10:14 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:59:55 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static unsigned int	copy_quoted_content(const char *str, char quote,
 	return (p);
 }
 
-static unsigned int	find_closing_quote(const char *str, char quote)
+unsigned int	find_closing_quote(const char *str, char quote)
 {
 	unsigned int	i;
 

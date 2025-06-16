@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 15:04:47 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:40:18 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,41 @@ static void	skip_whitespace(const char *line, unsigned int *i)
 static bool	process_token(unsigned int *cap, unsigned int *count, char *line,
 		unsigned int *i)
 {
-	if (line[*i] == '\'' || line[*i] == '"')
+	t_ctx	ctx;
+
+	if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
+		return (handle_operator(cap, count, line, i));
+	ctx = collect_word_ctx(line, i);
+	if (!ctx.arg || !ctx.arg[0] || _data()->early_error)
 	{
-		if (!handle_quote(cap, count, line, i))
-			return (false);
+		free(ctx.arg);
+		return (false);
 	}
-	else
-	{
-		handle_word(cap, count, line, i);
-		if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|'
-			|| line[*i] == '(' || line[*i] == ')' || line[*i] == ';'
-			|| line[*i] == '&')
-		{
-			if (!handle_operator(cap, count, line, i))
-				return (false);
-		}
-	}
+	append_t_ctx(cap, count, &ctx);
 	return (true);
 }
+
+// static bool	process_token(unsigned int *cap, unsigned int *count, char *line,
+// 		unsigned int *i)
+// {
+// 	if (line[*i] == '\'' || line[*i] == '"')
+// 	{
+// 		if (!handle_quote(cap, count, line, i))
+// 			return (false);
+// 	}
+// 	else
+// 	{
+// 		handle_word(cap, count, line, i);
+// 		if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|'
+// 			|| line[*i] == '(' || line[*i] == ')' || line[*i] == ';'
+// 			|| line[*i] == '&')
+// 		{
+// 			if (!handle_operator(cap, count, line, i))
+// 				return (false);
+// 		}
+// 	}
+// 	return (true);
+// }
 
 static int	split_on_whitespace_loop(char *line, unsigned int *cap,
 			unsigned int *count)

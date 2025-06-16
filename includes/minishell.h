@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 11:20:31 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:57:39 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,12 @@ typedef struct s_ast
 
 typedef struct s_ctx
 {
-	char	*arg;
-	bool	is_escaped;
-}			t_ctx;
+	char			*arg;
+	bool			is_escaped;
+	bool			unclosed;
+	unsigned int	len;
+	unsigned int	cap;
+}					t_ctx;
 
 typedef struct s_data
 {
@@ -211,6 +214,7 @@ void	print_export(t_env *env);
 
 // Parsing functions
 
+unsigned int	find_closing_quote(const char *str, char quote);
 void	free_ms_ctx(void);
 void	free_token_array(void);
 char	**split_on_whitespace(char *line);
@@ -242,6 +246,7 @@ t_ast	*parse_prefix(t_token *tok);
 t_ast	*parse_infix(t_ast *left, t_token *op);
 t_ast	*parse_expression(int min_bp);
 void	parser_error_at(t_token *tok, char *msg, char *tk_text);
+t_ctx	collect_word_ctx(const char *line, unsigned int *i);
 char	**alloc_args(size_t cap);
 char	*dup_arg(char *text);
 char	**grow_args(char **args, size_t old_cnt, size_t *cap);
@@ -250,5 +255,4 @@ void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok);
 t_cmd	*new_cmd(void);
 char	**copy_args(char **src);
 char	**get_args_from_ctx(t_ctx *ctx);
-
 #endif

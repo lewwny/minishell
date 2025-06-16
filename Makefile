@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
+#    By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/15 15:10:45 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/16 15:41:59 by mecauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -Werror -g3 -O1 -fsanitize=address,leak -fno-omit-frame-pointer
+CFLAGS		= -Wall -Wextra -Werror -g3 -O1 -fno-omit-frame-pointer
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
@@ -34,7 +34,7 @@ FILES		= builtins/builtins.c builtins/builtins_func.c builtins/cd_builtins.c \
 			parse/parse_infix.c parse/parse_prefix.c parse/parse_utils.c \
 			parse/parsing.c parse/pratt_handler.c parse/pratt_parsing.c \
 			parse/tokenizer.c parse/tokenizer2.c parse/ast_utils.c \
-			parse/handler_utils.c parse/args_ctx.c\
+			parse/handler_utils.c parse/args_ctx.c parse/collect_word.c\
 			\
 			main.c
 SRC_DIR		= srcs
