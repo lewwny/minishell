@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_prefix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:01:44 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 14:37:41 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:10:41 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static t_ast	*prefix_redir(t_token *tok)
 	if (!file_tok || file_tok->type != TK_WORD)
 	{
 		parser_error_at(tok, "Expected file name after redirection", tok->text);
+		_data()->early_error = true;
 		return (NULL);
 	}
 	cmd = parse_expression(0);
@@ -90,6 +91,7 @@ static t_ast	*prefix_redir(t_token *tok)
 		return (NULL);
 	return (create_redir_node(tok, file_tok, cmd));
 }
+
 
 t_ast	*parse_prefix(t_token *tok)
 {

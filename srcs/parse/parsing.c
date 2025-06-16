@@ -6,7 +6,7 @@
 /*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 18:40:48 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:24:06 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,13 @@ void	parsing(char *input)
 	expand_env_vars_in_ctx();
 	_data()->tokens = tokenize_to_pratt(_data()->ctx);
 	_data()->ast = parse_expression(0);
-	_data()->cmds = ast_to_cmd(_data()->ast);
+	if (_data()->early_error || _data()->error)
+	{
+		free_ast(_data()->ast);
+		_data()->ast = NULL;
+	}
+	if (_data()->ast)
+		_data()->cmds = ast_to_cmd(_data()->ast);
 	free_ctx();
 	free_ast(_data()->ast);
 	free_split(_data()->args);

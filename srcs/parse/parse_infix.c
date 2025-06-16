@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_infix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:45:42 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 14:37:36 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:25:27 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ static t_ast	*infix_redirection(t_ast *left, t_token *op)
 	if (!node->ast.redir.target)
 	{
 		free(node);
+		free_ast(left);
 		return (NULL);
 	}
 	node->ast.redir.child = left;
