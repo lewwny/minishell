@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:27:44 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:24:28 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
+static bool	is_option(char *arg)
+{
+	if (!arg || arg[0] != '-')
+		return (false);
+	while (*arg)
+	{
+		if (*arg != '-' && *arg != 'n')
+			return (false);
+		arg++;
+	}
+	return (true);
+}
+
 static void	echo_builtin(t_cmd *cmd)
 {
 	int	i;
@@ -42,13 +55,18 @@ static void	echo_builtin(t_cmd *cmd)
 
 	i = 1;
 	newline = 1;
-	if (cmd->args[1] && ft_strncmp(cmd->args[1], "-n", 2) == 0)
+	if (cmd->args[1] && is_option(cmd->args[1]))
 	{
 		newline = 0;
 		i++;
 	}
 	while (cmd->args[i])
 	{
+		if (is_option(cmd->args[i]))
+		{
+			i++;
+			continue;
+		}
 		ft_putstri(1, cmd->args[i]);
 		if (cmd->args[i + 1])
 			ft_putchari(1, ' ');
