@@ -6,7 +6,7 @@
 /*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/16 18:40:18 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:04:36 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ static bool	process_token(unsigned int *cap, unsigned int *count, char *line,
 	if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
 		return (handle_operator(cap, count, line, i));
 	ctx = collect_word_ctx(line, i);
-	if (!ctx.arg || !ctx.arg[0] || _data()->early_error)
+	if (_data()->early_error)
+	{
+		if (ctx.arg)
+			free(ctx.arg);
+		return (false);
+	}
+	if (!ctx.arg[0])
 	{
 		free(ctx.arg);
 		return (false);

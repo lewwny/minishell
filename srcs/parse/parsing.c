@@ -6,7 +6,7 @@
 /*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 19:24:06 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:09:13 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ void	parsing(char *input)
 	_data()->args = split_on_whitespace(input);
 	if (!_data()->args || !_data()->ctx || _data()->early_error)
 	{
+		_data()->exit_status = 1;
+		_data()->exit_code = 1;
 		free_ctx();
 		return ;
 	}
@@ -149,6 +151,8 @@ void	parsing(char *input)
 	_data()->ast = parse_expression(0);
 	if (_data()->early_error || _data()->error)
 	{
+		_data()->exit_status = 1;
+		_data()->exit_code = 1;
 		free_ast(_data()->ast);
 		_data()->ast = NULL;
 	}

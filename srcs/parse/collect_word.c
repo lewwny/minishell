@@ -6,7 +6,7 @@
 /*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:41:14 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/16 18:36:36 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:02:48 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ t_ctx	collect_word_ctx(const char *line, unsigned int *i)
 	ctx.unclosed = false;
 	ctx.arg = (char *)malloc(sizeof(char) * ctx.cap);
 	if (!ctx.arg)
+	{
+		_data()->early_error = true;
 		return (ctx);
-	// ft_bzero(&ctx.arg, sizeof(ctx.arg));
+	}
 	while (line[*i]
 		&& !ft_isspace(line[*i])
 		&& !ft_strchr("|<>", line[*i]))
@@ -112,6 +114,7 @@ t_ctx	collect_word_ctx(const char *line, unsigned int *i)
 				return (ctx);
 		}
 	}
-	ctx.arg[ctx.len] = 0;
+	if (ctx.arg)
+		ctx.arg[ctx.len] = 0;
 	return (ctx);
 }
