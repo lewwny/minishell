@@ -2,4 +2,23 @@ CHECKLIST de ce qui reste a faire :
 -Probleme avec les multi here-doc (pas tres grave, mais a regler)
 -defaut avec les signaux (pas tres tres grave non plus)
 -Exit_code for /
--'''' puis ecommande qui a leak
+-echo '''' puis ecommande qui a leak
+-"" qui doit mettre une erreur
+-echo "$USER"test
+-echo $? | echo $? echo $? ???????
+-echo $9HOME
+-echo '' HOME
+-echo $e hola
+-echo "hola     " | cat -e'
+-ctrl \ dans cat genre
+-bloquer ctrl z
+-export ""
+-gerer les cas des keys zehma
+-export HOLA =bonjour
+-cd too many arguments
+-gerer cd sans arg si il n'y a pas d'home
+-cd ~
+-max int exit
+-echo hole | echo que tal
+-echo hola ||| cat-e
+-cat << hola | rev
