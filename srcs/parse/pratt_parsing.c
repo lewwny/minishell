@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/16 22:04:36 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:35:35 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,6 @@ static bool	process_token(unsigned int *cap, unsigned int *count, char *line,
 	append_t_ctx(cap, count, &ctx);
 	return (true);
 }
-
-// static bool	process_token(unsigned int *cap, unsigned int *count, char *line,
-// 		unsigned int *i)
-// {
-// 	if (line[*i] == '\'' || line[*i] == '"')
-// 	{
-// 		if (!handle_quote(cap, count, line, i))
-// 			return (false);
-// 	}
-// 	else
-// 	{
-// 		handle_word(cap, count, line, i);
-// 		if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|'
-// 			|| line[*i] == '(' || line[*i] == ')' || line[*i] == ';'
-// 			|| line[*i] == '&')
-// 		{
-// 			if (!handle_operator(cap, count, line, i))
-// 				return (false);
-// 		}
-// 	}
-// 	return (true);
-// }
 
 static int	split_on_whitespace_loop(char *line, unsigned int *cap,
 			unsigned int *count)
@@ -118,6 +96,11 @@ char	**split_on_whitespace(char *line)
 	if (!split_on_whitespace_loop(line, &cap, &count))
 	{
 		free_split(minishell->args);
+		free(minishell->ctx);
+		minishell->args = NULL;
+		minishell->ctx = NULL;
+		minishell->early_error = true;
+		minishell->exit_status = 1;
 		return (NULL);
 	}
 	minishell->args[count] = NULL;
