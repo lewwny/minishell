@@ -6,7 +6,7 @@
 #    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/17 11:09:39 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/17 14:17:47 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,9 +104,9 @@ cppcheck:
 	@printf "$(GREEN)✔ Cppcheck complete. See cppcheck.log for output.$(RESET)\n"
 
 scan-build:
+	@rm -rf scan-report
 	@printf "$(BLUE)[CLANG STATIC ANALYZER]$(RESET)\n"
 	@scan-build-12 -o scan-report make re -k
-	@printf "$(GREEN)✔ Report generated at: scan-report/*/*.plist$(RESET)\n"
 	@printf "$(YELLOW)No scan-view? Use:\n  plutil -p scan-report/*/*.plist\n  or view in a plist editor$(RESET)\n"
 
 

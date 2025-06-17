@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:58:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/17 11:53:47 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:32:21 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ t_cmd	*flatten_pipe_on_redir(t_ast *leaf, t_redir *redir_list)
 	last = NULL;
 	pipe_list = flatten_pipe(leaf);
 	if (!pipe_list)
+	{
+		free_redir(redir_list);
 		return (NULL);
+	}
 	if (redir_list)
 	{
 		last = redir_list;

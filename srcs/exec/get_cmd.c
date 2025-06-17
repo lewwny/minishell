@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:47:36 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 10:02:10 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:24:49 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ void	get_cmd(char *cmd)
 	{
 		data->cmds->cmd_path = ft_strdup(cmd);
 		if (!data->cmds->cmd_path)
+		{
 			malloc_error();
+			return ;
+		}
 		return ;
 	}
 	if (!data->path)

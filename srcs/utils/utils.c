@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 08:40:27 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:35:16 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:22:04 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ t_cmd	*ft_cmdnew(char **content)
 
 	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!cmd)
+	{
 		malloc_error();
+		return (NULL);
+	}
 	cmd->cmd_path = NULL;
 	cmd->args = content;
 	cmd->next = NULL;

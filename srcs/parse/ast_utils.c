@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:53:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:54:14 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:33:37 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ char	**copy_args(char **src)
 	{
 		dst[i] = ft_strdup(src[i]);
 		if (!dst[i])
+		{
+			free_split(dst);
 			return (NULL);
+		}
 		i++;
 	}
 	dst[n] = NULL;
