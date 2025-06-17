@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:21:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:35:07 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,27 @@ static void	heredoc_sigint_handler(int sig)
 	_data()->exit_code = 130;
 }
 
+static void	sigquit_handler(int sig)
+{
+	(void) sig;
+	if (_data()->input)
+	{
+		free(_data()->input);
+		_data()->input = NULL;
+	}
+	if (_data()->prompt)
+	{
+		free(_data()->prompt);
+		_data()->prompt = NULL;
+	}
+	_data()->exit_code = 131;
+	write(2, "Quit: 3\n", 9);
+	rl_on_new_line();
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 void	signal_handler(int sig)
 {
 	if (sig == 0)
@@ -51,5 +72,10 @@ void	signal_handler(int sig)
 	{
 		signal(SIGINT, heredoc_sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
+	}
+	if (sig == 2)
+	{
+		signal(SIGINT, heredoc_sigint_handler);
+		signal(SIGQUIT, sigquit_handler);
 	}
 }

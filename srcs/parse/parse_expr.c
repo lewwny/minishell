@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:28:28 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 14:37:31 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:42:21 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,75 @@ void	parser_error_at(t_token *tok, char *msg, char *tk_text)
 	}
 }
 
+// t_ast *_parse_infix_loop(t_ast *root, int min_bp)
+// {
+// 	t_data	*ms = _data();
+// 	t_ast	*node = root;
+
+// 	while (!ms->error && peek_token()->left_bp > min_bp)
+// 	{
+// 		t_token *op   = advance_token();
+// 		t_ast   *next = parse_infix(node, op);
+// 		if (!next || ms->error || ms->early_error)
+// 		{
+// 			free_ast(root);
+// 			if (op->type == TK_ERROR)
+// 				parser_error_at(op, "Unexpected token", op->text);
+// 			return NULL;
+// 		}
+// 		node = next;
+// 	}
+// 	return node;
+// }
+
+// t_ast *_parse_prefix_root(void)
+// {
+// 	t_data	*ms = _data();
+// 	t_token	*token;
+// 	t_ast	*root;
+
+// 	token = advance_token();
+// 	root = parse_prefix(token);
+// 	if (!root || ms->error || ms->early_error)
+// 	{
+// 		free_ast(root);
+// 		return NULL;
+// 	}
+// 	return root;
+// }
+
+
 t_ast	*parse_expression(int min_bp)
 {
-	t_token		*token;
-	t_ast		*left;
-	t_token		*op;
-	t_data		*minishell;
+	t_data	*ms;
+	t_token	*token;
+	t_ast	*root;
+	t_ast	*node;
 
-	minishell = _data();
-	if (minishell->early_error || minishell->error)
-		return (NULL);
+	ms = _data();
+	ms->ctx->sp = 0;
+	if (ms->early_error || ms->error)
+		return NULL;
 	token = advance_token();
-	left = parse_prefix(token);
-	if (!left || minishell->error || minishell->early_error)
-		return (free_ast(left), NULL);
-	while (!minishell->error && peek_token()->left_bp > min_bp)
+	root  = parse_prefix(token);
+	if (!root || ms->error || ms->early_error)
 	{
-		op = advance_token();
-		left = parse_infix(left, op);
-		if (!left || minishell->error || minishell->early_error)
+		free_ast(root);
+		return NULL;
+	}
+	node = root;
+	while (!ms->error && peek_token()->left_bp > min_bp)
+	{
+		t_token *op   = advance_token();
+		t_ast   *next = parse_infix(node, op);
+		if (!next || ms->error || ms->early_error)
 		{
+			free_ast(root);
 			if (op->type == TK_ERROR)
 				parser_error_at(op, "Unexpected token", op->text);
-			return (free_ast(left), NULL);
+			return NULL;
 		}
+		node = next;
 	}
-	return (left);
+	return (node);
 }

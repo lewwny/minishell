@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/17 10:35:35 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:15:46 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ static bool	process_token(unsigned int *cap, unsigned int *count, char *line,
 	{
 		if (ctx.arg)
 			free(ctx.arg);
-		return (false);
-	}
-	if (!ctx.arg[0])
-	{
-		free(ctx.arg);
 		return (false);
 	}
 	append_t_ctx(cap, count, &ctx);
@@ -96,6 +91,7 @@ char	**split_on_whitespace(char *line)
 	if (!split_on_whitespace_loop(line, &cap, &count))
 	{
 		free_split(minishell->args);
+		free_ctx_str();
 		free(minishell->ctx);
 		minishell->args = NULL;
 		minishell->ctx = NULL;

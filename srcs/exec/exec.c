@@ -6,40 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 09:21:57 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	here_doc_manage(t_redir *redir)
-{
-	int		p[2];
-	char	*heredoc_input;
-
-	pipe(p);
-	signal_handler(1);
-	while (1)
-	{
-		heredoc_input = readline("heredoc> ");
-		if (!heredoc_input || !ft_strcmp(heredoc_input, redir->target))
-		{
-			if (!heredoc_input && !(_data()->exit_code == 130))
-				ft_dprintf(2, "minishell: warning: here-document wanted `%s'\n",
-					redir->target);
-			free(heredoc_input);
-			break ;
-		}
-		write(p[1], heredoc_input, ft_strlen(heredoc_input));
-		write(p[1], "\n", 1);
-		free(heredoc_input);
-	}
-	close(p[1]);
-	if (!(_data()->exit_code == 130))
-		dup2(p[0], 0);
-	close(p[0]);
-	signal_handler(0);
-}
 
 static void	setup_child_io(int in_fd, int out_fd, t_data *data)
 {
@@ -80,24 +51,61 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 	exit(127);
 }
 
-void	exec_cmds(t_cmd *cmd)
-{
-	int		in_fd;
-	t_cmd	*cur;
-	int		status;
 
-	in_fd = 0;
-	cur = cmd;
-	status = 0;
+int  get_heredoc_fd(const char *limiter)
+{
+	int p[2];
+	char *line;
+
+	if (pipe(p) < 0)
+		return (-1);
+	signal_handler(1);
+	while (1)
+	{
+		line = readline("heredoc> ");
+		if (!line || !ft_strcmp(line, limiter))
+		{
+			free(line);
+			write(2, "minishell: heredoc delimiter not found\n", 40);
+			break;
+		}
+		ft_putendl_fd(line, p[1]);
+		free(line);
+	}
+	signal_handler(0);
+	close(p[1]);
+	return (p[0]);
+}
+
+void exec_cmds(t_cmd *cmd)
+{
+	int   in_fd  = 0;
+	t_cmd *cur   = cmd;
+	int   status;
+
 	while (cur)
 	{
 		_data()->is_last = (cur->next == NULL);
 		if (!_data()->is_last)
 			pipe(_data()->fd);
+		for (t_redir *r = cur->redirs; r; r = r->next)
+		{
+			if (r->type == TK_HEREDOC)
+			{
+				r->heredoc_fd = get_heredoc_fd(r->target);
+				if (r->heredoc_fd < 0)
+				{
+					perror("heredoc");
+					exit(1);
+				}
+			}
+		}
 		exec_single_cmd(cur, &in_fd, _data()->fd, _data()->is_last);
 		if (is_builtin(cur->args[0]) && !cur->next)
 			break ;
+
 		cur = cur->next;
 	}
+
 	wait_for_children(&status);
 }

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:26:38 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:38:30 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ static char	*get_cd_path(void)
 	else
 	{
 		path = _data()->cmds->args[1];
+		if (_data()->cmds->args[2])
+		{
+			ft_dprintf(2, "cd: too many arguments\n");
+			_data()->exit_code = 1;
+			return (NULL);
+		}
 	}
 	return (path);
 }

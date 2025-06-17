@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 11:52:12 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last)
 	pid_t	pid;
 
 	pid = fork();
+	signal_handler(2);
 	if (pid == 0)
 	{
 		if (!is_last)
@@ -26,6 +27,7 @@ void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last)
 	}
 	else if (pid < 0)
 		perror("fork");
+	signal_handler(0);
 	_data()->pid = pid;
 }
 

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:48:19 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:48:28 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,40 @@ static int	handle_append(const char *target)
 	return (1);
 }
 
-static int	apply_redir(t_redir *redir)
+int	apply_redir(t_redir *redirs)
 {
-	if (redir->type == TK_REDIR_IN)
-		return (handle_redir_in(redir->target));
-	else if (redir->type == TK_REDIR_OUT)
-		return (handle_redir_out(redir->target));
-	else if (redir->type == TK_APPEND)
-		return (handle_append(redir->target));
-	else if (redir->type == TK_HEREDOC)
-		here_doc_manage(redir);
+	t_redir	*r;
+
+	r = redirs;
+	while (r)
+	{
+		if (r->type == TK_REDIR_IN)
+		{
+			if (!handle_redir_in(r->target))
+				return (0);
+		}
+		else if (r->type == TK_REDIR_OUT)
+		{
+			if (!handle_redir_out(r->target))
+				return (0);
+		}
+		else if (r->type == TK_APPEND)
+		{
+			if (!handle_append(r->target))
+				return (0);
+		}
+		else if (r->type == TK_HEREDOC)
+		{
+			if (dup2(r->heredoc_fd, STDIN_FILENO) < 0)
+				return (0);
+			close(r->heredoc_fd);
+		}
+		r = r->next;
+	}
 	return (1);
 }
 
 int	apply_redirs(t_redir *redirs)
 {
-	while (redirs)
-	{
-		if (!apply_redir(redirs))
-			return (0);
-		redirs = redirs->next;
-	}
-	return (1);
+	return apply_redir(redirs);
 }

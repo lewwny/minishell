@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 11:39:18 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:52:40 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_redir
 {
 	t_token_type	type;
 	char			*target;
+	int				heredoc_fd;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -139,6 +140,8 @@ typedef struct s_ctx
 	bool			unclosed;
 	unsigned int	len;
 	unsigned int	cap;
+	unsigned int	sp;
+	t_ast			*next;
 }					t_ctx;
 
 typedef struct s_data
@@ -216,6 +219,7 @@ void	print_export(t_env *env);
 
 unsigned int	find_closing_quote(const char *str, char quote);
 void	free_ms_ctx(void);
+void	free_ctx_str(void);
 void	free_token_array(void);
 char	**split_on_whitespace(char *line);
 void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size);

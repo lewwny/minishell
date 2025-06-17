@@ -6,11 +6,29 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:01:28 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 15:01:44 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:04:12 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_ctx_str(void)
+{
+	t_data	*m;
+	size_t	i;
+	
+	m = _data();
+	i = 0;
+	if (!m->ctx)
+		return;
+	while (m->ctx[i].arg)
+	{
+		free(m->ctx[i].arg);
+		i++;
+	}
+	free(m->ctx);
+	m->ctx = NULL;
+}
 
 static void	ensure_capacity(unsigned int *cap, unsigned int *c, t_data *m)
 {
