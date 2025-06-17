@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+         #
+#    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/16 15:41:59 by mecauchy         ###   ########.fr        #
+#    Updated: 2025/06/17 08:51:06 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC    		= cc
-CFLAGS		= -Wall -Wextra -Werror -g3 -O1 -fno-omit-frame-pointer
+CFLAGS		= -Wall -Wextra -Werror -g3 -O1 -fsanitize=address,leak -fno-omit-frame-pointer
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
