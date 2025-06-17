@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_to_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:58:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 14:54:05 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:53:47 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,18 @@ t_cmd	*switch_type(t_ast *root)
 	leaf = gather_redirs(root, &redir_lst);
 	cmd = NULL;
 	if (!leaf)
+	{
+		free_redir(redir_lst);
 		return (NULL);
+	}
 	if (leaf->type == AST_PIPE)
+	{
 		return (flatten_pipe_on_redir(leaf, redir_lst));
+	}
 	cmd = new_cmd();
 	cmd->redirs = redir_lst;
 	if (leaf->type == AST_CMD)
-	{
 		cmd->args = copy_args(leaf->ast.cmd.args);
-	}
 	else
 	{
 		cmd->args = (char **)malloc(sizeof(char *));

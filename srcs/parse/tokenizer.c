@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:26:00 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 15:22:38 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:11:42 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,12 @@ static void	process_args(char **args, t_token **tokens, unsigned int *count,
 		unsigned int *cap)
 {
 	size_t	i;
-	size_t	step;
 
 	i = 0;
-	step = 0;
 	while (_data()->ctx[i].arg && !_data()->error)
 	{
-		step = process_regular_token(args, i, tokens, count, cap);
-		i += step;
+		process_regular_token(args, i, tokens, count, cap);
+		i++;
 	}
 }
 

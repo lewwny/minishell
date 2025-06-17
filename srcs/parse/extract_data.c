@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 12:19:39 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/16 17:59:55 by mecauchy         ###   ########.fr       */
+/*   Created: 2025/06/17 11:13:04 by macauchy          #+#    #+#             */
+/*   Updated: 2025/06/17 11:14:56 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ char	*extract_word(const char *line, unsigned int *i)
 	unsigned int	len;
 	char			*token;
 
-	len = 0;
 	start = *i;
 	token = NULL;
 	while (line[*i] && !ft_isspace(line[*i])

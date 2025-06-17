@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:42:57 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/09 19:31:01 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/17 11:17:15 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	char		*dest_ptr;
 	const char	*src_ptr;
 
-	if (!dest && !src)
+	if (!dest || !src)
 		return (NULL);
 	dest_ptr = (char *)dest;
 	src_ptr = (const char *)src;

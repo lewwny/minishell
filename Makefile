@@ -6,13 +6,13 @@
 #    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/17 10:29:38 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/17 11:09:39 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
-CC    		= cc
+CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g3 -O1 -fno-omit-frame-pointer
 
 RESET 		= \033[0m
@@ -75,5 +75,39 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT_PATH) --no-print-directory fclean >/dev/null
 
 re: fclean all
+
+# === DEBUG TARGETS =======================================================
+
+DEBUG_FLAGS	= -Wall -Wextra -Werror -g3 -O1 -fno-omit-frame-pointer
+SAN_FLAGS	= -fsanitize=address,undefined -fno-omit-frame-pointer
+
+debug: CFLAGS += $(DEBUG_FLAGS) $(SAN_FLAGS)
+debug: re
+	@printf "$(BLUE)[DEBUG]$(RESET) Built with Address + Undefined Sanitizers\n"
+
+valgrind: CFLAGS += $(DEBUG_FLAGS)
+valgrind: re
+	@printf "$(BLUE)[VALGRIND]$(RESET) Built with -g debug info for Valgrind\n"
+	@printf "$(YELLOW)Run with: valgrind --track-origins=yes ./$(NAME)$(RESET)\n"
+
+coverage: CFLAGS += -fprofile-arcs -ftest-coverage -g
+coverage: LDFLAGS += -lgcov
+coverage: re
+	@printf "$(BLUE)[COVERAGE]$(RESET) Built with coverage instrumentation.\n"
+	@printf "$(YELLOW)Run ./$(NAME), then:\n"
+	@printf "  lcov --capture --directory . --output-file coverage.info\n"
+	@printf "  genhtml coverage.info --output-directory out\n$(RESET)"
+
+cppcheck:
+	@printf "$(BLUE)[CPPCHECK]$(RESET) Static analysis in progress...\n"
+	@cppcheck --enable=all --inconclusive --std=c99 --force srcs 2> cppcheck.log || true
+	@printf "$(GREEN)✔ Cppcheck complete. See cppcheck.log for output.$(RESET)\n"
+
+scan-build:
+	@printf "$(BLUE)[CLANG STATIC ANALYZER]$(RESET)\n"
+	@scan-build-12 -o scan-report make re -k
+	@printf "$(GREEN)✔ Report generated at: scan-report/*/*.plist$(RESET)\n"
+	@printf "$(YELLOW)No scan-view? Use:\n  plutil -p scan-report/*/*.plist\n  or view in a plist editor$(RESET)\n"
+
 
 .PHONY: all clean fclean re

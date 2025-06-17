@@ -1,1 +1,3 @@
 .vscode/
+scan-report/
+cppcheck.log

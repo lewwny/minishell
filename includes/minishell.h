@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 17:57:39 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:39:18 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ void	add_token(t_token **arr, unsigned int *count,
 void	set_token_fields(t_token *token, t_token_type type, char *text,
 			int bp[2]);
 void	free_ast(t_ast *ast);
+void	free_redir(t_redir *redir);
 void	free_cmdlst(t_cmd *cmd);
 t_token	*tokenize_to_pratt(t_ctx *args);
 t_token	*advance_token(void);
