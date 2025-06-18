@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 09:18:17 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:28:26 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static int	handle_input(void)
 	}
 	add_history(_data()->input);
 	parsing(_data()->input);
-	_data()->exit_code = 0;
 	return (2);
 }
 
@@ -76,11 +75,6 @@ static int	main_loop(void)
 		return (0);
 	if (input_status == 1)
 		return (1);
-	if (_data()->exit_code)
-	{
-		main_helper();
-		return (1);
-	}
 	exec_cmds(_data()->cmds);
 	main_helper();
 	return (1);

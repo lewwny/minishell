@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 18:38:30 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 10:36:42 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static char	*get_cd_path(void)
 		if (!path)
 		{
 			ft_dprintf(2, "cd: HOME not set\n");
-			_data()->exit_code = 1;
 			return (NULL);
 		}
 	}
@@ -32,7 +31,6 @@ static char	*get_cd_path(void)
 		if (_data()->cmds->args[2])
 		{
 			ft_dprintf(2, "cd: too many arguments\n");
-			_data()->exit_code = 1;
 			return (NULL);
 		}
 	}
@@ -55,14 +53,18 @@ void	cd_builtin(void)
 	if (!path)
 	{
 		free(oldpwd);
+		_data()->exit_code = 1;
 		return ;
 	}
 	if (chdir(path) != 0)
 	{
 		perror("cd");
 		_data()->exit_code = 1;
+		free(oldpwd);
+		return ;
 	}
 	else
 		change_oldpwd(oldpwd);
 	free(oldpwd);
+	_data()->exit_code = 0;
 }

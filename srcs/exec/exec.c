@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:28:35 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void exec_cmds(t_cmd *cmd)
 	int   in_fd  = 0;
 	t_cmd *cur   = cmd;
 	int   status;
+	int		did_fork;
 
 	while (cur)
 	{
@@ -100,12 +101,11 @@ void exec_cmds(t_cmd *cmd)
 				}
 			}
 		}
-		exec_single_cmd(cur, &in_fd, _data()->fd, _data()->is_last);
+		did_fork = exec_single_cmd(cur, &in_fd, _data()->fd, _data()->is_last);
 		if (is_builtin(cur->args[0]) && !cur->next)
 			break ;
-
 		cur = cur->next;
 	}
-
-	wait_for_children(&status);
+	if (did_fork)
+		wait_for_children(&status);
 }

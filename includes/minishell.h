@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 17:52:40 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:27:03 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last);
 void	cleanup_fds(int *in_fd, int *fd, int is_last);
 void	free_cmd_path(void);
 void	wait_for_children(int *status);
-void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last);
+int		exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last);
 void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data);
 void	get_cmd(char *cmd);
 char	*get_env_value(const char *key);
