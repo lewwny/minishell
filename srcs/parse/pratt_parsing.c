@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/18 14:55:50 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:21:39 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ t_ctx	*collect_word_fragments(const char *line, unsigned int *i, size_t *count)
 
 	fragments = malloc(sizeof(t_ctx) * cap);
 	if (!fragments)
-		return NULL;
-
+		malloc_error();
 	while (line[*i]
 		&& !ft_isspace(line[*i])
 		&& !ft_strchr("|<>", line[*i]))
@@ -161,7 +160,7 @@ static bool	process_token(unsigned int *cap, unsigned int *count,
 	}
 	ctx = join_fragments(frags, frag_count);
 	free(frags);
-	if (!ctx.arg || ctx.arg[0] == '\0')
+	if (!ctx.arg)
 	{
 		free(ctx.arg);
 		return (false);
