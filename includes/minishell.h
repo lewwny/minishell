@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 17:52:40 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:48:57 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct s_data
 	int		fd[2];
 	pid_t	pid;
 	char	*old_pwd;
+	bool	has_escaped;
 }	t_data;
 
 int		only_space(char *str);
@@ -260,4 +261,5 @@ void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok);
 t_cmd	*new_cmd(void);
 char	**copy_args(char **src);
 char	**get_args_from_ctx(t_ctx *ctx);
+
 #endif

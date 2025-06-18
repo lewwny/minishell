@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:01:28 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 17:04:12 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 10:36:20 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_ctx_str(void)
 	m->ctx = NULL;
 }
 
-static void	ensure_capacity(unsigned int *cap, unsigned int *c, t_data *m)
+void	ensure_capacity(unsigned int *cap, unsigned int *c, t_data *m)
 {
 	size_t	i;
 
