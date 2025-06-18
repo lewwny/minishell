@@ -6,11 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 11:01:17 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/10 15:46:08 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:33:41 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static char	*extract_env_key(const char *key_start, char **key_end)
 {

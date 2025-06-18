@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 17:23:01 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 10:04:10 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last)
 {
 	pid_t	pid;
 
 	pid = fork();
+	signal_handler(2);
 	if (pid == 0)
 	{
 		if (!is_last)
@@ -26,6 +27,8 @@ void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last)
 	}
 	else if (pid < 0)
 		perror("fork");
+	signal_handler(0);
+	_data()->pid = pid;
 }
 
 void	cleanup_fds(int *in_fd, int *fd, int is_last)
@@ -56,21 +59,32 @@ void	free_cmd_path(void)
 
 void	wait_for_children(int *status)
 {
-	while (wait(status) > 0)
+	waitpid(_data()->pid, status, 0);
+	while (wait(NULL) > 0)
 		;
-	if (WIFEXITED(*status))
+	if (_data()->pid)
 		_data()->exit_code = WEXITSTATUS(*status);
-	else
-		_data()->exit_code = 1;
 }
 
 void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
 {
-	get_cmd(cur->args[0]);
-	if (is_builtin(cur->args[0]) && !cur->next)
+	struct stat	st;
+
+	if (stat(cur->args[0], &st) == 0 && S_ISDIR(st.st_mode))
 	{
-		exec_builtins(cur);
+		write(2, "minishell: is a directory\n", 27);
+		_data()->exit_code = 126;
 		free_cmd_path();
+		return ;
+	}
+	get_cmd(cur->args[0]);
+	if ((ft_strcmp(cur->args[0], "exit") == 0
+			|| ft_strcmp(cur->args[0], "cd") == 0
+			|| ft_strcmp(cur->args[0], "unset") == 0
+			|| ft_strcmp(cur->args[0], "export") == 0) && !cur->next)
+	{
+		free_cmd_path();
+		exec_builtins(cur);
 		return ;
 	}
 	handle_child_process(cur, *in_fd, fd, is_last);

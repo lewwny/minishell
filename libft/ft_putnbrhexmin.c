@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:49:00 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/04 10:12:17 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:25 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_putnbrhexmin(int fd, int n)
 {
-	unsigned int		count;
-	unsigned int		nb;
+	size_t				count;
+	size_t				nb;
 	char				*hex;
 
 	hex = "0123456789abcdef";

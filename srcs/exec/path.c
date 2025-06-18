@@ -6,11 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:24:29 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:08:55 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:34:02 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	put_slash(char **path)
 {

@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 08:40:27 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:40:17 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:22:04 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
+
+void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	void	*new_ptr;
+
+	if (new_size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	ft_bzero(new_ptr, new_size);
+	if (ptr)
+	{
+		if (old_size < new_size)
+			ft_memcpy(new_ptr, ptr, old_size);
+		else
+			ft_memcpy(new_ptr, ptr, new_size);
+		free(ptr);
+	}
+	return (new_ptr);
+}
 
 void	print_tab(char **tab)
 {
@@ -48,10 +72,13 @@ t_cmd	*ft_cmdnew(char **content)
 
 	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!cmd)
+	{
 		malloc_error();
+		return (NULL);
+	}
 	cmd->cmd_path = NULL;
 	cmd->args = content;
 	cmd->next = NULL;
-	cmd->redir = NULL;
+	cmd->redirs = NULL;
 	return (cmd);
 }

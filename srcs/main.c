@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 16:04:43 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 09:18:17 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,68 @@ void	main_help(char **envp)
 
 static void	main_helper(void)
 {
-	free(_data()->input);
-	_data()->input = NULL;
-	free(_data()->prompt);
-	_data()->prompt = NULL;
-	free_split(_data()->env);
-	_data()->env = env_to_array(_data()->env_list);
-	if (!_data()->env)
-		malloc_error();
-	ft_cmdclear(&_data()->cmds);
-	free_split(_data()->path);
-	_data()->path = NULL;
+	t_data	*data;
+
+	data = _data();
+	edit_env(_data()->env_list);
+	free(data->input);
+	data->input = NULL;
+	free_cmdlst(data->cmds);
+	data->cmds = NULL;
+	free(data->prompt);
+	data->prompt = NULL;
+	free_split(data->env);
+	data->env = env_to_array(data->env_list);
+	free_split(data->path);
+	data->path = NULL;
 	get_path();
+	data->error = false;
+	data->early_error = false;
+	data->pos = 0;
+	data->escaped = 0;
+}
+
+static int	handle_input(void)
+{
+	_data()->prompt = get_prompt();
+	_data()->input = readline(_data()->prompt);
+	_data()->escaped = 0;
+	if (!_data()->input)
+	{
+		printf("exit\n");
+		return (0);
+	}
+	if (!only_space(_data()->input))
+		_data()->input[0] = '\0';
+	if (!*_data()->input)
+	{
+		free(_data()->prompt);
+		free(_data()->input);
+		return (1);
+	}
+	add_history(_data()->input);
+	parsing(_data()->input);
+	_data()->exit_code = 0;
+	return (2);
+}
+
+static int	main_loop(void)
+{
+	int	input_status;
+
+	input_status = handle_input();
+	if (input_status == 0)
+		return (0);
+	if (input_status == 1)
+		return (1);
+	if (_data()->exit_code)
+	{
+		main_helper();
+		return (1);
+	}
+	exec_cmds(_data()->cmds);
+	main_helper();
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -43,21 +93,8 @@ int	main(int argc, char **argv, char **envp)
 	main_help(envp);
 	while (1)
 	{
-		_data()->prompt = get_prompt();
-		_data()->input = readline(_data()->prompt);
-		if (!_data()->input)
-		{
-			printf("exit\n");
+		if (!main_loop())
 			break ;
-		}
-		if (!only_space(_data()->input))
-			_data()->input[0] = '\0';
-		if (!*_data()->input)
-			continue ;
-		add_history(_data()->input);
-		parsing(_data()->input);
-		exec_cmds(_data()->cmds);
-		main_helper();
 	}
 	ultimate_free_func();
 	return (0);

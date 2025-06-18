@@ -6,11 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:11:46 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 15:27:45 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:28:01 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	copy_path(char *fullpath, size_t size, const char *path)
 {

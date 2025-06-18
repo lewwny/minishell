@@ -6,46 +6,13 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:45:33 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	get_cmd(char *cmd)
-{
-	t_data	*data;
-	int		i;
-
-	data = _data();
-	if (access(cmd, F_OK) == 0)
-	{
-		data->cmds->cmd_path = ft_strdup(cmd);
-		if (!data->cmds->cmd_path)
-			malloc_error();
-		return ;
-	}
-	i = 0;
-	if (!data->path)
-	{
-		data->cmds->cmd_path = NULL;
-		return ;
-	}
-	while (data->path[i])
-	{
-		data->cmds->cmd_path = ft_strjoin(data->path[i], cmd);
-		if (!data->cmds->cmd_path)
-			malloc_error();
-		if (access(data->cmds->cmd_path, F_OK) == 0)
-			return ;
-		free(data->cmds->cmd_path);
-		data->cmds->cmd_path = NULL;
-		i++;
-	}
-	data->cmds->cmd_path = NULL;
-}
-
-void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
+static void	setup_child_io(int in_fd, int out_fd, t_data *data)
 {
 	if (in_fd != 0)
 	{
@@ -56,6 +23,19 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 	{
 		dup2(out_fd, 1);
 		close(out_fd);
+	}
+	if (!data->is_last)
+		close(_data()->fd[0]);
+}
+
+void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
+{
+	setup_child_io(in_fd, out_fd, data);
+	if (!apply_redirs(cmd->redirs))
+	{
+		ultimate_free_func();
+		perror("minishell: redirection error");
+		exit(1);
 	}
 	get_cmd(cmd->args[0]);
 	if (is_builtin(cmd->args[0]))
@@ -71,26 +51,61 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 	exit(127);
 }
 
-void	exec_cmds(t_cmd *cmd)
-{
-	int		fd[2];
-	int		in_fd;
-	t_cmd	*cur;
-	int		status;
-	int		is_last;
 
-	in_fd = 0;
-	cur = cmd;
-	status = 0;
+int  get_heredoc_fd(const char *limiter)
+{
+	int p[2];
+	char *line;
+
+	if (pipe(p) < 0)
+		return (-1);
+	signal_handler(1);
+	while (1)
+	{
+		line = readline("heredoc> ");
+		if (!line || !ft_strcmp(line, limiter))
+		{
+			free(line);
+			write(2, "minishell: heredoc delimiter not found\n", 40);
+			break;
+		}
+		ft_putendl_fd(line, p[1]);
+		free(line);
+	}
+	signal_handler(0);
+	close(p[1]);
+	return (p[0]);
+}
+
+void exec_cmds(t_cmd *cmd)
+{
+	int   in_fd  = 0;
+	t_cmd *cur   = cmd;
+	int   status;
+
 	while (cur)
 	{
-		is_last = (cur->next == NULL);
-		if (!is_last)
-			pipe(fd);
-		exec_single_cmd(cur, &in_fd, fd, is_last);
+		_data()->is_last = (cur->next == NULL);
+		if (!_data()->is_last)
+			pipe(_data()->fd);
+		for (t_redir *r = cur->redirs; r; r = r->next)
+		{
+			if (r->type == TK_HEREDOC)
+			{
+				r->heredoc_fd = get_heredoc_fd(r->target);
+				if (r->heredoc_fd < 0)
+				{
+					perror("heredoc");
+					exit(1);
+				}
+			}
+		}
+		exec_single_cmd(cur, &in_fd, _data()->fd, _data()->is_last);
 		if (is_builtin(cur->args[0]) && !cur->next)
 			break ;
+
 		cur = cur->next;
 	}
+
 	wait_for_children(&status);
 }

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:35:19 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/06/04 10:13:19 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:57:09 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_puthex(int fd, unsigned long n)
 {
-	unsigned int		count;
+	size_t				count;
 	char				*hex;
 
 	hex = "0123456789abcdef";
@@ -31,7 +31,7 @@ static int	ft_puthex(int fd, unsigned long n)
 
 int	ft_putptr(int fd, void	*ptr)
 {
-	unsigned int	count;
+	size_t			count;
 	unsigned long	addr;
 
 	if (ptr == 0)

@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 10:10:56 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/02 10:33:22 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/15 14:40:12 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	parsing(char *input)
+void	malloc_error(void)
 {
-	char	**args;
-	char	*temp;
-	t_cmd	*cmd;
-	int		i;
-
-	i = 0;
-	args = ft_split(input, ' ');
-	if (!args)
-		malloc_error();
-	while (args[i])
-	{
-		if (ft_strchr(args[i], '$'))
-		{
-			temp = replace_env_vars(args[i]);
-			free(args[i]);
-			args[i] = temp;
-		}
-		i++;
-	}
-	cmd = ft_cmdnew(args);
-	if (!cmd)
-		malloc_error();
-	_data()->cmds = cmd;
+	ultimate_free_func();
+	perror("malloc");
+	exit(1);
 }

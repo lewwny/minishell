@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	isspace(char c)
+static int	ft_isspace(char c)
 {
 	if ((c == 32) || (c >= 9 && c <= 13))
 		return (1);
@@ -26,7 +26,7 @@ long	ft_atoi(const char *str)
 	i = 0;
 	neg = 1;
 	res = 0;
-	while (isspace(str[i]))
+	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{

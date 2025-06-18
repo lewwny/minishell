@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   oldpwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 15:07:23 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:07:38 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/15 14:09:56 by lengarci          #+#    #+#             */
+/*   Updated: 2025/06/15 14:51:56 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-char	*get_env_value(const char *key)
+void	change_oldpwd(char *oldpwd)
 {
 	t_env	*env;
-	char	*value;
+	t_env	*new_node;
 
 	env = _data()->env_list;
 	while (env)
 	{
-		if (ft_strcmp(env->key, key) == 0)
+		if (ft_strcmp(env->key, "OLDPWD") == 0)
 		{
-			value = ft_strdup(env->value);
-			if (!value)
-				malloc_error();
-			return (value);
+			free(env->value);
+			env->value = ft_strdup(oldpwd);
+			return ;
 		}
 		env = env->next;
 	}
-	return (NULL);
+	if (!env)
+	{
+		new_node = create_env_node("OLDPWD");
+		new_node->value = ft_strdup(oldpwd);
+		new_node->next = _data()->env_list;
+		_data()->env_list = new_node;
+	}
 }

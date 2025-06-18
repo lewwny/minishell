@@ -6,27 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:20:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/10 15:43:22 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:32:05 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-static char	*get_key(char *arg)
-{
-	char	*eq;
-	char	*tmp;
-
-	eq = ft_strchr(arg, '=');
-	if (!eq)
-	{
-		tmp = ft_strdup(arg);
-		if (!tmp)
-			malloc_error();
-		return (tmp);
-	}
-	return (ft_substr(arg, 0, eq - arg));
-}
+#include "../../includes/minishell.h"
 
 static int	in_env(char *key)
 {
@@ -61,7 +45,36 @@ static void	edit_value(char *key, char *value)
 	}
 }
 
-static void	export_update_env(char *key, char *value)
+static t_env	*create_new_env_node(char *key, char *value)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		malloc_error();
+	new_node->key = ft_strdup(key);
+	if (!new_node->key)
+	{
+		free(new_node);
+		malloc_error();
+	}
+	if (value)
+	{
+		new_node->value = ft_strdup(value);
+		if (!new_node->value)
+		{
+			free(new_node->key);
+			free(new_node);
+			malloc_error();
+		}
+	}
+	else
+		new_node->value = NULL;
+	new_node->next = NULL;
+	return (new_node);
+}
+
+static void	add_or_update_env(char *key, char *value)
 {
 	t_env	*new_node;
 
@@ -72,28 +85,7 @@ static void	export_update_env(char *key, char *value)
 	}
 	else
 	{
-		new_node = malloc(sizeof(t_env));
-		if (!new_node)
-			malloc_error();
-		new_node->key = ft_strdup(key);
-		if (!new_node->key)
-		{
-			free(new_node);
-			malloc_error();
-		}
-		if (value)
-		{
-			new_node->value = ft_strdup(value);
-			if (!new_node->value)
-			{
-				free(new_node->key);
-				free(new_node);
-				malloc_error();
-			}
-		}
-		else
-			new_node->value = NULL;
-		new_node->next = NULL;
+		new_node = create_new_env_node(key, value);
 		lst_add_back_env(&_data()->env_list, new_node);
 	}
 }
@@ -103,20 +95,27 @@ void	export_builtin(void)
 	char	*key;
 	char	*value;
 	char	*eq;
+	int		i;
 
+	i = 1;
 	if (_data()->cmds->args[1] == NULL)
 	{
-		print_env_list(_data()->env_list);
+		print_export(_data()->env_list);
 		return ;
 	}
-	if (_data()->cmds->args[1][0] == '\0' || _data()->cmds->args[1][0] == '=')
-		return ;
-	eq = ft_strchr(_data()->cmds->args[1], '=');
-	key = get_key(_data()->cmds->args[1]);
-	if (eq)
-		value = eq + 1;
-	else
-		value = NULL;
-	export_update_env(key, value);
-	free(key);
+	while (_data()->cmds->args[i])
+	{
+		if (_data()->cmds->args[i][0] == '\0' ||
+			_data()->cmds->args[i][0] == '=')
+			return ;
+		eq = ft_strchr(_data()->cmds->args[i], '=');
+		key = get_key(_data()->cmds->args[i]);
+		if (eq)
+			value = eq + 1;
+		else
+			value = NULL;
+		add_or_update_env(key, value);
+		free(key);
+		i++;
+	}
 }

@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 10:33:22 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/05 09:32:39 by lengarci         ###   ########.fr       */
+/*   Created: 2025/06/10 12:02:39 by macauchy          #+#    #+#             */
+/*   Updated: 2025/06/10 12:02:45 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	malloc_error(void)
+int	ft_isspace(char c)
 {
-	ultimate_free_func();
-	perror("malloc");
-	exit(1);
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || \
+			c == '\v' || c == '\f');
 }

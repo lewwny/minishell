@@ -6,11 +6,11 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:35:50 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/04 09:41:39 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:34:59 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	delete_env_node(t_env **env, const char *key)
 {

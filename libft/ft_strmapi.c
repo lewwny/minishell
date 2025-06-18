@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 20:59:01 by lenygarcia        #+#    #+#             */
-/*   Updated: 2025/03/09 21:01:16 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/12 18:18:24 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f)(size_t, char))
 {
-	unsigned int	i;
+	size_t			i;
 	size_t			size;
 	char			*res;
 

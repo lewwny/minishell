@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:28:14 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/09 19:35:49 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/15 14:34:56 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	free_env_list(t_env *env)
 {
@@ -65,7 +65,7 @@ static void	free_data_lists(void)
 	}
 	if (_data()->cmds)
 	{
-		ft_cmdclear(&_data()->cmds);
+		free_cmdlst(_data()->cmds);
 		_data()->cmds = NULL;
 	}
 	if (_data()->prompt)
