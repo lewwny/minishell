@@ -1,13 +1,2 @@
 CHECKLIST de ce qui reste a faire :
--defaut avec les signaux (pas tres tres grave non plus)
--Exit_code for /
--echo "$USER"test
--echo $? | echo $? echo $? ???????
--echo $9HOME
--echo $e hola
--gerer les cas des keys zehma
--export HOLA =bonjour
--cd ~
--max int exit
--echo hole | echo que tal
 -<<a<<b<<c cat (changer le sens des redirs)

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/18 14:09:11 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:55:50 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,6 @@ char **split_on_whitespace(char *line)
 		minishell->args = NULL;
 		minishell->ctx = NULL;
 		minishell->early_error = true;
-		minishell->exit_status = 1;
 		return (NULL);
 	}
 	minishell->args[count] = NULL;

@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:20:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 16:32:05 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:31:13 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,24 @@ static void	add_or_update_env(char *key, char *value)
 	}
 }
 
+static bool	verify_key(t_cmd *cmd)
+{
+	int	i;
+	
+	i = 0;
+	while (cmd->args[i])
+	{
+		if (!ft_isalpha(cmd->args[i][0]) && cmd->args[i][0] != '_')
+		{
+			dprintf(2, "minishell: export: `%s': not a valid identifier\n", cmd->args[i]);
+			_data()->exit_code = 1;
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
 void	export_builtin(void)
 {
 	char	*key;
@@ -103,6 +121,8 @@ void	export_builtin(void)
 		print_export(_data()->env_list);
 		return ;
 	}
+	if (!verify_key(_data()->cmds))
+		return ;
 	while (_data()->cmds->args[i])
 	{
 		if (_data()->cmds->args[i][0] == '\0' ||

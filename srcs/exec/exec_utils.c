@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:50:37 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ void	cleanup_fds(int *in_fd, int *fd, int is_last)
 		*in_fd = fd[0];
 	}
 	else
+	{
+		if (fd[0] != 0)
+			close(fd[0]);
 		*in_fd = 0;
+	}
 }
 
 void	free_cmd_path(void)
@@ -62,7 +66,7 @@ void	wait_for_children(int *status)
 		_data()->exit_code = WEXITSTATUS(*status);
 }
 
-void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
+int	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
 {
 	struct stat	st;
 
@@ -71,7 +75,7 @@ void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
 		write(2, "minishell: is a directory\n", 27);
 		_data()->exit_code = 126;
 		free_cmd_path();
-		return ;
+		return (0);
 	}
 	get_cmd(cur->args[0]);
 	if ((ft_strcmp(cur->args[0], "exit") == 0
@@ -81,9 +85,10 @@ void	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)
 	{
 		free_cmd_path();
 		exec_builtins(cur);
-		return ;
+		return (0);
 	}
 	handle_child_process(cur, *in_fd, fd, is_last);
 	cleanup_fds(in_fd, fd, is_last);
 	free_cmd_path();
+	return (1);
 }

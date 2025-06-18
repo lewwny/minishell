@@ -5,10 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 14:45:42 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/18 10:39:11 by macauchy         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/06/18 14:54:07 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 
 #include "../../includes/minishell.h"
 
@@ -45,33 +48,9 @@ static t_ast	*infix_pipe(t_ast *left, t_token *op)
 	node->ast.pipe.right = parse_expression(op->right_bp);
 	if (!node->ast.pipe.right)
 	{
-		free_ast(node);
+		// free_ast(node);
+		free(node);
 		parser_error_at(op, "Expected right side of pipe", op->text);
-		return (NULL);
-	}
-	return (node);
-}
-
-static t_ast	*infix_logical(t_ast *left, t_token *op)
-{
-	t_ast	*node;
-
-	node = malloc(sizeof(t_ast));
-	if (!node)
-	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
-		exit(EXIT_FAILURE);
-	}
-	if (op->type == TK_AND)
-		node->type = AST_AND;
-	else if (op->type == TK_OR)
-		node->type = AST_OR;
-	node->ast.logical.left = left;
-	node->ast.logical.right = parse_expression(op->right_bp);
-	if (!node->ast.logical.right || _data()->error)
-	{
-		free_ast(node);
-		parser_error_at(op, "Expected right side of logical ope", op->text);
 		return (NULL);
 	}
 	return (node);
@@ -95,6 +74,7 @@ static t_ast	*infix_redirection(t_ast *left, t_token *op)
 	if (!node->ast.redir.target)
 	{
 		free(node);
+		// free_ast(left);
 		return (NULL);
 	}
 	node->ast.redir.child = left;
@@ -105,11 +85,10 @@ t_ast	*parse_infix(t_ast *left, t_token *op)
 {
 	if (op->type == TK_PIPE)
 		return (infix_pipe(left, op));
-	else if (op->type == TK_AND || op->type == TK_OR)
-		return (infix_logical(left, op));
 	if (op->type == TK_REDIR_IN || op->type == TK_REDIR_OUT
 		|| op->type == TK_APPEND || op->type == TK_HEREDOC
-		|| op->type == TK_DUP_IN || op->type == TK_DUP_OUT)
+		|| op->type == TK_DUP_IN || op->type == TK_DUP_OUT
+		|| op->type == TK_AND || op->type == TK_OR)
 		return (infix_redirection(left, op));
 	parser_error_at(op, "Unexpected token in infix", op->text);
 	return (NULL);

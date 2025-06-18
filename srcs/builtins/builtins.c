@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 10:24:02 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:03:14 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	exec_builtins(t_cmd *cmd)
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
 		export_builtin();
 	else if (ft_strcmp(cmd->args[0], "echo") == 0)
-		echo_builtin(_data()->cmds);
+		echo_builtin(cmd);
 	else if (ft_strcmp(cmd->args[0], "ls") == 0)
-		ls_builtin(_data()->cmds);
+		ls_builtin(cmd);
 }

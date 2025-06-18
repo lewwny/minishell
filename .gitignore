@@ -1,3 +1,5 @@
+readline.supp
+run.sh
 .vscode/
 scan-report/
 cppcheck.log
