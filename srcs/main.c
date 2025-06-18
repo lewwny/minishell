@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 09:22:09 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 09:18:17 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	handle_input(void)
 {
 	_data()->prompt = get_prompt();
 	_data()->input = readline(_data()->prompt);
-	_data()->exit_code = 0;
 	_data()->escaped = 0;
 	if (!_data()->input)
 	{
@@ -64,6 +63,7 @@ static int	handle_input(void)
 	}
 	add_history(_data()->input);
 	parsing(_data()->input);
+	_data()->exit_code = 0;
 	return (2);
 }
 

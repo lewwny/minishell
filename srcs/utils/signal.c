@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:21:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 18:43:31 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/18 09:15:05 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ void	signal_handler(int sig)
 		signal(SIGINT, heredoc_sigint_handler);
 		signal(SIGQUIT, sigquit_handler);
 	}
+	signal(SIGTSTP, SIG_IGN);
 }

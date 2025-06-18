@@ -5,7 +5,6 @@ CHECKLIST de ce qui reste a faire :
 -echo $? | echo $? echo $? ???????
 -echo $9HOME
 -echo $e hola
--bloquer ctrl z
 -gerer les cas des keys zehma
 -export HOLA =bonjour
 -cd ~
