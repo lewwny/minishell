@@ -5,13 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/18 14:54:07 by macauchy         ###   ########.fr       */
+/*   Created: 2025/06/18 15:38:51 by macauchy          #+#    #+#             */
+/*   Updated: 2025/06/18 15:38:53 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #include "../../includes/minishell.h"
 
