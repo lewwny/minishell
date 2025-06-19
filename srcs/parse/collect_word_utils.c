@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collect_word_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:56:40 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:15:46 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:19:59 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,3 @@ bool	collect_quoted_ctx(t_ctx *ctx, const char *str, char quote,
 	(*i)++;
 	return (true);
 }
-

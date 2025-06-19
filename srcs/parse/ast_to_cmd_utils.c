@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_to_cmd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:52:25 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 12:55:11 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:19:49 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,3 @@ t_ast	*gather_redirs(t_ast *node, t_redir **rlist)
 	}
 	return (node);
 }
-
