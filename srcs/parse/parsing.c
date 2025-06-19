@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 10:04:08 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:00:47 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,12 @@ static void	reverse_redir_list(t_redir **redirs)
 		current->next = prev;
 		prev = current;
 		current = next;
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
+	*redirs = prev;
 	*redirs = prev;
 }
 
