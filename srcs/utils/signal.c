@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:21:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 12:00:08 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:56:13 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 static void	sigint_handler(int sig)
 {
 	(void) sig;
-	if (_data()->input)
-	{
-		free(_data()->input);
-		_data()->input = NULL;
-	}
-	if (_data()->prompt)
-	{
-		free(_data()->prompt);
-		_data()->prompt = NULL;
-	}
 	_data()->exit_code = 130;
 	rl_on_new_line();
 	write(1, "\n", 1);
