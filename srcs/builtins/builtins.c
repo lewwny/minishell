@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 11:23:10 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:25:27 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ static void	echo_builtin(t_cmd *cmd)
 {
 	int	i;
 	int	newline;
-	int	token;
 
-	token = 0;
 	i = echo_skip_options(cmd->args, &newline);
 	while (cmd->args[i])
 	{
@@ -79,7 +77,6 @@ static void	echo_builtin(t_cmd *cmd)
 		if (cmd->args[i + 1])
 			ft_putchari(1, ' ');
 		i++;
-		token = 1;
 	}
 	if (newline)
 		ft_putchari(1, '\n');

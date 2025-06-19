@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 11:28:26 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:59:03 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_signal_status = 0;
 
 void	main_help(char **envp)
 {
@@ -25,7 +27,7 @@ static void	main_helper(void)
 	t_data	*data;
 
 	data = _data();
-	edit_env(_data()->env_list);
+	edit_env();
 	free(data->input);
 	data->input = NULL;
 	free_cmdlst(data->cmds);

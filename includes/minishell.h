@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:16:22 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:59:19 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@
 # include <sys/ioctl.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <errno.h>
 
 # define COLOR_GREEN "\001\033[0;32m\002"
 # define COLOR_RESET "\001\033[0m\002"
 # define COLOR_RED "\001\033[0;31m\002"
+
+extern int	g_signal_status;
 
 typedef enum e_token_type
 {
@@ -208,7 +211,7 @@ int		exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last);
 void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data);
 void	get_cmd(char *cmd);
 char	*get_env_value(const char *key);
-void	edit_env(t_env *env_list);
+void	edit_env(void);
 t_env	*create_env_node(char *env);
 char	*get_key(char *arg);
 void	change_oldpwd(char *oldpwd);
@@ -219,6 +222,7 @@ int		in_env(char *key);
 void	edit_value(char *key, char *value);
 int		get_heredoc_fd(const char *limiter, int *tmp);
 int		check_all_files(t_redir *redirs);
+void	split_env(const char *env, char **key, char **value);
 
 // Parsing functions
 

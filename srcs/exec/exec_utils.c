@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 13:50:37 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:02:14 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	wait_for_children(int *status)
 		;
 	if (_data()->pid)
 		_data()->exit_code = WEXITSTATUS(*status);
+	if (g_signal_status != 0)
+	{
+		_data()->exit_code = g_signal_status;
+		g_signal_status = 0;
+	}
 }
 
 int	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)

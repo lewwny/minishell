@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:26:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:33:26 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:54:12 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,22 @@ t_env	*create_env_node(char *env)
 	new_node = alloc_env_node(kv);
 	free_split(kv);
 	return (new_node);
+}
+
+void	split_env(const char *env, char **key, char **value)
+{
+	char	**kv;
+
+	*key = NULL;
+	*value = NULL;
+	kv = ft_split(env, '=');
+	if (!kv || !kv[0])
+	{
+		free_split(kv);
+		return ;
+	}
+	*key = ft_strdup(kv[0]);
+	if (kv[1])
+		*value = ft_strdup(kv[1]);
+	free_split(kv);
 }

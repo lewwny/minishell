@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:43:32 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 11:45:26 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:26:10 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ static void	close_heredocs(t_redir *r)
 
 static int	handle_redir_and_files(t_cmd *cur, int *in_fd, int *tmp)
 {
-	t_redir	*r;
-
-	r = cur->redirs;
 	ft_bzero(tmp, sizeof(int) * 1024);
 	if (!check_all_files(cur->redirs))
 	{
