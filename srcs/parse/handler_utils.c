@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:01:28 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 12:20:19 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:59:16 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_ctx_str(void)
 	m->ctx = NULL;
 }
 
-void	ensure_capacity(unsigned int *cap, unsigned int *c, t_data *m)
+static void	ensure_capacityi(unsigned int *cap, unsigned int *c, t_data *m)
 {
 	size_t	i;
 
@@ -64,7 +64,7 @@ void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok)
 	t_data	*m;
 
 	m = _data();
-	ensure_capacity(cap, c, m);
+	ensure_capacityi(cap, c, m);
 	m->args[*c] = new_tok->arg;
 	if (m->ctx[*c].arg)
 		free(m->ctx[*c].arg);

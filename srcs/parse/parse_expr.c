@@ -6,19 +6,11 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:28:28 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 12:20:19 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:18:33 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_token	*advance_token(void)
-{
-	t_data	*minishell;
-
-	minishell = _data();
-	return (&minishell->tokens[minishell->pos++]);
-}
 
 t_token	*peek_token(void)
 {

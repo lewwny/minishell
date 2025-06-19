@@ -6,7 +6,7 @@
 #    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/19 11:44:50 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/19 13:14:42 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,9 @@ FILES		= builtins/builtins.c builtins/builtins_func.c builtins/cd_builtins.c \
 			parse/parsing.c parse/pratt_handler.c parse/pratt_parsing.c \
 			parse/tokenizer.c parse/tokenizer2.c parse/ast_utils.c \
 			parse/handler_utils.c parse/args_ctx.c parse/collect_word.c\
+			parse/ast_to_cmd_utils.c parse/collect_word_utils.c \
+			parse/pratt_parsing_utils.c parse/pratt_parsing_utils2.c \
+			parse/parse_utils2.c \
 			\
 			main.c
 SRC_DIR		= srcs

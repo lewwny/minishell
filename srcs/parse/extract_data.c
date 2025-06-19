@@ -6,31 +6,11 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:13:04 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 12:20:18 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:18:33 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	handle_double_quote_escape(const char *str, unsigned int *j,
-			unsigned int *p, t_ctx *buff)
-{
-	_data()->escaped++;
-	if (str[*j + 1] == '$')
-		buff->is_escaped = true;
-	(*j)++;
-	buff->arg[(*p)++] = str[*j];
-	(*j)++;
-}
-
-static void	handle_single_quote_dollar(unsigned int *j, unsigned int *p,
-			t_ctx *buff)
-{
-	_data()->escaped++;
-	buff->is_escaped = true;
-	buff->arg[(*p)++] = '$';
-	(*j)++;
-}
 
 static unsigned int	copy_quoted_content(const char *str, char quote,
 		unsigned int end, t_ctx *buff)

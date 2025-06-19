@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 11:50:22 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:16:22 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,5 +265,27 @@ void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok);
 t_cmd	*new_cmd(void);
 char	**copy_args(char **src);
 char	**get_args_from_ctx(t_ctx *ctx);
+t_ast	*gather_redirs(t_ast *node, t_redir **rlist);
+t_cmd	*flatten_pipe(t_ast *root);
+bool	collect_quoted_ctx(t_ctx *ctx, const char *str, char quote,
+			unsigned int *i);
+bool	ensure_capacity(char **buf, unsigned int *cap, unsigned int len);
+t_ctx	*collect_word_fragments(const char *line, unsigned int *i,
+			size_t *count);
+void	skip_whitespace(const char *line, unsigned int *i);
+void	join_fragments_env(t_ctx *frag);
+t_ctx	join_fragments(t_ctx *frags, size_t count);
+bool	process_token(unsigned int *cap, unsigned int *count,
+			char *line, unsigned int *i);
+bool	add_fragment(t_ctx **fragments, size_t *idx, size_t *cap,
+			t_ctx *frag);
+bool	collect_one_fragment(const char *line, unsigned int *i, t_ctx *frag);
+t_ctx	*alloc_fragments(size_t cap);
+bool	ensure_str_capacity(char **buf, unsigned int *cap, unsigned int needed);
+bool	init_fragment(t_ctx *frag);
+void	handle_double_quote_escape(const char *str, unsigned int *j,
+			unsigned int *p, t_ctx *buff);
+void	handle_single_quote_dollar(unsigned int *j, unsigned int *p,
+			t_ctx *buff);
 
 #endif
