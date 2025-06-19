@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/18 15:21:39 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:50:01 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ t_ctx	*collect_word_fragments(const char *line, unsigned int *i, size_t *count)
 
 	fragments = malloc(sizeof(t_ctx) * cap);
 	if (!fragments)
+	{
 		malloc_error();
+		return (NULL);
+	}
 	while (line[*i]
 		&& !ft_isspace(line[*i])
 		&& !ft_strchr("|<>", line[*i]))
@@ -47,7 +50,10 @@ t_ctx	*collect_word_fragments(const char *line, unsigned int *i, size_t *count)
 		frag.cap = 64;
 		frag.arg = malloc(frag.cap);
 		if (!frag.arg)
-			return NULL;
+		{
+			free(fragments);
+			return (NULL);
+		}
 		if (line[*i] == '\'' || line[*i] == '"')
 		{
 			char quote = line[(*i)++];
@@ -65,7 +71,11 @@ t_ctx	*collect_word_fragments(const char *line, unsigned int *i, size_t *count)
 					frag.is_escaped = true;
 				}
 				if (!ensure_str_capacity(&frag.arg, &frag.cap, frag.len + 2))
-					return NULL;
+				{
+					free(frag.arg);
+					free(fragments);
+					return (NULL);
+				}
 				frag.arg[frag.len++] = line[(*i)++];
 			}
 			if (line[*i] != quote)
@@ -82,7 +92,11 @@ t_ctx	*collect_word_fragments(const char *line, unsigned int *i, size_t *count)
 			while (line[*i] && !ft_isspace(line[*i]) && !ft_strchr("|<>\"\'", line[*i]))
 			{
 				if (!ensure_str_capacity(&frag.arg, &frag.cap, frag.len + 2))
+				{
+					free(frag.arg);
+					free(fragments);	
 					return (NULL);
+				}
 				frag.arg[frag.len++] = line[(*i)++];
 			}
 		}

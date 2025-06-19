@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:51:17 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 14:38:09 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:41:20 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,6 @@ static void	assign_simple_token_type(const char *word, t_token *token)
 		set_token_fields(token, TK_APPEND, (char *)word, (int []){30, 31});
 	else if (!ft_strcmp(word, "<<"))
 		set_token_fields(token, TK_HEREDOC, (char *)word, (int []){30, 31});
-	else if (!ft_strcmp(word, "&&"))
-		set_token_fields(token, TK_AND, (char *)word, (int []){20, 21});
-	else if (!ft_strcmp(word, "||"))
-		set_token_fields(token, TK_OR, (char *)word, (int []){20, 21});
 	else
 		set_token_fields(token, TK_WORD, (char *)word, (int []){0, 0});
 }
