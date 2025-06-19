@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:01:28 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 10:36:20 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:20:19 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	free_ctx_str(void)
 {
 	t_data	*m;
 	size_t	i;
-	
+
 	m = _data();
 	i = 0;
 	if (!m->ctx)
-		return;
+		return ;
 	while (m->ctx[i].arg)
 	{
 		free(m->ctx[i].arg);

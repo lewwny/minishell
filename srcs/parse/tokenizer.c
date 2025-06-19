@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:26:00 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/17 11:11:42 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:20:19 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	add_token(t_token **arr, unsigned int *count,
 }
 
 int	process_regular_token(char **args, int i, t_token **tokens,
-			unsigned int *count, unsigned int *cap)
+			unsigned int *tab[2])
 {
 	t_token	new_token;
 	char	*word;
@@ -44,7 +44,7 @@ int	process_regular_token(char **args, int i, t_token **tokens,
 	(void)word;
 	ctx_word = _data()->ctx[i].arg;
 	assign_token_type_and_bp(ctx_word, &new_token);
-	add_token(tokens, count, cap, new_token);
+	add_token(tokens, tab[0], tab[1], new_token);
 	return (1);
 }
 
@@ -65,7 +65,7 @@ static void	process_args(char **args, t_token **tokens, unsigned int *count,
 	i = 0;
 	while (_data()->ctx[i].arg && !_data()->error)
 	{
-		process_regular_token(args, i, tokens, count, cap);
+		process_regular_token(args, i, tokens, (unsigned int *[]){count, cap});
 		i++;
 	}
 }

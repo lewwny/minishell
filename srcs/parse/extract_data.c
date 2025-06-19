@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:13:04 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/17 11:14:56 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:20:18 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static unsigned int	copy_quoted_content(const char *str, char quote,
 	return (p);
 }
 
-unsigned int	find_closing_quote(const char *str, char quote)
+size_t	find_closing_quote(const char *str, char quote)
 {
-	unsigned int	i;
+	size_t	i;
 
 	i = 1;
 	while (str[i] && str[i] != quote)
@@ -80,8 +80,8 @@ unsigned int	find_closing_quote(const char *str, char quote)
 
 t_ctx	collect_quoted(const char *str, char quote, bool *unclosed)
 {
-	unsigned int	end;
-	t_ctx			buff;
+	size_t	end;
+	t_ctx	buff;
 
 	ft_bzero(&buff, sizeof(buff));
 	end = find_closing_quote(str, quote);

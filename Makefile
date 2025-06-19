@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
+#    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/18 12:10:23 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/19 11:44:50 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,10 @@ YELLOW		= \033[1;33m
 
 FILES		= builtins/builtins.c builtins/builtins_func.c builtins/cd_builtins.c \
 			builtins/export_builtins.c builtins/export_utils.c builtins/ls_builtins.c \
+			builtins/export_utils2.c \
 			\
 			exec/exec.c exec/exec_utils.c exec/path.c exec/redir.c exec/get_cmd.c \
+			exec/heredoc.c exec/exec_cmds.c\
 			\
 			env/env.c env/env_utils.c env/expand.c env/oldpwd.c env/create_env_node.c \
 			\

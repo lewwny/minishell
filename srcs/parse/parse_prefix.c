@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:01:44 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/18 15:39:00 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:20:19 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static t_ast	*prefix_redir(t_token *tok)
 		return (NULL);
 	return (create_redir_node(tok, file_tok, cmd));
 }
-
 
 t_ast	*parse_prefix(t_token *tok)
 {

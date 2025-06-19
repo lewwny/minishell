@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:31:09 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 11:24:27 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:27:07 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*get_key(char *arg)
-{
-	char	*eq;
-	char	*tmp;
-
-	eq = ft_strchr(arg, '=');
-	if (!eq)
-	{
-		tmp = ft_strdup(arg);
-		if (!tmp)
-			malloc_error();
-		return (tmp);
-	}
-	return (ft_substr(arg, 0, eq - arg));
-}
 
 char	*get_env_value(const char *key)
 {
@@ -86,15 +70,14 @@ static void	sort_env_array(t_env **arr, int count)
 	}
 }
 
-void	print_export(t_env *env)
+static t_env	**enve_to_array(t_env *env, int *count)
 {
-	int		count;
-	int		i;
 	t_env	**arr;
 	t_env	*tmp;
+	int		i;
 
-	count = env_list_size(env);
-	arr = malloc(sizeof(t_env *) * count);
+	*count = env_list_size(env);
+	arr = malloc(sizeof(t_env *) * (*count));
 	if (!arr)
 		malloc_error();
 	tmp = env;
@@ -104,7 +87,17 @@ void	print_export(t_env *env)
 		arr[i++] = tmp;
 		tmp = tmp->next;
 	}
-	sort_env_array(arr, count);
+	sort_env_array(arr, *count);
+	return (arr);
+}
+
+void	print_export(t_env *env)
+{
+	int		count;
+	int		i;
+	t_env	**arr;
+
+	arr = enve_to_array(env, &count);
 	i = 0;
 	while (i < count)
 	{

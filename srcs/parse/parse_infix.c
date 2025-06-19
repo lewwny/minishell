@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:38:51 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/18 15:38:53 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:20:19 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static t_ast	*infix_pipe(t_ast *left, t_token *op)
 	node->ast.pipe.right = parse_expression(op->right_bp);
 	if (!node->ast.pipe.right)
 	{
-		// free_ast(node);
 		free(node);
 		parser_error_at(op, "Expected right side of pipe", op->text);
 		return (NULL);
@@ -71,7 +70,6 @@ static t_ast	*infix_redirection(t_ast *left, t_token *op)
 	if (!node->ast.redir.target)
 	{
 		free(node);
-		// free_ast(left);
 		return (NULL);
 	}
 	node->ast.redir.child = left;

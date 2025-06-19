@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 14:50:15 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:50:22 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,13 +212,17 @@ void	edit_env(t_env *env_list);
 t_env	*create_env_node(char *env);
 char	*get_key(char *arg);
 void	change_oldpwd(char *oldpwd);
-int		apply_redirs(t_redir *redirs);
+int		apply_redir(t_redir *r);
 void	here_doc_manage(t_redir *redir);
 void	print_export(t_env *env);
+int		in_env(char *key);
+void	edit_value(char *key, char *value);
+int		get_heredoc_fd(const char *limiter, int *tmp);
+int		check_all_files(t_redir *redirs);
 
 // Parsing functions
 
-unsigned int	find_closing_quote(const char *str, char quote);
+size_t	find_closing_quote(const char *str, char quote);
 void	free_ms_ctx(void);
 void	free_ctx_str(void);
 void	free_token_array(void);

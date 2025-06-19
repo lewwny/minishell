@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 10:50:01 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:20:19 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,105 +29,172 @@ bool	ensure_str_capacity(char **buf, unsigned int *cap, unsigned int needed)
 	return (true);
 }
 
-t_ctx	*collect_word_fragments(const char *line, unsigned int *i, size_t *count)
+t_ctx	*alloc_fragments(size_t cap)
 {
-	t_ctx	*fragments = NULL;
-	size_t	cap = 4;
-	size_t	idx = 0;
+	t_ctx	*fragments;
 
 	fragments = malloc(sizeof(t_ctx) * cap);
 	if (!fragments)
-	{
 		malloc_error();
-		return (NULL);
-	}
-	while (line[*i]
-		&& !ft_isspace(line[*i])
-		&& !ft_strchr("|<>", line[*i]))
+	return (fragments);
+}
+
+bool	init_fragment(t_ctx *frag)
+{
+	ft_bzero(frag, sizeof(*frag));
+	frag->cap = 64;
+	frag->arg = malloc(frag->cap);
+	if (!frag->arg)
+		return (false);
+	return (true);
+}
+
+static bool	handle_quoted_inner(const char *line, unsigned int *i, t_ctx *frag,
+		char quote)
+{
+	while (line[*i] && line[*i] != quote)
 	{
-		t_ctx frag;
-		ft_bzero(&frag, sizeof(frag));
-		frag.cap = 64;
-		frag.arg = malloc(frag.cap);
-		if (!frag.arg)
+		if (quote == '"' && line[*i] == '\\'
+			&& ft_strchr("\"\\$`", line[*i + 1]))
+		{
+			if (line[*i + 1] == '$')
+				frag->is_escaped = true;
+			(*i)++;
+		}
+		else if (quote == '\'' && line[*i] == '$')
+			frag->is_escaped = true;
+		if (!ensure_str_capacity(&frag->arg, &frag->cap, frag->len + 2))
+			return (false);
+		frag->arg[frag->len++] = line[(*i)++];
+	}
+	return (true);
+}
+
+bool	handle_quoted(const char *line, unsigned int *i, t_ctx *frag)
+{
+	char	quote;
+
+	quote = line[(*i)++];
+	if (!handle_quoted_inner(line, i, frag, quote))
+		return (false);
+	if (line[*i] != quote)
+	{
+		frag->unclosed = true;
+		return (false);
+	}
+	(*i)++;
+	return (true);
+}
+
+bool	handle_unquoted(const char *line, unsigned int *i, t_ctx *frag)
+{
+	while (line[*i] && !ft_isspace(line[*i]) && !ft_strchr("|<>\"\'", line[*i]))
+	{
+		if (!ensure_str_capacity(&frag->arg, &frag->cap, frag->len + 2))
+			return (false);
+		frag->arg[frag->len++] = line[(*i)++];
+	}
+	return (true);
+}
+
+static bool	add_fragment(t_ctx **fragments, size_t *idx, size_t *cap,
+		t_ctx *frag)
+{
+	t_ctx	*new;
+
+	if (*idx >= *cap)
+	{
+		*cap *= 2;
+		new = realloc(*fragments, sizeof(t_ctx) * (*cap));
+		if (!new)
+		{
+			free(frag->arg);
+			free(*fragments);
+			return (false);
+		}
+		*fragments = new;
+	}
+	(*fragments)[(*idx)++] = *frag;
+	return (true);
+}
+
+static bool	collect_one_fragment(const char *line, unsigned int *i, t_ctx *frag)
+{
+	if (!init_fragment(frag))
+		return (false);
+	if (line[*i] == '\'' || line[*i] == '"')
+	{
+		if (!handle_quoted(line, i, frag))
+		{
+			free(frag->arg);
+			return (false);
+		}
+	}
+	else
+	{
+		if (!handle_unquoted(line, i, frag))
+		{
+			free(frag->arg);
+			return (false);
+		}
+	}
+	frag->arg[frag->len] = '\0';
+	return (true);
+}
+
+t_ctx	*collect_word_fragments(const char *line, unsigned int *i,
+		size_t *count)
+{
+	size_t	cap;
+	size_t	idx;
+	t_ctx	frag;
+	t_ctx	*fragments;
+
+	cap = 4;
+	idx = 0;
+	fragments = alloc_fragments(cap);
+	if (!fragments)
+		return (NULL);
+	while (line[*i] && !ft_isspace(line[*i]) && !ft_strchr("|<>", line[*i]))
+	{
+		if (!collect_one_fragment(line, i, &frag))
 		{
 			free(fragments);
 			return (NULL);
 		}
-		if (line[*i] == '\'' || line[*i] == '"')
-		{
-			char quote = line[(*i)++];
-			while (line[*i] && line[*i] != quote)
-			{
-				if (quote == '"' && line[*i] == '\\'
-					&& ft_strchr("\"\\$`", line[*i + 1]))
-				{
-					if (line[*i + 1] == '$')
-						frag.is_escaped = true;
-					(*i)++;
-				}
-				else if (quote == '\'' && line[*i] == '$')
-				{
-					frag.is_escaped = true;
-				}
-				if (!ensure_str_capacity(&frag.arg, &frag.cap, frag.len + 2))
-				{
-					free(frag.arg);
-					free(fragments);
-					return (NULL);
-				}
-				frag.arg[frag.len++] = line[(*i)++];
-			}
-			if (line[*i] != quote)
-			{
-				frag.unclosed = true;
-				free(frag.arg);
-				free(fragments);
-				return NULL;
-			}
-			(*i)++;
-		}
-		else
-		{
-			while (line[*i] && !ft_isspace(line[*i]) && !ft_strchr("|<>\"\'", line[*i]))
-			{
-				if (!ensure_str_capacity(&frag.arg, &frag.cap, frag.len + 2))
-				{
-					free(frag.arg);
-					free(fragments);	
-					return (NULL);
-				}
-				frag.arg[frag.len++] = line[(*i)++];
-			}
-		}
-		frag.arg[frag.len] = '\0';
-		if (idx >= cap)
-		{
-			cap *= 2;
-			t_ctx *new = realloc(fragments, sizeof(t_ctx) * cap);
-			if (!new)
-				return (NULL);
-			fragments = new;
-		}
-		fragments[idx++] = frag;
+		if (!add_fragment(&fragments, &idx, &cap, &frag))
+			return (NULL);
 	}
 	*count = idx;
 	return (fragments);
 }
 
-static void skip_whitespace(const char *line, unsigned int *i)
+static void	skip_whitespace(const char *line, unsigned int *i)
 {
 	while (line[*i] && ft_isspace(line[*i]))
 		(*i)++;
 }
 
-static t_ctx join_fragments(t_ctx *frags, size_t count)
+static void	join_fragments_env(t_ctx *frag)
+{
+	char	*tmp_env;
+
+	if (!frag->is_escaped && ft_strchr(frag->arg, '$'))
+	{
+		tmp_env = frag->arg;
+		frag->arg = replace_env_vars(tmp_env);
+		free(tmp_env);
+	}
+	else if (frag->is_escaped)
+		_data()->has_escaped = true;
+}
+
+static t_ctx	join_fragments(t_ctx *frags, size_t count)
 {
 	t_ctx	joined;
 	char	*result;
 	size_t	i;
 	char	*tmp;
-	char	*tmp_env;
 
 	i = 0;
 	result = ft_strdup("");
@@ -138,14 +205,7 @@ static t_ctx join_fragments(t_ctx *frags, size_t count)
 	while (i < count)
 	{
 		tmp = result;
-		if (!frags[i].is_escaped && ft_strchr(frags[i].arg, '$'))
-		{
-			tmp_env = frags[i].arg;
-			frags[i].arg = replace_env_vars(tmp_env);
-			free(tmp_env);
-		}
-		else if (frags[i].is_escaped)
-			_data()->has_escaped = true;
+		join_fragments_env(&frags[i]);
 		result = ft_strjoin(result, frags[i].arg);
 		free(tmp);
 		free(frags[i].arg);
@@ -183,26 +243,28 @@ static bool	process_token(unsigned int *cap, unsigned int *count,
 	return (true);
 }
 
-static int split_on_whitespace_loop(char *line, unsigned int *cap,
+static int	split_on_whitespace_loop(char *line, unsigned int *cap,
 	unsigned int *count)
 {
-	unsigned int i = 0;
-	unsigned int size = ft_strlen(line);
+	unsigned int	i;
+	unsigned int	size;
 
+	i = 0;
+	size = ft_strlen(line);
 	while (line[i])
 	{
 		skip_whitespace(line, &i);
 		if (!line[i])
-			break;
+			break ;
 		if (!process_token(cap, count, line, &i))
 			return (0);
 		if (i >= size)
-			break;
+			break ;
 	}
 	return (1);
 }
 
-static bool init_split_args(unsigned int *cap, t_data **minishell)
+static bool	init_split_args(unsigned int *cap, t_data **minishell)
 {
 	*cap = 8;
 	*minishell = _data();
@@ -220,12 +282,13 @@ static bool init_split_args(unsigned int *cap, t_data **minishell)
 	return (true);
 }
 
-char **split_on_whitespace(char *line)
+char	**split_on_whitespace(char *line)
 {
-	unsigned int cap;
-	unsigned int count = 0;
-	t_data *minishell;
+	unsigned int	cap;
+	unsigned int	count;
+	t_data			*minishell;
 
+	count = 0;
 	if (!init_split_args(&cap, &minishell))
 		return (NULL);
 	if (!split_on_whitespace_loop(line, &cap, &count))

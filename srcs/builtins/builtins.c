@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:05:59 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 14:03:14 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:23:10 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,30 @@ static bool	is_option(char *arg)
 	return (true);
 }
 
+static int	echo_skip_options(char **args, int *newline)
+{
+	int	i;
+
+	i = 1;
+	*newline = 1;
+	while (args[i] && is_option(args[i]))
+	{
+		*newline = 0;
+		i++;
+	}
+	return (i);
+}
+
 static void	echo_builtin(t_cmd *cmd)
 {
 	int	i;
 	int	newline;
 	int	token;
 
-	i = 1;
 	token = 0;
-	newline = 1;
-	if (cmd->args[1] && is_option(cmd->args[1]))
-	{
-		newline = 0;
-		i++;
-	}
+	i = echo_skip_options(cmd->args, &newline);
 	while (cmd->args[i])
 	{
-		if (is_option(cmd->args[i]) && !token)
-		{
-			i++;
-			continue ;
-		}
 		ft_putstri(1, cmd->args[i]);
 		if (cmd->args[i + 1])
 			ft_putchari(1, ' ');

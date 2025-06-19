@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 10:36:42 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:24:04 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,21 @@ static char	*get_cd_path(void)
 	return (path);
 }
 
+static int	change_directory(const char *path, char *oldpwd)
+{
+	if (chdir(path) != 0)
+	{
+		perror("cd");
+		_data()->exit_code = 1;
+		free(oldpwd);
+		return (1);
+	}
+	change_oldpwd(oldpwd);
+	free(oldpwd);
+	_data()->exit_code = 0;
+	return (0);
+}
+
 void	cd_builtin(void)
 {
 	char	*path;
@@ -56,15 +71,5 @@ void	cd_builtin(void)
 		_data()->exit_code = 1;
 		return ;
 	}
-	if (chdir(path) != 0)
-	{
-		perror("cd");
-		_data()->exit_code = 1;
-		free(oldpwd);
-		return ;
-	}
-	else
-		change_oldpwd(oldpwd);
-	free(oldpwd);
-	_data()->exit_code = 0;
+	change_directory(path, oldpwd);
 }

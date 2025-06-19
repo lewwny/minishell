@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:07:23 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 14:33:32 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/19 12:20:18 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	in_env(const char *key)
+static int	in_enve(const char *key)
 {
 	t_env	*env;
 
@@ -26,7 +26,7 @@ static int	in_env(const char *key)
 	return (0);
 }
 
-static void	edit_value(const char *key, const char *value)
+static void	edite_value(const char *key, const char *value)
 {
 	t_env	*env;
 
@@ -91,9 +91,9 @@ void	edit_env(t_env *env_list)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		malloc_error();
-	if (in_env("PWD"))
+	if (in_enve("PWD"))
 	{
-		edit_value("PWD", pwd);
+		edite_value("PWD", pwd);
 		free(pwd);
 	}
 	else
