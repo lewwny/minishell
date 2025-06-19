@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 15:49:04 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:39:07 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,12 +182,12 @@ static void	reverse_redir_list(t_redir **redirs)
 
 	while (current != NULL)
 	{
-		next = current->next; // Store next node
-		current->next = prev; // Reverse the link
-		prev = current; // Move prev to current
-		current = next; // Move to next node
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
-	*redirs = prev; // Update head to new first node
+	*redirs = prev;
 }
 
 void	parsing(char *input)
@@ -209,7 +209,7 @@ void	parsing(char *input)
 		free_ast(_data()->ast);
 		_data()->ast = NULL;
 	}
-	print_ast(_data()->ast, 0);
+	// print_ast(_data()->ast, 0);
 	if (_data()->ast)
 		_data()->cmds = ast_to_cmd(_data()->ast);
 	if (!_data()->early_error || !_data()->error)

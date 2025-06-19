@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 15:58:07 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/19 10:27:14 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 	exit(127);
 }
 
-int get_heredoc_fd(const char *limiter)
+int get_heredoc_fd(const char *limiter, int *tmp)
 {
 	int		p[2];
 	pid_t	pid;
 	int		status;
+	int		j;
 
 	if (pipe(p) < 0)
 		return (-1);
@@ -64,6 +65,7 @@ int get_heredoc_fd(const char *limiter)
 	{
 		signal_handler(1);
 		close(p[0]);
+		j = 0;
 		while (1)
 		{
 			char *line = readline("heredoc> ");
@@ -82,6 +84,12 @@ int get_heredoc_fd(const char *limiter)
 		ultimate_free_func();
 		close(_data()->fd[0]);
 		close(_data()->fd[1]);
+		while (j < 1024)
+		{
+			if (tmp[j] > 2)
+				close(tmp[j]);
+			j++;
+		}
 		exit(0);
 	}
 	else
@@ -98,12 +106,33 @@ int get_heredoc_fd(const char *limiter)
 	}
 }
 
+static int check_all_files(t_redir *redirs)
+{
+    t_redir *r = redirs;
+    while (r)
+    {
+        if (r->type == TK_REDIR_IN)
+        {
+            int fd = open(r->target, O_RDONLY);
+            if (fd < 0)
+            {
+                perror(r->target);
+                return (0);
+            }
+            close(fd);
+        }
+        r = r->next;
+    }
+    return (1);
+}
+
 void exec_cmds(t_cmd *cmd)
 {
 	int   in_fd  = 0;
 	t_cmd *cur   = cmd;
 	int   status;
 	int   did_fork = 0;
+	int		j;
 
 	while (cur)
 	{
@@ -111,11 +140,22 @@ void exec_cmds(t_cmd *cmd)
 		if (!_data()->is_last)
 			pipe(_data()->fd);
 		t_redir *r = cur->redirs;
+		int tmp[1024];
+		ft_bzero(&tmp, sizeof(tmp));
+		j = 0;
+		if (!check_all_files(cur->redirs))
+		{
+			cleanup_fds(&in_fd, _data()->fd, _data()->is_last);
+			_data()->exit_code = 1;
+			cur = cur->next;
+			continue; // Passe à la commande suivante
+		}
 		while (r)
 		{
 			if (r->type == TK_HEREDOC)
 			{
-				r->heredoc_fd = get_heredoc_fd(r->target);
+				r->heredoc_fd = get_heredoc_fd(r->target, tmp);
+				tmp[j] = r->heredoc_fd;
 				if (r->heredoc_fd < 0)
 				{
 					cleanup_fds(&in_fd, _data()->fd, _data()->is_last);
@@ -123,6 +163,7 @@ void exec_cmds(t_cmd *cmd)
 				}
 			}
 			r = r->next;
+			j++;
 		}
 		did_fork = exec_single_cmd(cur, &in_fd, _data()->fd, _data()->is_last);
 		r = cur->redirs;
