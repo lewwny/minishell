@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 19:02:14 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/20 08:26:57 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last)
 
 	pid = fork();
 	signal_handler(2);
+	g_signal_status = 0;
 	if (pid == 0)
 	{
 		if (!is_last)
@@ -63,7 +64,12 @@ void	wait_for_children(int *status)
 	while (wait(NULL) > 0)
 		;
 	if (_data()->pid)
-		_data()->exit_code = WEXITSTATUS(*status);
+	{
+		if (WIFSIGNALED(*status))
+			_data()->exit_code = 128 + WTERMSIG(*status);
+		else
+			_data()->exit_code = WEXITSTATUS(*status);
+	}
 	if (g_signal_status != 0)
 	{
 		_data()->exit_code = g_signal_status;

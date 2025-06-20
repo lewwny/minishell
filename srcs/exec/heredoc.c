@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:39:55 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 11:40:12 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:30:46 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ static int	heredoc_parent(pid_t pid, int *p)
 
 	close(p[1]);
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	if (WIFSIGNALED(status))
 	{
 		close(p[0]);
-		_data()->exit_code = 130;
+		_data()->exit_code = WTERMSIG(status) + 128;
+		g_signal_status = WTERMSIG(status) + 128;
 		return (-1);
 	}
 	return (p[0]);
