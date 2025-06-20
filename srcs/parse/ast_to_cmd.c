@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_to_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:58:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 12:52:16 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:28:52 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_cmd	*handle_cmd_leaf(t_ast *leaf, t_redir *redir_lst)
 	{
 		cmd->args = (char **)malloc(sizeof(char *));
 		if (!cmd->args)
-			return (NULL);
+			malloc_error();
 	}
 	return (cmd);
 }

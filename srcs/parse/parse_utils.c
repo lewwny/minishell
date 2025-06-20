@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:08:36 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/16 19:26:06 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:36:51 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ char	**alloc_args(size_t cap)
 
 	args = malloc(sizeof(char *) * cap);
 	if (!args)
-	{
-		dprintf(2, "Error: Memory allocation failed for command args\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	return (args);
 }
 
@@ -85,9 +82,6 @@ char	*dup_arg(char *text)
 
 	arg = ft_strdup(text);
 	if (!arg)
-	{
-		dprintf(2, "Error: Memory allocation failed for command arg\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	return (arg);
 }

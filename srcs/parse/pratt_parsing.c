@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pratt_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:59:59 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 13:13:45 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:37:14 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,110 +28,9 @@ bool	init_fragment(t_ctx *frag)
 	frag->cap = 64;
 	frag->arg = malloc(frag->cap);
 	if (!frag->arg)
-		return (false);
+		malloc_error();
 	return (true);
 }
-
-// t_ctx	*collect_word_fragments(const char *line, unsigned int *i,
-// 		size_t *count)
-// {
-// 	size_t	cap;
-// 	size_t	idx;
-// 	t_ctx	frag;
-// 	t_ctx	*fragments;
-
-// 	cap = 4;
-// 	idx = 0;
-// 	fragments = alloc_fragments(cap);
-// 	if (!fragments)
-// 		return (NULL);
-// 	while (line[*i] && !ft_isspace(line[*i]) && !ft_strchr("|<>", line[*i]))
-// 	{
-// 		if (!collect_one_fragment(line, i, &frag))
-// 		{
-// 			free(fragments);
-// 			return (NULL);
-// 		}
-// 		if (!add_fragment(&fragments, &idx, &cap, &frag))
-// 			return (NULL);
-// 	}
-// 	*count = idx;
-// 	return (fragments);
-// }
-
-// static void	skip_whitespace(const char *line, unsigned int *i)
-// {
-// 	while (line[*i] && ft_isspace(line[*i]))
-// 		(*i)++;
-// }
-
-// static void	join_fragments_env(t_ctx *frag)
-// {
-// 	char	*tmp_env;
-
-// 	if (!frag->is_escaped && ft_strchr(frag->arg, '$'))
-// 	{
-// 		tmp_env = frag->arg;
-// 		frag->arg = replace_env_vars(tmp_env);
-// 		free(tmp_env);
-// 	}
-// 	else if (frag->is_escaped)
-// 		_data()->has_escaped = true;
-// }
-
-// static t_ctx	join_fragments(t_ctx *frags, size_t count)
-// {
-// 	t_ctx	joined;
-// 	char	*result;
-// 	size_t	i;
-// 	char	*tmp;
-
-// 	i = 0;
-// 	result = ft_strdup("");
-// 	_data()->has_escaped = false;
-// 	ft_bzero(&joined, sizeof(joined));
-// 	if (!result)
-// 		malloc_error();
-// 	while (i < count)
-// 	{
-// 		tmp = result;
-// 		join_fragments_env(&frags[i]);
-// 		result = ft_strjoin(result, frags[i].arg);
-// 		free(tmp);
-// 		free(frags[i].arg);
-// 		i++;
-// 	}
-// 	joined.arg = result;
-// 	joined.is_escaped = _data()->has_escaped;
-// 	joined.unclosed = false;
-// 	return (joined);
-// }
-
-// static bool	process_token(unsigned int *cap, unsigned int *count,
-// 		char *line, unsigned int *i)
-// {
-// 	t_ctx		*frags;
-// 	t_ctx		ctx;
-// 	size_t		frag_count;
-
-// 	if (line[*i] == '>' || line[*i] == '<' || line[*i] == '|')
-// 		return (handle_operator(cap, count, line, i));
-// 	frags = collect_word_fragments(line, i, &frag_count);
-// 	if (!frags)
-// 	{
-// 		_data()->early_error = true;
-// 		return (false);
-// 	}
-// 	ctx = join_fragments(frags, frag_count);
-// 	free(frags);
-// 	if (!ctx.arg)
-// 	{
-// 		free(ctx.arg);
-// 		return (false);
-// 	}
-// 	append_t_ctx(cap, count, &ctx);
-// 	return (true);
-// }
 
 static int	split_on_whitespace_loop(char *line, unsigned int *cap,
 	unsigned int *count)
@@ -165,7 +64,6 @@ static bool	init_split_args(unsigned int *cap, t_data **minishell)
 		free((*minishell)->args);
 		free((*minishell)->ctx);
 		malloc_error();
-		return (false);
 	}
 	ft_bzero((*minishell)->ctx, sizeof(t_ctx) * (*cap));
 	ft_bzero((*minishell)->args, sizeof(char *) * (*cap));

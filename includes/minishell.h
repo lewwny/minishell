@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:49:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 18:59:19 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/20 15:39:50 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,6 @@ void	unset_builtin(void);
 void	export_builtin(void);
 void	lst_add_back_env(t_env **env, t_env *new_node);
 void	ultimate_free_func(void);
-void	free_split(char **tab);
 void	ft_cmdclear(t_cmd **cmd);
 char	*get_prompt(void);
 void	signal_handler(int sig);

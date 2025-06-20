@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:06:55 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/15 15:08:00 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:35:22 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ static void	*alloc_args_array(size_t size)
 
 	args = malloc(sizeof(char *) * (size + 1));
 	if (!args)
-	{
-		perror("minishell: calloc");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	return (args);
 }
 
@@ -46,10 +43,7 @@ static void	fill_args_array(char **args, t_ctx *ctx, size_t size)
 	{
 		args[i] = ft_strdup(ctx[i].arg);
 		if (!args[i])
-		{
-			perror("minishell: strdup");
-			exit(EXIT_FAILURE);
-		}
+			malloc_error();
 		i++;
 	}
 	args[i] = NULL;

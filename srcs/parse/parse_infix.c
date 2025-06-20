@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_infix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:38:51 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 13:18:33 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:36:18 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static char	*get_redir_target(t_token *file_tok, t_token *op)
 	}
 	target = ft_strdup(file_tok->text);
 	if (!target)
-	{
-		dprintf(2, "Error: Memory allocation failed for redirection target\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	return (target);
 }
 
@@ -36,10 +33,7 @@ static t_ast	*infix_pipe(t_ast *left, t_token *op)
 
 	node = malloc(sizeof(t_ast));
 	if (!node)
-	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	node->type = AST_PIPE;
 	node->ast.pipe.left = left;
 	node->ast.pipe.right = parse_expression(op->right_bp);
@@ -60,10 +54,7 @@ static t_ast	*infix_redirection(t_ast *left, t_token *op)
 	file_tok = advance_token();
 	node = malloc(sizeof(t_ast));
 	if (!node)
-	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	node->type = AST_REDIR;
 	node->ast.redir.type = op->type;
 	node->ast.redir.target = get_redir_target(file_tok, op);

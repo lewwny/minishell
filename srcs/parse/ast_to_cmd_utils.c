@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:52:25 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:19:49 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:35:32 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ t_ast	*gather_redirs(t_ast *node, t_redir **rlist)
 	{
 		r = (t_redir *)malloc(sizeof(t_redir));
 		if (!r)
-			return (NULL);
+			malloc_error();
 		r->type = node->ast.redir.type;
 		r->target = ft_strdup(node->ast.redir.target);
+		if (!r->target)
+			malloc_error();
 		r->next = *rlist;
 		*rlist = r;
 		child = node->ast.redir.child;

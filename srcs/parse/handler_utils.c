@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:01:28 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 12:59:16 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:36:01 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	append_t_ctx(unsigned int *cap, unsigned int *c, t_ctx *new_tok)
 	if (m->ctx[*c].arg)
 		free(m->ctx[*c].arg);
 	m->ctx[*c].arg = ft_strdup(new_tok->arg);
+	if (!m->ctx[*c].arg)
+		malloc_error();
 	m->ctx[*c].is_escaped = new_tok->is_escaped;
 	(*c)++;
 }

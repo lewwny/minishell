@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:26:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 18:54:12 by lenygarcia       ###   ########.fr       */
+/*   Updated: 2025/06/20 15:33:44 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,26 @@ t_env	*create_env_node(char *env)
 	return (new_node);
 }
 
+static void	split_env_key_value(char **kv, char **key, char **value)
+{
+	*key = NULL;
+	*value = NULL;
+	if (!kv || !kv[0])
+		return ;
+	*key = ft_strdup(kv[0]);
+	if (!*key)
+		malloc_error();
+	if (kv[1])
+	{
+		*value = ft_strdup(kv[1]);
+		if (!*value)
+		{
+			free(*key);
+			malloc_error();
+		}
+	}
+}
+
 void	split_env(const char *env, char **key, char **value)
 {
 	char	**kv;
@@ -76,8 +96,6 @@ void	split_env(const char *env, char **key, char **value)
 		free_split(kv);
 		return ;
 	}
-	*key = ft_strdup(kv[0]);
-	if (kv[1])
-		*value = ft_strdup(kv[1]);
+	split_env_key_value(kv, key, value);
 	free_split(kv);
 }
