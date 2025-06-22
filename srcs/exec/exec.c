@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:26:47 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 11:43:55 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/22 11:59:38 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 	if (!apply_redir(cmd->redirs))
 	{
 		ultimate_free_func();
-		perror("minishell: redirection error");
+		write(2, "minishell: redirection error\n", 30);
 		exit(1);
 	}
 	get_cmd(cmd->args[0]);
@@ -46,7 +46,8 @@ void	exec_child(t_cmd *cmd, int in_fd, int out_fd, t_data *data)
 	}
 	if (data->cmds->cmd_path)
 		execve(data->cmds->cmd_path, cmd->args, data->env);
-	perror(cmd->args[0]);
+	write(2, cmd->args[0], ft_strlen(cmd->args[0]));
+	write(2, ": command not found\n", 21);
 	ultimate_free_func();
 	exit(127);
 }

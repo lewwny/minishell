@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:21:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/20 08:19:17 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:01:37 by lenygarcia       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	signal_handler(int sig)
 	{
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
+		signal(SIGPIPE, SIG_IGN);
 	}
 	if (sig == 1)
 	{
@@ -69,6 +70,7 @@ void	signal_handler(int sig)
 	{
 		signal(SIGINT, heredoc_sigint_handler);
 		signal(SIGQUIT, sigquit_handler);
+		signal(SIGPIPE, SIG_DFL);
 	}
 	signal(SIGTSTP, SIG_IGN);
 }
