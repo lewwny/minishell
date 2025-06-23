@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:08:36 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/20 15:36:51 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:39:49 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**grow_args(char **args, size_t old_cnt, size_t *cap)
 	args = ft_realloc(args, sizeof(char *) * old_cnt, sizeof(char *) * (*cap));
 	if (!args)
 	{
-		dprintf(2, "Error: Memory allocation failed for command args\n");
+		ft_dprintf(2, "Error: Memory allocation failed for command args\n");
 		exit(EXIT_FAILURE);
 	}
 	return (args);

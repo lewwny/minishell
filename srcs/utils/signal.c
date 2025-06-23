@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:21:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/23 09:20:01 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:40:54 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	heredoc_sigint_handler(int sig)
 	(void) sig;
 	close(0);
 	open("/dev/stdin", O_RDONLY);
-	_data()->exit_code = 130;
-	g_signal_status = 130;
+	g_signal_status = 133;
+	_data()->exit_code = 133;
 }
 
 static void	sigquit_handler(int sig)

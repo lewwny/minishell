@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 11:39:55 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/20 08:30:46 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:51:11 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,16 @@ static int	heredoc_parent(pid_t pid, int *p)
 
 	close(p[1]);
 	waitpid(pid, &status, 0);
+	_data()->flag = 1;
 	if (WIFSIGNALED(status))
 	{
 		close(p[0]);
 		_data()->exit_code = WTERMSIG(status) + 128;
-		g_signal_status = WTERMSIG(status) + 128;
+		if (g_signal_status != 0)
+		{
+			_data()->exit_code = g_signal_status;
+			g_signal_status = 0;
+		}
 		return (-1);
 	}
 	return (p[0]);

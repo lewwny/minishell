@@ -6,14 +6,14 @@
 #    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/23 15:23:01 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/23 15:24:14 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g3
+CFLAGS		= -Wall -Wextra -Werror -g
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
