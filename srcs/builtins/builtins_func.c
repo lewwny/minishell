@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:19:24 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/16 11:45:07 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:33:18 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	verify_exit_code(char *arg)
 	if (arg[0] == '\0')
 	{
 		write(2, "minishell: exit: numeric argument required\n", 44);
-		return (exit_code);
+		ultimate_free_func();
+		exit(exit_code);
 	}
 	if ((arg[0] == '-' || arg[0] == '+') && arg[1] != '\0')
 		i++;
@@ -36,7 +37,8 @@ static int	verify_exit_code(char *arg)
 		if (!ft_isdigit(arg[i]))
 		{
 			write(2, "minishell: exit: numeric argument required\n", 44);
-			return (exit_code);
+			ultimate_free_func();
+			exit(exit_code);
 		}
 		i++;
 	}
@@ -55,6 +57,11 @@ void	exit_builtin(void)
 			write(2, "minishell: exit: too many arguments\n", 37);
 			_data()->exit_status = 1;
 		}
+	}
+	if (_data()->exit_status == 1)
+	{
+		_data()->exit_code = 1;
+		return ;
 	}
 	ultimate_free_func();
 	exit(_data()->exit_status);
