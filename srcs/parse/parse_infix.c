@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_infix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:38:51 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/23 13:00:37 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:16:37 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static t_ast	*infix_pipe(t_ast *left, t_token *op)
 
 static void	attach_redir_node(t_ast *left, t_ast *new_node)
 {
-	t_ast *r;
+	t_ast	*r;
 
 	r = left;
 	while (r->type == AST_REDIR
-			&& r->ast.redir.child
-			&& r->ast.redir.child->type == AST_REDIR)
+		&& r->ast.redir.child
+		&& r->ast.redir.child->type == AST_REDIR)
 		r = r->ast.redir.child;
 	if (r->type == AST_REDIR)
 	{
@@ -49,8 +49,8 @@ static void	attach_redir_node(t_ast *left, t_ast *new_node)
 
 static t_ast	*create_redir_node(t_token *op, t_token *file_tok)
 {
-	t_ast *new_node;
-	
+	t_ast	*new_node;
+
 	new_node = malloc(sizeof(t_ast));
 	if (!new_node)
 		malloc_error();
@@ -70,13 +70,13 @@ static t_ast	*infix_redirection(t_ast *left, t_token *op)
 	if (!left || !file_tok || file_tok->type != TK_WORD)
 	{
 		parser_error_at(op, "Expected file after redirection", op->text);
-		return NULL;
+		return (NULL);
 	}
 	new_node = create_redir_node(op, file_tok);
 	if (left->type == AST_REDIR)
 	{
 		attach_redir_node(left, new_node);
-		return left;
+		return (left);
 	}
 	new_node->ast.redir.child = left;
 	return (new_node);
