@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtins.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:20:01 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 11:26:35 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:40:03 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static bool	verify_key(t_cmd *cmd)
 	{
 		if (!ft_isalpha(cmd->args[i][0]) && cmd->args[i][0] != '_')
 		{
-			dprintf(2, "minishell: export: `%s': not a valid identifier\n",
+			ft_dprintf(2, "minishell: export: `%s': not a valid identifier\n",
 				cmd->args[i]);
 			_data()->exit_code = 1;
 			return (false);

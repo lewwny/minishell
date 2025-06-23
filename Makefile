@@ -6,14 +6,14 @@
 #    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/23 13:20:52 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/23 13:27:03 by lengarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m

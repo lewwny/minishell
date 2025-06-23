@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:12:47 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/15 15:01:39 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:39:58 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	handle_operator(unsigned int *cap, unsigned int *count,
 	op_token = extract_operator(line, i);
 	if (!op_token)
 	{
-		dprintf(2, "Error: Memory allocation failed\n");
+		ft_dprintf(2, "Error: Memory allocation failed\n");
 		free_split(_data()->args);
 	}
 	ctx.arg = op_token;
@@ -82,7 +82,7 @@ bool	handle_quote(unsigned int *cap, unsigned int *count,
 	ctx = collect_quoted(line + *i, quote, &unclosed);
 	if (unclosed || !ctx.arg)
 	{
-		dprintf(2, "Error: Unclosed quote '%c'\n", quote);
+		ft_dprintf(2, "Error: Unclosed quote '%c'\n", quote);
 		_data()->early_error = true;
 		return (false);
 	}

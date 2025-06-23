@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:19:24 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/23 09:33:18 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:39:39 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	unset_builtin(void)
 	i = 1;
 	if (_data()->cmds->args[1] == NULL)
 	{
-		fprintf(stderr, "unset: not enough arguments\n");
+		write(2, "unset: not enough arguments\n", 29);
 		return ;
 	}
 	while (_data()->cmds->args[i])

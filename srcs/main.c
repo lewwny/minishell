@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 07:48:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/20 08:19:05 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:50:16 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	main_help(char **envp)
 	_data()->env = env_to_array(_data()->env_list);
 	get_path();
 	signal_handler(0);
+	g_signal_status = 0;
+	_data()->flag = 0;
 }
 
 static void	main_helper(void)
