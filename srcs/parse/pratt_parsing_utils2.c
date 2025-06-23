@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:09:45 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:09:55 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:21:39 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,16 @@ bool	add_fragment(t_ctx **fragments, size_t *idx, size_t *cap,
 bool	collect_one_fragment(const char *line, unsigned int *i, t_ctx *frag)
 {
 	if (!init_fragment(frag))
+	{
+		free(frag->arg);
 		return (false);
+	}
 	if (line[*i] == '\'' || line[*i] == '"')
 	{
 		if (!handle_quoted(line, i, frag))
 		{
 			free(frag->arg);
+			frag->arg = NULL;
 			return (false);
 		}
 	}
@@ -98,6 +102,7 @@ bool	collect_one_fragment(const char *line, unsigned int *i, t_ctx *frag)
 		if (!handle_unquoted(line, i, frag))
 		{
 			free(frag->arg);
+			frag->arg = NULL;
 			return (false);
 		}
 	}

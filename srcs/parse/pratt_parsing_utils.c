@@ -6,38 +6,11 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:01:55 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:08:48 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:21:23 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_ctx	*collect_word_fragments(const char *line, unsigned int *i,
-		size_t *count)
-{
-	size_t	cap;
-	size_t	idx;
-	t_ctx	frag;
-	t_ctx	*fragments;
-
-	cap = 4;
-	idx = 0;
-	fragments = alloc_fragments(cap);
-	if (!fragments)
-		return (NULL);
-	while (line[*i] && !ft_isspace(line[*i]) && !ft_strchr("|<>", line[*i]))
-	{
-		if (!collect_one_fragment(line, i, &frag))
-		{
-			free(fragments);
-			return (NULL);
-		}
-		if (!add_fragment(&fragments, &idx, &cap, &frag))
-			return (NULL);
-	}
-	*count = idx;
-	return (fragments);
-}
 
 void	skip_whitespace(const char *line, unsigned int *i)
 {

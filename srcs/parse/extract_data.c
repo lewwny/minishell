@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:13:04 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/23 11:36:05 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:25:28 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_ctx	collect_quoted(const char *str, char quote, bool *unclosed)
 	{
 		*unclosed = true;
 		buff.arg = NULL;
+		ft_dprintf(2, "Error: Unclosed quote '%c'\n", quote);
 		return (buff);
 	}
 	buff.arg = (char *)malloc(end);

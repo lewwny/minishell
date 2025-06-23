@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+         #
+#    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/23 13:20:52 by lengarci         ###   ########.fr        #
+#    Updated: 2025/06/23 15:23:01 by macauchy         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g3
 
 RESET 		= \033[0m
 GREEN 		= \033[0;32m
@@ -39,7 +39,7 @@ FILES		= builtins/builtins.c builtins/builtins_func.c builtins/cd_builtins.c \
 			parse/handler_utils.c parse/args_ctx.c parse/collect_word.c\
 			parse/ast_to_cmd_utils.c parse/collect_word_utils.c \
 			parse/pratt_parsing_utils.c parse/pratt_parsing_utils2.c \
-			parse/parse_utils2.c \
+			parse/parse_utils2.c parse/pratt_parsing_utils3.c\
 			\
 			main.c
 SRC_DIR		= srcs

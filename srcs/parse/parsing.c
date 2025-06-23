@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/23 12:59:47 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:43:10 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	parsing(char *input)
 	{
 		_data()->exit_code = 1;
 		free_ctx();
+		ft_dprintf(STDERR_FILENO, "Error: An error occurred during parsing\n");
 		return ;
 	}
 	expand_env_vars_in_ctx();
