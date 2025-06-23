@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+         #
+#    By: lenygarcia <lenygarcia@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/07 14:49:00 by lenygarcia        #+#    #+#              #
-#    Updated: 2025/06/19 13:14:42 by macauchy         ###   ########.fr        #
+#    Updated: 2025/06/19 18:24:08 by lenygarcia       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

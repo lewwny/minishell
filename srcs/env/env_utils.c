@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:07:23 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:19:14 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:35:36 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,6 @@ static void	edite_value(const char *key, const char *value)
 	}
 }
 
-static void	split_env(const char *env, char **key, char **value)
-{
-	char	**kv;
-
-	*key = NULL;
-	*value = NULL;
-	kv = ft_split(env, '=');
-	if (!kv || !kv[0])
-	{
-		free_split(kv);
-		return ;
-	}
-	*key = ft_strdup(kv[0]);
-	if (kv[1])
-		*value = ft_strdup(kv[1]);
-	free_split(kv);
-}
-
 static t_env	*create_enve_node(const char *env)
 {
 	t_env	*new_node;
@@ -83,26 +65,42 @@ static t_env	*create_enve_node(const char *env)
 	return (new_node);
 }
 
-void	edit_env(t_env *env_list)
+void	update_pwd_value(const char *pwd)
 {
-	char	*pwd;
 	t_env	*new_node;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		malloc_error();
 	if (in_enve("PWD"))
 	{
 		edite_value("PWD", pwd);
-		free(pwd);
+		free((char *)pwd);
 	}
 	else
 	{
 		new_node = create_enve_node("PWD=");
 		if (!new_node)
 			malloc_error();
-		new_node->value = pwd;
-		new_node->next = env_list;
+		new_node->value = (char *)pwd;
+		new_node->next = _data()->env_list;
 		_data()->env_list = new_node;
 	}
+}
+
+void	edit_env(void)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+	{
+		if (errno == ENOENT)
+		{
+			write(2, "minishell: pwd: No such file or directory\n", 43);
+			pwd = ft_strdup("/");
+			if (!pwd)
+				malloc_error();
+		}
+		else
+			malloc_error();
+	}
+	update_pwd_value(pwd);
 }

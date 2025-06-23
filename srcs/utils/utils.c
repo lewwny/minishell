@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 08:40:27 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/17 14:22:04 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:31:30 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	}
 	new_ptr = malloc(new_size);
 	if (!new_ptr)
-		return (NULL);
+		malloc_error();
 	ft_bzero(new_ptr, new_size);
 	if (ptr)
 	{
@@ -72,10 +72,7 @@ t_cmd	*ft_cmdnew(char **content)
 
 	cmd = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!cmd)
-	{
 		malloc_error();
-		return (NULL);
-	}
 	cmd->cmd_path = NULL;
 	cmd->args = content;
 	cmd->next = NULL;

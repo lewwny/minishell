@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:13:04 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 13:19:15 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:36:05 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*extract_operator(const char *line, unsigned int *i)
 		op_len = 2;
 	op_token = (char *)malloc(op_len + 1);
 	if (!op_token)
-		return (NULL);
+		malloc_error();
 	ft_memcpy(op_token, line + *i, op_len);
 	op_token[op_len] = '\0';
 	*i += op_len;
@@ -122,7 +122,7 @@ char	*extract_word(const char *line, unsigned int *i)
 		return (NULL);
 	token = (char *)malloc(len + 1);
 	if (!token)
-		return (NULL);
+		malloc_error();
 	ft_memcpy(token, line + start, len);
 	token[len] = '\0';
 	return (token);

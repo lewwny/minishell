@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_to_cmd_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 12:52:25 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:19:49 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:53:44 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ t_ast	*gather_redirs(t_ast *node, t_redir **rlist)
 	{
 		r = (t_redir *)malloc(sizeof(t_redir));
 		if (!r)
-			return (NULL);
+			malloc_error();
 		r->type = node->ast.redir.type;
 		r->target = ft_strdup(node->ast.redir.target);
-		r->next = *rlist;
-		*rlist = r;
+		if (!r->target)
+			malloc_error();
+		redir_add_back(rlist, r);
 		child = node->ast.redir.child;
 		return (gather_redirs(child, rlist));
 	}

@@ -6,29 +6,11 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:38:51 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 13:19:15 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:00:37 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static char	*get_redir_target(t_token *file_tok, t_token *op)
-{
-	char	*target;
-
-	if (!file_tok || file_tok->type != TK_WORD)
-	{
-		parser_error_at(op, "Expected file name after redirection", op->text);
-		return (NULL);
-	}
-	target = ft_strdup(file_tok->text);
-	if (!target)
-	{
-		dprintf(2, "Error: Memory allocation failed for redirection target\n");
-		exit(EXIT_FAILURE);
-	}
-	return (target);
-}
 
 static t_ast	*infix_pipe(t_ast *left, t_token *op)
 {
@@ -36,10 +18,7 @@ static t_ast	*infix_pipe(t_ast *left, t_token *op)
 
 	node = malloc(sizeof(t_ast));
 	if (!node)
-	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	node->type = AST_PIPE;
 	node->ast.pipe.left = left;
 	node->ast.pipe.right = parse_expression(op->right_bp);
@@ -52,28 +31,55 @@ static t_ast	*infix_pipe(t_ast *left, t_token *op)
 	return (node);
 }
 
+static void	attach_redir_node(t_ast *left, t_ast *new_node)
+{
+	t_ast *r;
+
+	r = left;
+	while (r->type == AST_REDIR
+			&& r->ast.redir.child
+			&& r->ast.redir.child->type == AST_REDIR)
+		r = r->ast.redir.child;
+	if (r->type == AST_REDIR)
+	{
+		new_node->ast.redir.child = r->ast.redir.child;
+		r->ast.redir.child = new_node;
+	}
+}
+
+static t_ast	*create_redir_node(t_token *op, t_token *file_tok)
+{
+	t_ast *new_node;
+	
+	new_node = malloc(sizeof(t_ast));
+	if (!new_node)
+		malloc_error();
+	new_node->type = AST_REDIR;
+	new_node->ast.redir.type = op->type;
+	new_node->ast.redir.target = ft_strdup(file_tok->text);
+	new_node->ast.redir.child = NULL;
+	return (new_node);
+}
+
 static t_ast	*infix_redirection(t_ast *left, t_token *op)
 {
 	t_token	*file_tok;
-	t_ast	*node;
+	t_ast	*new_node;
 
 	file_tok = advance_token();
-	node = malloc(sizeof(t_ast));
-	if (!node)
+	if (!left || !file_tok || file_tok->type != TK_WORD)
 	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
-		exit(EXIT_FAILURE);
+		parser_error_at(op, "Expected file after redirection", op->text);
+		return NULL;
 	}
-	node->type = AST_REDIR;
-	node->ast.redir.type = op->type;
-	node->ast.redir.target = get_redir_target(file_tok, op);
-	if (!node->ast.redir.target)
+	new_node = create_redir_node(op, file_tok);
+	if (left->type == AST_REDIR)
 	{
-		free(node);
-		return (NULL);
+		attach_redir_node(left, new_node);
+		return left;
 	}
-	node->ast.redir.child = left;
-	return (node);
+	new_node->ast.redir.child = left;
+	return (new_node);
 }
 
 t_ast	*parse_infix(t_ast *left, t_token *op)

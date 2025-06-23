@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:51:17 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 10:41:20 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:37:36 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	set_token_fields(t_token *token, t_token_type type, char *text,
 	{
 		token->text = ft_strdup(text);
 		if (!token->text)
-		{
-			dprintf(2, "Error: Memory allocation failed for token text\n");
-			exit(EXIT_FAILURE);
-		}
+			malloc_error();
 	}
 	else
 		token->text = NULL;

@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:53:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 13:19:15 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:35:45 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*new_cmd(void)
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
+		malloc_error();
 	cmd->args = NULL;
 	cmd->next = NULL;
 	cmd->redirs = NULL;
@@ -50,7 +50,7 @@ static int	copy_args_content(char **dst, char **src, size_t n)
 		if (!dst[i])
 		{
 			free_split(dst);
-			return (0);
+			malloc_error();
 		}
 		i++;
 	}
@@ -66,7 +66,7 @@ char	**copy_args(char **src)
 	n = count_args(src);
 	dst = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!dst)
-		return (NULL);
+		malloc_error();
 	if (!copy_args_content(dst, src, n))
 		return (NULL);
 	return (dst);

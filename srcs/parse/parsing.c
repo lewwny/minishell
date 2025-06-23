@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 14:38:58 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 11:04:09 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:59:47 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,6 @@ static void	expand_env_vars_in_ctx(void)
 	}
 }
 
-static void	reverse_redir_list(t_redir **redirs)
-{
-	t_redir	*prev;
-	t_redir	*current;
-	t_redir	*next;
-
-	prev = NULL;
-	current = *redirs;
-	while (current != NULL)
-	{
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-	}
-	*redirs = prev;
-}
-
 void	parsing(char *input)
 {
 	_data()->escaped = 0;
@@ -89,8 +71,6 @@ void	parsing(char *input)
 	}
 	if (_data()->ast)
 		_data()->cmds = ast_to_cmd(_data()->ast);
-	if (!_data()->early_error || !_data()->error)
-		reverse_redir_list(&_data()->cmds->redirs);
 	free_ctx();
 	free_ast(_data()->ast);
 	free_split(_data()->args);

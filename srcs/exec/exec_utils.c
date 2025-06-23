@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:25:13 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/18 13:50:37 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/20 08:26:57 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	handle_child_process(t_cmd *cur, int in_fd, int *fd, int is_last)
 
 	pid = fork();
 	signal_handler(2);
+	g_signal_status = 0;
 	if (pid == 0)
 	{
 		if (!is_last)
@@ -63,7 +64,17 @@ void	wait_for_children(int *status)
 	while (wait(NULL) > 0)
 		;
 	if (_data()->pid)
-		_data()->exit_code = WEXITSTATUS(*status);
+	{
+		if (WIFSIGNALED(*status))
+			_data()->exit_code = 128 + WTERMSIG(*status);
+		else
+			_data()->exit_code = WEXITSTATUS(*status);
+	}
+	if (g_signal_status != 0)
+	{
+		_data()->exit_code = g_signal_status;
+		g_signal_status = 0;
+	}
 }
 
 int	exec_single_cmd(t_cmd *cur, int *in_fd, int *fd, int is_last)

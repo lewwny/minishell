@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:58:57 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 12:52:16 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:07:36 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ t_cmd	*flatten_pipe_on_redir(t_ast *leaf, t_redir *redir_list)
 	return (pipe_list);
 }
 
-static t_cmd	*handle_pipe_leaf(t_ast *leaf, t_redir *redir_lst)
-{
-	return (flatten_pipe_on_redir(leaf, redir_lst));
-}
-
 static t_cmd	*handle_cmd_leaf(t_ast *leaf, t_redir *redir_lst)
 {
 	t_cmd	*cmd;
@@ -52,9 +47,27 @@ static t_cmd	*handle_cmd_leaf(t_ast *leaf, t_redir *redir_lst)
 	{
 		cmd->args = (char **)malloc(sizeof(char *));
 		if (!cmd->args)
-			return (NULL);
+			malloc_error();
 	}
 	return (cmd);
+}
+
+void	redir_add_back(t_redir **lst, t_redir *new)
+{
+	t_redir	*last;
+
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		last = *lst;
+		while (last->next)
+			last = last->next;
+		last->next = new;
+	}
+	new->next = NULL;
 }
 
 t_cmd	*switch_type(t_ast *root)
@@ -70,7 +83,7 @@ t_cmd	*switch_type(t_ast *root)
 		return (NULL);
 	}
 	if (leaf->type == AST_PIPE)
-		return (handle_pipe_leaf(leaf, redir_lst));
+		return (flatten_pipe_on_redir(leaf, redir_lst));
 	return (handle_cmd_leaf(leaf, redir_lst));
 }
 

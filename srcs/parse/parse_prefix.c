@@ -6,7 +6,7 @@
 /*   By: macauchy <macauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:01:44 by macauchy          #+#    #+#             */
-/*   Updated: 2025/06/19 13:00:05 by macauchy         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:32:00 by macauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ static t_ast	*prefix_word(t_token *tok)
 
 	node = malloc(sizeof(t_ast));
 	if (!node)
-	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
-		exit(EXIT_FAILURE);
-	}
+		malloc_error();
 	node->type = AST_CMD;
 	node->ast.cmd.args = collect_args(tok);
 	return (node);
@@ -56,19 +53,17 @@ static t_ast	*create_redir_node(t_token *tok, t_token *file_tok, t_ast *cmd)
 	node = malloc(sizeof(t_ast));
 	if (!node)
 	{
-		dprintf(2, "Error: Memory allocation failed for AST node\n");
 		free_ast(cmd);
-		exit(EXIT_FAILURE);
+		malloc_error();
 	}
 	node->type = AST_REDIR;
 	node->ast.redir.type = tok->type;
 	node->ast.redir.target = ft_strdup(file_tok->text);
 	if (!node->ast.redir.target)
 	{
-		dprintf(2, "Error: Memory allocation failed for redirection target\n");
 		free_ast(cmd);
 		free(node);
-		exit(EXIT_FAILURE);
+		malloc_error();
 	}
 	node->ast.redir.child = cmd;
 	return (node);

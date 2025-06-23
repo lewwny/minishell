@@ -6,7 +6,7 @@
 /*   By: lengarci <lengarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 10:21:15 by lengarci          #+#    #+#             */
-/*   Updated: 2025/06/19 15:56:13 by lengarci         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:20:01 by lengarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	sigint_handler(int sig)
 {
 	(void) sig;
 	_data()->exit_code = 130;
+	g_signal_status = 130;
 	rl_on_new_line();
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
@@ -28,6 +29,7 @@ static void	heredoc_sigint_handler(int sig)
 	close(0);
 	open("/dev/stdin", O_RDONLY);
 	_data()->exit_code = 130;
+	g_signal_status = 130;
 }
 
 static void	sigquit_handler(int sig)
@@ -43,7 +45,7 @@ static void	sigquit_handler(int sig)
 		free(_data()->prompt);
 		_data()->prompt = NULL;
 	}
-	_data()->exit_code = 131;
+	g_signal_status = 131;
 	write(2, "Quit: 3\n", 9);
 	rl_on_new_line();
 	write(1, "\n", 1);
